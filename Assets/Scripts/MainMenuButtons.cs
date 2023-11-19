@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
@@ -15,6 +16,7 @@ public class MainMenuButtons : MonoBehaviour
     public void openScene()
     {
         SceneManager.LoadScene(sceneNumber);
+  
     }
 
     public void quitGame()
@@ -38,7 +40,7 @@ public class MainMenuButtons : MonoBehaviour
         RectTransform rt = gameObject.GetComponent<RectTransform>();
         float difference = (pointerHovering ? hoverWidth : width) - rt.sizeDelta.x;
         // resize the button by a faction of the difference. I used fixed update to make this animation run the same speed at all frame rates.
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x + (difference / animationSpeed), height);
+        rt.sizeDelta = new Vector2((float)Math.Round(rt.sizeDelta.x + (difference / animationSpeed)), height);
     }
 
 }
