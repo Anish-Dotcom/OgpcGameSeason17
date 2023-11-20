@@ -52,7 +52,6 @@ public class PlayerMove : MonoBehaviour
                 if (hit.collider.CompareTag("Object"))
                 {
                     heldObject = hit.transform.gameObject;
-                    Debug.Log("pick up");
 
                 }
             }
@@ -65,7 +64,6 @@ public class PlayerMove : MonoBehaviour
             newPos = cam.transform.position + (cam.transform.forward * objectHoldDistance);
             int layermask = -1;
             layermask = layermask & ~(1 << 7);
-            Debug.Log(layermask);
             bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos),layermask);
             if (canMove)
             {
@@ -77,26 +75,12 @@ public class PlayerMove : MonoBehaviour
 
         if (!Input.GetMouseButton(0) && heldObject != null)
         {
-            Debug.Log("Drop");
             heldObject = null;
         }
 
 
     }
 
-    private void OnDrawGizmos()
-    {
-        if (!heldObject.IsUnityNull())
-        {
-            Gizmos.color = Color.green;
-            //Gizmos.DrawCube(heldObject.transform.position, new Vector3(1, 1, 1));
-            Gizmos.color = Color.red;
-            //Gizmos.DrawCube(newPos, new Vector3(1, 1, 1));
-            Ray r = new Ray(heldObject.transform.position, Vector3.Normalize(newPos - heldObject.transform.position));
-            //Gizmos.DrawRay(r);
-        }
-
-    }
 
     private void FixedUpdate()
 
