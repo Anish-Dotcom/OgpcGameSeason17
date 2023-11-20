@@ -45,8 +45,8 @@ public class PlayerMove : MonoBehaviour
                 {
                     Debug.Log("hit");
                     Vector3 newPos = cam.transform.position + cam.transform.forward * distToObject;
-                    hit.transform.position = newPos;
-                    pickedUp = true;
+                    hit.transform.position = transform.position+ new Vector3(1,1,0);
+                    
                 }
             }
         }
