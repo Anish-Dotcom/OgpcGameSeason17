@@ -23,8 +23,16 @@ public class PlayerCam : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        sensX= Senscript.sense;
-        sensY= Senscript.sense;
+        if (sensX != 0 && sensY != 0) 
+        {
+            sensX = Senscript.sense;
+            sensY = Senscript.sense;
+        }
+        else 
+        {
+            sensX = 400f;
+            sensY = 400f;
+        }
     }
 
     // Update is called once per frame
