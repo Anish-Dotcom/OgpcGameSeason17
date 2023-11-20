@@ -23,7 +23,7 @@ public class PlayerCam : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        if (sensX != 0 && sensY != 0) 
+        if (Senscript.sense != 0) 
         {
             sensX = Senscript.sense;
             sensY = Senscript.sense;
