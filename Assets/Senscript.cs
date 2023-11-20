@@ -7,7 +7,7 @@ public class Senscript : MonoBehaviour
 {
     public Slider senseSlider;
     public float senseMult;
-
+    public static float sense;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,10 @@ public class Senscript : MonoBehaviour
 
     void ChngMouseSense(float input)
     {
-        float sense = input * senseMult;
+        sense = input * senseMult;
+
+        Debug.Log(sense);
+       
     }
     // Update is called once per frame
     void Update()

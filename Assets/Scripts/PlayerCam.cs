@@ -15,11 +15,16 @@ public class PlayerCam : MonoBehaviour
     float xRot;
     float yRot;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        sensX= Senscript.sense;
+        sensY= Senscript.sense;
     }
 
     // Update is called once per frame
