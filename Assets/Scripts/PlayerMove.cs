@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,7 +13,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject heldObject;
     public Transform orientation;
     public GameObject cam;
-
+    public float pullpower = 1;
     float horizontalInput;
     float verticalInput;
 
@@ -38,6 +39,12 @@ public class PlayerMove : MonoBehaviour
         PlayerInput();
         SpeedControl();
 
+        if (!heldObject.IsUnityNull())
+        {
+            float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
+            Gobackandforth(scrollDirection);
+        }
+
         if (Input.GetMouseButtonDown(0) && heldObject.IsUnityNull())
         {
             int layermask = -1;
@@ -61,6 +68,7 @@ public class PlayerMove : MonoBehaviour
         {
             heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
             newPos = cam.transform.position + (cam.transform.forward * objectHoldDistance);
             int layermask = -1;
             layermask = layermask & ~(1 << 7);
@@ -72,6 +80,11 @@ public class PlayerMove : MonoBehaviour
             
 
         }
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f && !heldObject.IsUnityNull())
+        {
+            float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
+            Gobackandforth(scrollDirection);
+        }
 
         if (!Input.GetMouseButton(0) && heldObject != null)
         {
@@ -81,6 +94,21 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+    void Gobackandforth(float Direction)
+    {
+        Vector3 scrollOffset = cam.transform.forward * Direction * pullpower * 5f;
+        newPos = heldObject.transform.position + scrollOffset;
+
+        int layermask = -1;
+        layermask = layermask & ~(1 << 7);
+        bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(scrollOffset), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(scrollOffset), layermask);
+
+        if (canMove)
+        {
+            heldObject.GetComponent<Rigidbody>().transform.position = newPos;
+        }
+
+    }
 
     private void FixedUpdate()
 
