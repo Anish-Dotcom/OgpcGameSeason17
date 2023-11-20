@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
+    private Vector3 offsetFromCamToObject;
+
     public float moveSpeed;
     public float objectPickupDistance = 6;
     public float objectHoldDistance = 4;
@@ -38,7 +40,6 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WrapAround();
         PlayerInput();
         SpeedControl();
 
@@ -62,6 +63,7 @@ public class PlayerMove : MonoBehaviour
                 if (hit.collider.CompareTag("Object"))
                 {
                     heldObject = hit.transform.gameObject;
+                    offsetFromCamToObject = heldObject.transform.position - cam.transform.position;
                 }
             }
         }
@@ -74,14 +76,13 @@ public class PlayerMove : MonoBehaviour
             newPos = cam.transform.position + (cam.transform.forward * objectHoldDistance);
             int layermask = -1;
             layermask = layermask & ~(1 << 7);
-            bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos),layermask);
+            bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
             if (canMove)
             {
-                heldObject.GetComponent<Rigidbody>().transform.position = newPos;
+                heldObject.GetComponent<Rigidbody>().transform.position = newPos + offsetFromCamToObject;
             }
-            
-
         }
+
         if (Input.GetAxis("Mouse ScrollWheel") != 0f && !heldObject.IsUnityNull())
         {
             float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
@@ -93,6 +94,7 @@ public class PlayerMove : MonoBehaviour
             heldObject = null;
         }
     }
+
 
     void Gobackandforth(float Direction)
     {
@@ -108,8 +110,8 @@ public class PlayerMove : MonoBehaviour
             heldObject.GetComponent<Rigidbody>().transform.position = newPos;
         }
 
+        WrapAround();
     }
-
     private void FixedUpdate()
     {
         MovePlayer();

@@ -665,11 +665,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   objectPickupDistance: 6
-  objectHoldDistance: 4
+  objectHoldDistance: 1
   heldObject: {fileID: 0}
   orientation: {fileID: 1339100077}
   cam: {fileID: 1559247135}
+  pullpower: 1
   distToObject: 10000
+  wrapAroundPosP: 0
+  wrapAroundPosN: 0
 --- !u!1 &1157743619
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d287c4e8b20c646a44a682bdcca368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fogDen: 0.15
+  fogDen: 0
   fogOn: 1
 --- !u!4 &1531846898
 Transform:
