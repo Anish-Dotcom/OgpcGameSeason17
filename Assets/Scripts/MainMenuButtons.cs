@@ -16,7 +16,6 @@ public class MainMenuButtons : MonoBehaviour
     public void openScene()
     {
         SceneManager.LoadScene(sceneNumber);
-  
     }
 
     public void quitGame()
