@@ -40,14 +40,16 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && heldObject.IsUnityNull())
         {
+            int layermask = -1;
+            layermask = layermask & ~(1 << 7);
             Ray grabberRay = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit hit;
 
-            if (Physics.Raycast(grabberRay, out hit))
+            if (Physics.Raycast(grabberRay, out hit, objectPickupDistance, layermask))
             {
                 distToObject = Vector3.Distance(hit.transform.position, cam.transform.position);
 
-                if (distToObject <= objectPickupDistance && hit.collider.CompareTag("Object"))
+                if (hit.collider.CompareTag("Object"))
                 {
                     heldObject = hit.transform.gameObject;
                     Debug.Log("pick up");
@@ -58,14 +60,16 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !heldObject.IsUnityNull())
         {
+            heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             newPos = cam.transform.position + (cam.transform.forward * objectHoldDistance);
-            bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos));
+            int layermask = -1;
+            layermask = layermask & ~(1 << 7);
+            Debug.Log(layermask);
+            bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos),layermask);
             if (canMove)
             {
                 heldObject.GetComponent<Rigidbody>().transform.position = newPos;
-            } else
-            {
-                Debug.Log("Hit something");
             }
             
 
@@ -82,12 +86,16 @@ public class PlayerMove : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawCube(heldObject.transform.position, new Vector3(1, 1, 1));
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(newPos, new Vector3(1, 1, 1));
-        Ray r = new Ray(heldObject.transform.position, Vector3.Normalize(newPos - heldObject.transform.position));
-        Gizmos.DrawRay(r);
+        if (!heldObject.IsUnityNull())
+        {
+            Gizmos.color = Color.green;
+            //Gizmos.DrawCube(heldObject.transform.position, new Vector3(1, 1, 1));
+            Gizmos.color = Color.red;
+            //Gizmos.DrawCube(newPos, new Vector3(1, 1, 1));
+            Ray r = new Ray(heldObject.transform.position, Vector3.Normalize(newPos - heldObject.transform.position));
+            //Gizmos.DrawRay(r);
+        }
+
     }
 
     private void FixedUpdate()
