@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
     public float moveSpeed;
 
     public Transform orientation;
+    public GameObject cam;
 
     float horizontalInput;
     float verticalInput;
@@ -14,6 +15,9 @@ public class PlayerMove : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    public float distToObject;
+    public bool pickedUp = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +31,25 @@ public class PlayerMove : MonoBehaviour
     {
         PlayerInput();
         SpeedControl();
+
+        if (Input.GetMouseButtonDown(0)&&!pickedUp)
+        {
+            Ray grabberRay = new Ray(transform.position, cam.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(grabberRay, out hit, distToObject))
+            {
+
+                Debug.Log("ray");
+                if (hit.collider.CompareTag("Object"))
+                {
+                    Debug.Log("hit");
+                    Vector3 newPos = cam.transform.position + cam.transform.forward * distToObject;
+                    hit.transform.position = newPos;
+                    pickedUp = true;
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
