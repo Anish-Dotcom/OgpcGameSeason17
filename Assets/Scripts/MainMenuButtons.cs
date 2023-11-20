@@ -13,6 +13,7 @@ public class MainMenuButtons : MonoBehaviour
     public float animationSpeed = 3;
     public int sceneNumber = 0;
     private bool pointerHovering;
+    private float animaitionStartTime = -1000;
     public void openScene()
     {
         SceneManager.LoadScene(sceneNumber);
@@ -27,11 +28,15 @@ public class MainMenuButtons : MonoBehaviour
     public void pointerEnter() // used with the event trigger component
     {
         pointerHovering = true;
+        animaitionStartTime = Time.time;
     }
     public void pointerExit() // used with the event trigger component
     {
         pointerHovering = false;
+        animaitionStartTime = Time.time;
     }
+
+
 
     void FixedUpdate()
     {
@@ -40,6 +45,8 @@ public class MainMenuButtons : MonoBehaviour
         float difference = (pointerHovering ? hoverWidth : width) - rt.sizeDelta.x;
         // resize the button by a faction of the difference. I used fixed update to make this animation run the same speed at all frame rates.
         rt.sizeDelta = new Vector2((float)Math.Round(rt.sizeDelta.x + (difference / animationSpeed)), height);
+
+        
     }
 
 }

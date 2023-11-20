@@ -1,23 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed;
-
+    public float objectPickupDistance = 6;
+    public float objectHoldDistance = 4;
+    public GameObject heldObject;
     public Transform orientation;
     public GameObject cam;
 
     float horizontalInput;
     float verticalInput;
 
+    private Vector3 newPos;
+
     Vector3 moveDirection;
 
     Rigidbody rb;
 
-    public float distToObject;
-    public bool pickedUp = false;
+    public float distToObject = 0;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,28 +38,63 @@ public class PlayerMove : MonoBehaviour
         PlayerInput();
         SpeedControl();
 
-        if (Input.GetMouseButtonDown(0)&&!pickedUp)
+        if (Input.GetMouseButtonDown(0) && heldObject.IsUnityNull())
         {
-            Ray grabberRay = new Ray(transform.position, cam.transform.forward);
+            Ray grabberRay = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit hit;
 
-            if (Physics.Raycast(grabberRay, out hit, distToObject))
+            if (Physics.Raycast(grabberRay, out hit))
             {
+                distToObject = Vector3.Distance(hit.transform.position, cam.transform.position);
 
-                Debug.Log("ray");
-                if (hit.collider.CompareTag("Object"))
+                if (distToObject <= objectPickupDistance && hit.collider.CompareTag("Object"))
                 {
-                    Debug.Log("hit");
-                    Vector3 newPos = cam.transform.position + cam.transform.forward * distToObject;
-                    hit.transform.position = transform.position+ new Vector3(1,1,0);
-                    
+                    heldObject = hit.transform.gameObject;
+                    Debug.Log("pick up");
+
                 }
             }
         }
+
+        if (Input.GetMouseButton(0) && !heldObject.IsUnityNull())
+        {
+            newPos = cam.transform.position + (cam.transform.forward * objectHoldDistance);
+            bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos));
+            if (canMove)
+            {
+                heldObject.GetComponent<Rigidbody>().transform.position = newPos;
+            } else
+            {
+                Debug.Log("Hit something");
+            }
+            
+
+        }
+
+        if (!Input.GetMouseButton(0) && heldObject != null)
+        {
+            Debug.Log("Drop");
+            heldObject = null;
+        }
+
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawCube(heldObject.transform.position, new Vector3(1, 1, 1));
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(newPos, new Vector3(1, 1, 1));
+        Ray r = new Ray(heldObject.transform.position, Vector3.Normalize(newPos - heldObject.transform.position));
+        Gizmos.DrawRay(r);
     }
 
     private void FixedUpdate()
+
     {
+
+
         MovePlayer();
     }
 

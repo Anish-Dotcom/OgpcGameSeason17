@@ -264,6 +264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3291808180857849244, guid: e8d92f5cdb2dbcf40967f7544698f34b,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3291808180857849244, guid: e8d92f5cdb2dbcf40967f7544698f34b,
+        type: 3}
       propertyPath: hoverWidth
       value: 310
       objectReference: {fileID: 0}
@@ -581,13 +586,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3291808180857849244, guid: e8d92f5cdb2dbcf40967f7544698f34b,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3291808180857849244, guid: e8d92f5cdb2dbcf40967f7544698f34b,
+        type: 3}
       propertyPath: hoverWidth
       value: 310
       objectReference: {fileID: 0}
     - target: {fileID: 3291808180857849244, guid: e8d92f5cdb2dbcf40967f7544698f34b,
         type: 3}
       propertyPath: sceneNumber
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8d92f5cdb2dbcf40967f7544698f34b, type: 3}
@@ -1225,6 +1235,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneNumber
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3291808180857849244, guid: e8d92f5cdb2dbcf40967f7544698f34b,
+        type: 3}
+      propertyPath: animationSpeed
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8d92f5cdb2dbcf40967f7544698f34b, type: 3}
