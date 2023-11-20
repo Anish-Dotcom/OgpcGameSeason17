@@ -23,7 +23,9 @@ public class PlayerMove : MonoBehaviour
     Rigidbody rb;
 
     public float distToObject = 0;
-    
+
+    public float wrapAroundPosP;
+    public float wrapAroundPosN;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        WrapAround();
         PlayerInput();
         SpeedControl();
 
@@ -52,7 +55,6 @@ public class PlayerMove : MonoBehaviour
                 if (hit.collider.CompareTag("Object"))
                 {
                     heldObject = hit.transform.gameObject;
-
                 }
             }
         }
@@ -77,16 +79,11 @@ public class PlayerMove : MonoBehaviour
         {
             heldObject = null;
         }
-
-
     }
 
 
     private void FixedUpdate()
-
     {
-
-
         MovePlayer();
     }
 
@@ -111,5 +108,32 @@ public class PlayerMove : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+    }
+    private void WrapAround()
+    {
+        float changePosX = 0;
+        float changePosZ = 0;
+        if (transform.position.x >= 20)
+        {
+            changePosX = -39;
+            Debug.Log("Wrap around x");
+        }
+        else if (transform.position.x <= -20)
+        {
+            changePosX = 39;
+            Debug.Log("Wrap around -x");
+        }
+        else if (transform.position.z <= -20)
+        {
+            changePosZ = 39;
+            Debug.Log("Wrap around -z");
+        }
+        else if (transform.position.z >= 20)
+        {
+            changePosZ = -39;
+            Debug.Log("Wrap around z");
+        }
+        Vector3 playPos = new Vector3(transform.position.x + changePosX, transform.position.y, transform.position.z + changePosZ);
+        transform.position = playPos;
     }
 }
