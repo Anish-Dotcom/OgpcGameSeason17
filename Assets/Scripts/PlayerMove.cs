@@ -12,6 +12,9 @@ public class PlayerMove : MonoBehaviour
     public float moveSpeed;
     public float objectPickupDistance = 6;
     public float objectHoldDistance = 4;
+    public float maxObjectHoldDistnace = 6;
+    public float minObjectHoldDistnace = 2;
+    public float currentObjectHoldDistance;
     public GameObject heldObject;
     public Transform orientation;
     public GameObject cam;
@@ -31,6 +34,7 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentObjectHoldDistance = objectHoldDistance;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -65,7 +69,7 @@ public class PlayerMove : MonoBehaviour
         {
             heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            newPos = cam.transform.position + (cam.transform.forward * objectHoldDistance);
+            newPos = cam.transform.position + (cam.transform.forward * currentObjectHoldDistance);
             int layermask = -1;
             layermask = layermask & ~(1 << 7);
             Debug.Log(layermask);
@@ -84,7 +88,7 @@ public class PlayerMove : MonoBehaviour
         }
         if (!Input.GetMouseButton(0) && heldObject != null)
         {
-            Debug.Log("Drop");
+            currentObjectHoldDistance = objectHoldDistance;
             heldObject = null;
         }
 
@@ -102,7 +106,10 @@ public class PlayerMove : MonoBehaviour
 
         if (canMove)
         {
-            objectHoldDistance += Direction * pullpower;
+            // keep distance in range
+            currentObjectHoldDistance += Direction * pullpower;
+            currentObjectHoldDistance = Math.Min(Math.Max(currentObjectHoldDistance, minObjectHoldDistnace), maxObjectHoldDistnace);
+            
         }
 
     }

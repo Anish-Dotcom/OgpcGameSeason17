@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -663,16 +663,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb8dbaa07b7654e8ece2c2623800ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullpower: 2
   moveSpeed: 6
   objectPickupDistance: 6
-  objectHoldDistance: 1
+  objectHoldDistance: 4
+  maxObjectHoldDistnace: 6
+  minObjectHoldDistnace: 2
+  currentObjectHoldDistance: 4
   heldObject: {fileID: 0}
   orientation: {fileID: 1339100077}
   cam: {fileID: 1559247135}
-  pullpower: 1
   distToObject: 10000
-  wrapAroundPosP: 0
-  wrapAroundPosN: 0
 --- !u!1 &1157743619
 GameObject:
   m_ObjectHideFlags: 0
