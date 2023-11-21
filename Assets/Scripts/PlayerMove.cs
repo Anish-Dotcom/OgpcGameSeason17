@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
 {
     public float pullpower = 5;
 
-    public float moveSpeed;
+    public static float moveSpeed;
     public float objectPickupDistance = 6;
     public float objectHoldDistance = 4;
     public float maxObjectHoldDistnace = 6;
@@ -34,6 +34,7 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        moveSpeed = 6;
         currentObjectHoldDistance = objectHoldDistance;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;

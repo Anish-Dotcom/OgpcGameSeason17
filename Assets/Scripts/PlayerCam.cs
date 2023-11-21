@@ -7,8 +7,8 @@ public class PlayerCam : MonoBehaviour
     public GameObject playerCamera;
     public Transform cameraPos;
 
-    public float sensX;
-    public float sensY;
+    public static float sensX;
+    public static float sensY;
 
     public Transform orientation;
 
