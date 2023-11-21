@@ -1,13 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
-    private Vector3 offsetFromCamToObject;
+    public float pullpower = 5;
 
     public float moveSpeed;
     public float objectPickupDistance = 6;
@@ -15,7 +15,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject heldObject;
     public Transform orientation;
     public GameObject cam;
-    public float pullpower = 1;
+
     float horizontalInput;
     float verticalInput;
 
@@ -27,8 +27,6 @@ public class PlayerMove : MonoBehaviour
 
     public float distToObject = 0;
 
-    public float wrapAroundPosP;
-    public float wrapAroundPosN;
 
     // Start is called before the first frame update
     void Start()
@@ -40,15 +38,8 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WrapAround();
         PlayerInput();
         SpeedControl();
-
-        if (!heldObject.IsUnityNull())
-        {
-            float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
-            Gobackandforth(scrollDirection);
-        }
 
         if (Input.GetMouseButtonDown(0) && heldObject.IsUnityNull())
         {
@@ -64,7 +55,8 @@ public class PlayerMove : MonoBehaviour
                 if (hit.collider.CompareTag("Object"))
                 {
                     heldObject = hit.transform.gameObject;
-                    offsetFromCamToObject = heldObject.transform.position - cam.transform.position;
+                    Debug.Log("pick up");
+
                 }
             }
         }
@@ -73,31 +65,33 @@ public class PlayerMove : MonoBehaviour
         {
             heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
             newPos = cam.transform.position + (cam.transform.forward * objectHoldDistance);
             int layermask = -1;
             layermask = layermask & ~(1 << 7);
+            Debug.Log(layermask);
             bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
             if (canMove)
             {
-                heldObject.GetComponent<Rigidbody>().transform.position = newPos + offsetFromCamToObject;
+                heldObject.GetComponent<Rigidbody>().transform.position = newPos;
             }
-        }
 
+
+        }
         if (Input.GetAxis("Mouse ScrollWheel") != 0f && !heldObject.IsUnityNull())
         {
             float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
             Gobackandforth(scrollDirection);
         }
-
         if (!Input.GetMouseButton(0) && heldObject != null)
         {
+            Debug.Log("Drop");
             heldObject = null;
         }
+
+
     }
 
-
-    void Gobackandforth(float Direction)
+    private void Gobackandforth(float Direction)
     {
         Vector3 scrollOffset = cam.transform.forward * Direction * pullpower * 5f;
         newPos = heldObject.transform.position + scrollOffset;
@@ -108,13 +102,30 @@ public class PlayerMove : MonoBehaviour
 
         if (canMove)
         {
-            heldObject.GetComponent<Rigidbody>().transform.position = newPos;
+            objectHoldDistance += Direction * pullpower;
         }
 
-        WrapAround();
     }
-    private void FixedUpdate()
+
+    private void OnDrawGizmos()
     {
+        if (!heldObject.IsUnityNull())
+        {
+            Gizmos.color = Color.green;
+            //Gizmos.DrawCube(heldObject.transform.position, new Vector3(1, 1, 1));
+            Gizmos.color = Color.red;
+            //Gizmos.DrawCube(newPos, new Vector3(1, 1, 1));
+            Ray r = new Ray(heldObject.transform.position, Vector3.Normalize(newPos - heldObject.transform.position));
+            //Gizmos.DrawRay(r);
+        }
+
+    }
+
+    private void FixedUpdate()
+
+    {
+
+
         MovePlayer();
     }
 
@@ -134,37 +145,10 @@ public class PlayerMove : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        if(flatVel.magnitude > moveSpeed)
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
-    }
-    private void WrapAround()
-    {
-        float changePosX = 0;
-        float changePosZ = 0;
-        if (transform.position.x >= 20)
-        {
-            changePosX = -39;
-            Debug.Log("Wrap around x");
-        }
-        else if (transform.position.x <= -20)
-        {
-            changePosX = 39;
-            Debug.Log("Wrap around -x");
-        }
-        else if (transform.position.z <= -20)
-        {
-            changePosZ = 39;
-            Debug.Log("Wrap around -z");
-        }
-        else if (transform.position.z >= 20)
-        {
-            changePosZ = -39;
-            Debug.Log("Wrap around z");
-        }
-        Vector3 playPos = new Vector3(transform.position.x + changePosX, transform.position.y, transform.position.z + changePosZ);
-        transform.position = playPos;
     }
 }
