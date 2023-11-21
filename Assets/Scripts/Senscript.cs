@@ -6,20 +6,21 @@ using UnityEngine.UI;
 public class Senscript : MonoBehaviour
 {
     public Slider senseSlider;
-    public float senseMult;
+    public float maxSensetivity;
+    public float minSensetivity;
     public static float sense;
     // Start is called before the first frame update
     void Start()
     {
-        senseSlider.onValueChanged.AddListener(ChngMouseSense);
+        senseSlider.onValueChanged.AddListener(ChangeMouseSense);
     }
 
-    void ChngMouseSense(float input)
+    void ChangeMouseSense(float input)
     {
-        sense = input * senseMult;
+        sense = input * (maxSensetivity - minSensetivity) + minSensetivity;
+        PlayerPrefs.SetFloat("sensitivity", input * (maxSensetivity - minSensetivity) + minSensetivity);
+        
 
-        Debug.Log(sense);
-       
     }
     // Update is called once per frame
     void Update()
