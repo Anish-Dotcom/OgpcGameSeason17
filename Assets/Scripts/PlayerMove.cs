@@ -62,6 +62,7 @@ public class PlayerMove : MonoBehaviour
                     heldObject = hit.transform.gameObject;
                     Debug.Log("pick up");
 
+                    currentObjectHoldDistance = Vector3.Distance(heldObject.transform.position, cam.transform.position);
                 }
             }
         }

@@ -1186,11 +1186,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb8dbaa07b7654e8ece2c2623800ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pullpower: 2
-  objectPickupDistance: 6
-  objectHoldDistance: 4
-  maxObjectHoldDistnace: 6
-  minObjectHoldDistnace: 2
+  pullpower: 3.5
+  objectPickupDistance: 3
+  objectHoldDistance: 3
+  maxObjectHoldDistnace: 3
+  minObjectHoldDistnace: 1
   currentObjectHoldDistance: 4
   heldObject: {fileID: 0}
   orientation: {fileID: 1339100077}
