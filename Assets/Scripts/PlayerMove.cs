@@ -29,7 +29,9 @@ public class PlayerMove : MonoBehaviour
     Rigidbody rb;
 
     public float distToObject = 0;
-
+    Vector3 currentVelocity;
+    public float smoothTime = 0.5f;
+    public float maxFollowSpeed = 20;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +47,7 @@ public class PlayerMove : MonoBehaviour
     {
         PlayerInput();
         SpeedControl();
-
-        if (Input.GetMouseButtonDown(0) && heldObject.IsUnityNull())
+        if (Input.GetMouseButtonDown(0) && heldObject == null)//pickup object
         {
             int layermask = -1;
             layermask = layermask & ~(1 << 7);
@@ -56,18 +57,22 @@ public class PlayerMove : MonoBehaviour
             if (Physics.Raycast(grabberRay, out hit, objectPickupDistance, layermask))
             {
                 distToObject = Vector3.Distance(hit.transform.position, cam.transform.position);
-
                 if (hit.collider.CompareTag("Object"))
                 {
                     heldObject = hit.transform.gameObject;
+                    hit.collider.GetComponent<Rigidbody>().useGravity = false;
                     Debug.Log("pick up");
-
                     currentObjectHoldDistance = Vector3.Distance(heldObject.transform.position, cam.transform.position);
                 }
             }
         }
-
-        if (Input.GetMouseButton(0) && !heldObject.IsUnityNull())
+        else if (!Input.GetMouseButton(0) && heldObject != null)//put down object
+        {
+            currentObjectHoldDistance = objectHoldDistance;
+            heldObject.GetComponent<Rigidbody>().useGravity = true;
+            heldObject = null;
+        }
+        if (heldObject != null)//change object position
         {
             heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
@@ -75,26 +80,17 @@ public class PlayerMove : MonoBehaviour
             int layermask = -1;
             layermask = layermask & ~(1 << 7);
             Debug.Log(layermask);
-            bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
-            if (canMove)
+            //bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
+            //if (canMove)
             {
-                heldObject.GetComponent<Rigidbody>().transform.position = newPos;
+                heldObject.GetComponent<Rigidbody>().transform.position = Vector3.SmoothDamp(heldObject.GetComponent<Rigidbody>().transform.position, newPos, ref currentVelocity, smoothTime, maxFollowSpeed);
             }
-
-
         }
-        if (Input.GetAxis("Mouse ScrollWheel") != 0f && !heldObject.IsUnityNull())
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f && !heldObject.IsUnityNull())//change distance of object from player
         {
             float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
             Gobackandforth(scrollDirection);
         }
-        if (!Input.GetMouseButton(0) && heldObject != null)
-        {
-            currentObjectHoldDistance = objectHoldDistance;
-            heldObject = null;
-        }
-
-
     }
 
     private void Gobackandforth(float Direction)
@@ -111,7 +107,6 @@ public class PlayerMove : MonoBehaviour
             // keep distance in range
             currentObjectHoldDistance += Direction * pullpower;
             currentObjectHoldDistance = Math.Min(Math.Max(currentObjectHoldDistance, minObjectHoldDistnace), maxObjectHoldDistnace);
-            
         }
 
     }
