@@ -10,6 +10,9 @@ public class telephoneScript : MonoBehaviour
     public GameObject telephoneUI;
     public GameObject telephoneUIOnPickUp;
 
+    public GameObject callShopButton;
+    public GameObject shopUI;
+
     private float moveSpeedSaved;
     private float sensXSaved;
     private float sensYSaved;
@@ -42,6 +45,9 @@ public class telephoneScript : MonoBehaviour
 
     public void PutTelephoneBackButton()
     {
+        shopUI.SetActive(false);
+        callShopButton.SetActive(true);
+
         telephoneIsOpen = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -52,6 +58,12 @@ public class telephoneScript : MonoBehaviour
         telephone.SetActive(true);
         telephoneOutline.SetActive(true);
         telephoneUI.SetActive(false);
+    }
+
+    public void CallShopButton()
+    {
+        shopUI.SetActive(true);
+        callShopButton.SetActive(false);
     }
 
     // Start is called before the first frame update
