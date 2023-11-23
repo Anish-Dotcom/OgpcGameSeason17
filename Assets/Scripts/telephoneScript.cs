@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class telephoneScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject callShopButton;
     public GameObject shopUI;
+    public AudioSource greeting;
 
     private float moveSpeedSaved;
     private float sensXSaved;
@@ -20,6 +22,8 @@ public class telephoneScript : MonoBehaviour
     public float distFromObject = 0;
 
     public bool telephoneIsOpen;
+
+    public TMP_Text subtitles;
 
     private void OnMouseUpAsButton()
     {
@@ -62,6 +66,18 @@ public class telephoneScript : MonoBehaviour
 
     public void CallShopButton()
     {
+        StartCoroutine(showText());
+        greeting.Play();
+    }
+
+    IEnumerator showText()
+    {
+        yield return new WaitForSeconds(0.3f);
+        subtitles.text = "Thank you for calling Playful Depot.";
+        yield return new WaitForSeconds(2.7f);
+        subtitles.text = "What would you like to buy?";
+        yield return new WaitForSeconds(2.3f);
+        subtitles.text = "";
         shopUI.SetActive(true);
         callShopButton.SetActive(false);
     }
