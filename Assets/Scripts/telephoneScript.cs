@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class telephoneScript : MonoBehaviour
@@ -9,7 +10,6 @@ public class telephoneScript : MonoBehaviour
     public GameObject telephone;
     public GameObject telephoneOutline;
     public GameObject telephoneUI;
-    public GameObject telephoneUIOnPickUp;
 
     public GameObject callShopButton;
     public GameObject shopUI;
@@ -25,12 +25,19 @@ public class telephoneScript : MonoBehaviour
 
     public TMP_Text subtitles;
 
+    public Button callButton;
+    public Button awayButton;
+
     private void OnMouseUpAsButton()
     {
         distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
 
         if(distFromObject <= 2.1 && !telephoneIsOpen)
         {
+            callButton.interactable = true;
+            awayButton.interactable = true;
+            shopUI.SetActive(false);
+            callShopButton.SetActive(true);
             telephoneIsOpen = true;
             telephone.SetActive(false);
             telephoneOutline.SetActive(false);
@@ -41,7 +48,6 @@ public class telephoneScript : MonoBehaviour
             sensYSaved = PlayerCam.sensY;
             PlayerCam.sensX = 0f;
             PlayerCam.sensY = 0f;
-            telephoneUIOnPickUp.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -49,13 +55,9 @@ public class telephoneScript : MonoBehaviour
 
     public void PutTelephoneBackButton()
     {
-        shopUI.SetActive(false);
-        callShopButton.SetActive(true);
-
         telephoneIsOpen = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        telephoneUIOnPickUp.SetActive(false);
         PlayerMove.moveSpeed = moveSpeedSaved;
         PlayerCam.sensX = sensXSaved;
         PlayerCam.sensY = sensYSaved;
@@ -66,6 +68,8 @@ public class telephoneScript : MonoBehaviour
 
     public void CallShopButton()
     {
+        callButton.interactable = false;
+        awayButton.interactable = false;
         StartCoroutine(showText());
         greeting.Play();
     }
@@ -80,6 +84,7 @@ public class telephoneScript : MonoBehaviour
         subtitles.text = "";
         shopUI.SetActive(true);
         callShopButton.SetActive(false);
+        awayButton.interactable = true;
     }
 
     // Start is called before the first frame update
@@ -91,6 +96,6 @@ public class telephoneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
