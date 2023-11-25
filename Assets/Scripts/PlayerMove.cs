@@ -53,14 +53,14 @@ public class PlayerMove : MonoBehaviour
             layermask = layermask & ~(1 << 7);
             Ray grabberRay = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit hit;
-
             if (Physics.Raycast(grabberRay, out hit, objectPickupDistance, layermask))
             {
                 distToObject = Vector3.Distance(hit.transform.position, cam.transform.position);
-                if (hit.collider.CompareTag("Object"))
+                if (hit.collider.CompareTag("Object"))//if pickup-able then pickup
                 {
                     heldObject = hit.transform.gameObject;
                     hit.collider.GetComponent<Rigidbody>().useGravity = false;
+                    heldObject.GetComponent<Rigidbody>().drag = 0;
                     Debug.Log("pick up");
                     currentObjectHoldDistance = Vector3.Distance(heldObject.transform.position, cam.transform.position);
                 }
@@ -70,23 +70,10 @@ public class PlayerMove : MonoBehaviour
         {
             currentObjectHoldDistance = objectHoldDistance;
             heldObject.GetComponent<Rigidbody>().useGravity = true;
+            heldObject.GetComponent<Rigidbody>().drag = 0.1f;
             heldObject = null;
         }
-        if (heldObject != null)//change object position
-        {
-            heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            newPos = cam.transform.position + (cam.transform.forward * currentObjectHoldDistance);
-            int layermask = -1;
-            layermask = layermask & ~(1 << 7);
-            Debug.Log(layermask);
-            //bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
-            //if (canMove)
-            {
-                heldObject.GetComponent<Rigidbody>().transform.position = Vector3.SmoothDamp(heldObject.GetComponent<Rigidbody>().transform.position, newPos, ref currentVelocity, smoothTime, maxFollowSpeed);
-            }
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") != 0f && !heldObject.IsUnityNull())//change distance of object from player
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f && heldObject != null)//change distance of object from player
         {
             float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
             Gobackandforth(scrollDirection);
@@ -113,7 +100,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!heldObject.IsUnityNull())
+        if (heldObject != null)
         {
             Gizmos.color = Color.green;
             //Gizmos.DrawCube(heldObject.transform.position, new Vector3(1, 1, 1));
@@ -122,37 +109,49 @@ public class PlayerMove : MonoBehaviour
             Ray r = new Ray(heldObject.transform.position, Vector3.Normalize(newPos - heldObject.transform.position));
             //Gizmos.DrawRay(r);
         }
-
     }
 
-    private void FixedUpdate()
-
+    private void FixedUpdate()//physic based movements
     {
-
-
         MovePlayer();
+        if (heldObject != null)//change object position
+        {
+            MoveHeldObject();
+        }
     }
-
     private void PlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
     }
-
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
     }
-
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+    }
+    private void MoveHeldObject()
+    {
+        heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        newPos = cam.transform.position + (cam.transform.forward* currentObjectHoldDistance);
+        int layermask = -1;
+        layermask = layermask & ~(1 << 7);
+        Debug.Log(layermask);
+        //bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
+        //if (canMove)
+        //{
+        //
+        //}
+        heldObject.GetComponent<Rigidbody>().transform.position = Vector3.SmoothDamp(heldObject.GetComponent<Rigidbody>().transform.position, newPos, ref currentVelocity, smoothTime, maxFollowSpeed);
+            
     }
 }
