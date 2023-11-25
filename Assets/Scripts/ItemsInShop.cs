@@ -38,7 +38,7 @@ public class ItemsInShop : MonoBehaviour
             foreach (GameObject obj in instantiatedObjects)
             {
                 Text[] legacyTextComponents = obj.GetComponentsInChildren<Text>();
-                if (legacyTextComponents.Length > 0 && legacyTextComponents[0].text.Contains(itemName))
+                if (legacyTextComponents[0].text.Contains(itemName))
                 {
                     legacyTextComponents[0].text = "- " + itemName + " (" + quantity + ")";
                     legacyTextComponents[1].text = "$" + formattedPrice;
@@ -51,11 +51,8 @@ public class ItemsInShop : MonoBehaviour
                 GameObject newObject = Instantiate(prefabToInstantiate, parentObject);
                 instantiatedObjects.Add(newObject);
                 Text[] legacyTextComponents = newObject.GetComponentsInChildren<Text>();
-                if (legacyTextComponents.Length > 0)
-                {
-                    legacyTextComponents[0].text = "- " + itemName + " (" + quantity + ")";
-                    legacyTextComponents[1].text = "$" + formattedPrice;
-                }
+                legacyTextComponents[0].text = "- " + itemName + " (" + quantity + ")";
+                legacyTextComponents[1].text = "$" + formattedPrice;
             }
         }
     }

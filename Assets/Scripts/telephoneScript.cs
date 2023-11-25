@@ -31,6 +31,24 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject commissionsUI;
 
+    public string[] daysOfWeek;
+    private string currentDayOfWeek;
+    public TMP_Text dayOfWeekText;
+    public TMP_Text time;
+    public string[] hour;
+    public string[] minutes;
+    private string currentHour;
+    private string currentMinutes;
+    private string meridiem;
+
+    private int currentDayOfWeekIndex;
+    private int currentHourIndex;
+    private int currentMinutesIndex;
+
+    public bool GameIsPaused;
+
+    public float secondsPer10Minutes;
+
     private void OnMouseUpAsButton()
     {
         distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
@@ -96,12 +114,32 @@ public class telephoneScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentHourIndex = 0;
+        currentMinutesIndex = 5;
+        currentDayOfWeekIndex = 6;
+        meridiem = "AM";
+        timeGoes();
     }
 
     // Update is called once per frame
     void Update()
     {
+        currentDayOfWeek = daysOfWeek[currentDayOfWeekIndex]; // time system
+        currentHour = hour[currentHourIndex];
+        currentMinutes = minutes[currentMinutesIndex];
+
+        dayOfWeekText.text = currentDayOfWeek;
+        time.text = currentHour + ":" + currentMinutes + " " + meridiem;
+
+        if(currentHourIndex == 5)
+        {
+            meridiem = "PM";
+        }
+        if(currentHourIndex == 17)
+        {
+            meridiem = "AM";
+        }
+
         if (Input.GetKeyDown(KeyCode.C) && callButton.interactable && !shopUI.activeInHierarchy) // show commissions
         {
             if (commissionsUI.activeInHierarchy)
@@ -111,6 +149,47 @@ public class telephoneScript : MonoBehaviour
             else
             {
                 commissionsUI.SetActive(true);
+            }
+        }
+    }
+
+    public void timeGoes()
+    {
+        if (currentHourIndex == 0 && currentMinutesIndex == 5) // if its a new day
+        {
+            if (currentDayOfWeekIndex == 6)
+            {
+                currentDayOfWeekIndex = 0;
+            }
+            else
+            {
+                currentDayOfWeekIndex = currentDayOfWeekIndex + 1;
+            }
+            currentHourIndex = 1;
+            currentMinutesIndex = 0;
+        }
+
+        StartCoroutine(minutesPass());
+    }
+
+    IEnumerator minutesPass()
+    {
+        if (!GameIsPaused)
+        {
+            yield return new WaitForSeconds(secondsPer10Minutes);
+            currentMinutesIndex = currentMinutesIndex + 1;
+            if(currentMinutesIndex == 6)
+            {
+                currentHourIndex = currentHourIndex + 1;
+                currentMinutesIndex = 0;
+            }
+            if(currentHourIndex == 19)
+            {
+                // falls on floor from sleepiness
+            }
+            else
+            {
+                StartCoroutine(minutesPass());
             }
         }
     }
