@@ -24,9 +24,12 @@ public class telephoneScript : MonoBehaviour
     public bool telephoneIsOpen;
 
     public TMP_Text subtitles;
+    public GameObject subtitlesHighlight;
 
     public Button callButton;
     public Button awayButton;
+
+    public GameObject commissionsUI;
 
     private void OnMouseUpAsButton()
     {
@@ -34,8 +37,7 @@ public class telephoneScript : MonoBehaviour
 
         if(distFromObject <= 2.1 && !telephoneIsOpen)
         {
-            callButton.interactable = true;
-            awayButton.interactable = true;
+            commissionsUI.SetActive(false);
             shopUI.SetActive(false);
             callShopButton.SetActive(true);
             telephoneIsOpen = true;
@@ -55,6 +57,8 @@ public class telephoneScript : MonoBehaviour
 
     public void PutTelephoneBackButton()
     {
+        callButton.interactable = true;
+        awayButton.interactable = true;
         telephoneIsOpen = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -77,10 +81,12 @@ public class telephoneScript : MonoBehaviour
     IEnumerator showText()
     {
         yield return new WaitForSeconds(0.3f);
+        subtitlesHighlight.SetActive(true);
         subtitles.text = "Thank you for calling Playful Depot.";
         yield return new WaitForSeconds(2.7f);
         subtitles.text = "What would you like to buy?";
         yield return new WaitForSeconds(2.3f);
+        subtitlesHighlight.SetActive(false);
         subtitles.text = "";
         shopUI.SetActive(true);
         callShopButton.SetActive(false);
@@ -96,6 +102,16 @@ public class telephoneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.C) && callButton.interactable && !shopUI.activeInHierarchy) // show commissions
+        {
+            if (commissionsUI.activeInHierarchy)
+            {
+                commissionsUI.SetActive(false);
+            }
+            else
+            {
+                commissionsUI.SetActive(true);
+            }
+        }
     }
 }
