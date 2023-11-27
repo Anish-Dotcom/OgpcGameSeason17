@@ -5257,9 +5257,16 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   orientation: {fileID: 1339100077}
   cam: {fileID: 1559247135}
+  wrapAroundPosP: 0
+  wrapAroundPosN: 0
   distToObject: 10000
   smoothTime: 0.1
   maxFollowSpeed: 10
+  maxDistances:
+  - 12
+  - -12
+  - -12
+  - 12
 --- !u!1 &1151198135
 GameObject:
   m_ObjectHideFlags: 0
@@ -7336,7 +7343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d287c4e8b20c646a44a682bdcca368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fogDen: 0.15
+  fogDen: 0.2
   fogOn: 1
 --- !u!4 &1531846898
 Transform:

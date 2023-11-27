@@ -19,6 +19,9 @@ public class PlayerMove : MonoBehaviour
     public Transform orientation;
     public GameObject cam;
 
+    public float wrapAroundPosP;
+    public float wrapAroundPosN;
+
     float horizontalInput;
     float verticalInput;
 
@@ -32,6 +35,7 @@ public class PlayerMove : MonoBehaviour
     Vector3 currentVelocity;
     public float smoothTime = 0.5f;
     public float maxFollowSpeed = 20;
+    public float[] maxDistances = new float[4];
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +49,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        WrapAround();
         PlayerInput();
         SpeedControl();
         if (Input.GetMouseButtonDown(0) && heldObject == null)//pickup object
@@ -153,5 +158,33 @@ public class PlayerMove : MonoBehaviour
         //}
         heldObject.GetComponent<Rigidbody>().transform.position = Vector3.SmoothDamp(heldObject.GetComponent<Rigidbody>().transform.position, newPos, ref currentVelocity, smoothTime, maxFollowSpeed);
             
+    }
+    private void WrapAround()
+    {
+        float changePosX = 0;
+        float changePosZ = 0;
+        if (transform.position.x >= maxDistances[0])
+        {
+            changePosX = -2 * transform.position.x + 0.5f;
+            Debug.Log("Wrap around x" + transform.position.x);
+        }
+        else if (transform.position.x <= maxDistances[1])
+        {
+            changePosX = -2 * transform.position.x - 0.5f;
+            Debug.Log("Wrap around -x" + transform.position.x);
+        }
+        else if (transform.position.z <= maxDistances[2])
+        {
+            changePosZ = -2 * transform.position.z - 0.5f;
+            Debug.Log("Wrap around -z" + transform.position.z);
+        }
+        else if (transform.position.z >= maxDistances[3])
+        {
+            changePosZ = -2 * transform.position.z + 0.5f;
+            Debug.Log("Wrap around z" + transform.position.z);
+        }
+        Vector3 playPos = new Vector3(transform.position.x + changePosX, transform.position.y, transform.position.z + changePosZ);
+        transform.position = playPos;
+        Debug.Log(transform.position.x + transform.position.z);
     }
 }
