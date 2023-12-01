@@ -9,7 +9,7 @@ public class ButtonScript : MonoBehaviour
     public bool isQuitButton;
     public GameObject objectToActivateOnHover;
 
-    public void OnMouseUpAsButton()
+    public   void OnMouseUpAsButton()
     {
         if (!isQuitButton)
         {
