@@ -75,6 +75,9 @@ public class telephoneScript : MonoBehaviour
 
     public void PutTelephoneBackButton()
     {
+        ItemsInShop.reset();
+        ItemManager.costsStatic[0] = 0;
+        ItemManager.costsStatic[1] = 0;
         callButton.interactable = true;
         awayButton.interactable = true;
         telephoneIsOpen = false;

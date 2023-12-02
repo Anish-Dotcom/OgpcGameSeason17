@@ -15,7 +15,7 @@ public class ItemsInShop : MonoBehaviour
     public GameObject prefabToInstantiate;
     public Transform parentObject;
 
-    private List<GameObject> instantiatedObjects = new List<GameObject>();
+    private static List<GameObject> instantiatedObjects = new List<GameObject>();
     private int quantity = 0;
 
     public float totalPriceOfSingle;
@@ -76,7 +76,7 @@ public class ItemsInShop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void reformatThePrice()
@@ -125,6 +125,19 @@ public class ItemsInShop : MonoBehaviour
 
                 break;
             }
+        }
+    }
+
+    public static void reset()
+    {
+        foreach (GameObject obj in instantiatedObjects)
+        {
+            Destroy(obj);
+        }
+        instantiatedObjects.Clear();
+        foreach (ItemsInShop item in FindObjectsOfType<ItemsInShop>())
+        {
+            item.quantity = 0;
         }
     }
 }
