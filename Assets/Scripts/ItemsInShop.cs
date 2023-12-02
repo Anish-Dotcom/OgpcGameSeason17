@@ -19,13 +19,22 @@ public class ItemsInShop : MonoBehaviour
     private int quantity = 0;
 
     public float totalPriceOfSingle;
+
+    //private int updown;
+
     // Start is called before the first frame update
     void Start()
     {
+        //updown = 1;
         if (nameAsText != null && priceAsText != null)
         {
             nameAsText.text = itemName;
             priceAsText.text = "$" + price;
+        }
+        Button[] buttons = prefabToInstantiate.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            button.onClick.AddListener(() => OnButtonClick(button.gameObject));
         }
     }
 
@@ -33,7 +42,8 @@ public class ItemsInShop : MonoBehaviour
     {
         if (prefabToInstantiate != null && parentObject != null)
         {
-            quantity = quantity + 1;
+            //updown = 1;
+            quantity++;
             bool found = false;
             foreach (GameObject obj in instantiatedObjects)
             {
@@ -41,8 +51,10 @@ public class ItemsInShop : MonoBehaviour
                 if (legacyTextComponents[0].text.Contains(itemName))
                 {
                     legacyTextComponents[0].text = "- " + itemName + " (" + quantity + ")";
+                    reformatThePrice();
                     legacyTextComponents[1].text = "$" + formattedPrice;
                     found = true;
+                    UpdateArray();
                     break;
                 }
             }
@@ -52,7 +64,16 @@ public class ItemsInShop : MonoBehaviour
                 instantiatedObjects.Add(newObject);
                 Text[] legacyTextComponents = newObject.GetComponentsInChildren<Text>();
                 legacyTextComponents[0].text = "- " + itemName + " (" + quantity + ")";
+                reformatThePrice();
                 legacyTextComponents[1].text = "$" + formattedPrice;
+                UpdateArray();
+
+                // Add a button click listener to the newly instantiated button
+                Button newButton = newObject.GetComponentInChildren<Button>();
+                if (newButton != null)
+                {
+                    newButton.onClick.AddListener(() => OnButtonClick(newButton.gameObject));
+                }
             }
         }
     }
@@ -60,7 +81,50 @@ public class ItemsInShop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        totalPriceOfSingle = float.Parse(price) * (quantity + 1);
+
+    }
+
+    public void reformatThePrice()
+    {
+        totalPriceOfSingle = float.Parse(price) * (quantity); //+ updown);
         formattedPrice = totalPriceOfSingle.ToString("F2");
+    }
+
+    void UpdateUI(GameObject obj)
+    {
+        Text[] legacyTextComponents = obj.GetComponentsInChildren<Text>();
+        legacyTextComponents[0].text = "- " + itemName + " (" + quantity + ")";
+        legacyTextComponents[1].text = "$" + formattedPrice;
+    }
+
+    public void UpdateArray()
+    {
+        if (itemName == "cube")
+        {
+            ItemManager.cubeQuantity = quantity;
+            ItemManager.costsStatic[0] = float.Parse(formattedPrice);
+        }
+        if (itemName == "cylinder")
+        {
+            ItemManager.cylinderQuantity = quantity;
+            ItemManager.costsStatic[1] = float.Parse(formattedPrice);
+        }
+    }
+
+    void OnButtonClick(GameObject buttonClicked)
+    {
+        // Find the object in the instantiatedObjects list and decrement its quantity
+        foreach (GameObject obj in instantiatedObjects)
+        {
+            if (obj == buttonClicked.transform.parent.gameObject)
+            {
+                //updown = -1;
+                quantity--;
+                reformatThePrice();
+                UpdateUI(obj);
+                UpdateArray();
+                break;
+            }
+        }
     }
 }
