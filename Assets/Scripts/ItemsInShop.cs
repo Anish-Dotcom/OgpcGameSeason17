@@ -20,12 +20,9 @@ public class ItemsInShop : MonoBehaviour
 
     public float totalPriceOfSingle;
 
-    //private int updown;
-
     // Start is called before the first frame update
     void Start()
     {
-        //updown = 1;
         if (nameAsText != null && priceAsText != null)
         {
             nameAsText.text = itemName;
@@ -42,7 +39,6 @@ public class ItemsInShop : MonoBehaviour
     {
         if (prefabToInstantiate != null && parentObject != null)
         {
-            //updown = 1;
             quantity++;
             bool found = false;
             foreach (GameObject obj in instantiatedObjects)
@@ -68,7 +64,6 @@ public class ItemsInShop : MonoBehaviour
                 legacyTextComponents[1].text = "$" + formattedPrice;
                 UpdateArray();
 
-                // Add a button click listener to the newly instantiated button
                 Button newButton = newObject.GetComponentInChildren<Button>();
                 if (newButton != null)
                 {
@@ -86,7 +81,7 @@ public class ItemsInShop : MonoBehaviour
 
     public void reformatThePrice()
     {
-        totalPriceOfSingle = float.Parse(price) * (quantity); //+ updown);
+        totalPriceOfSingle = float.Parse(price) * (quantity);
         formattedPrice = totalPriceOfSingle.ToString("F2");
     }
 
@@ -113,16 +108,21 @@ public class ItemsInShop : MonoBehaviour
 
     void OnButtonClick(GameObject buttonClicked)
     {
-        // Find the object in the instantiatedObjects list and decrement its quantity
         foreach (GameObject obj in instantiatedObjects)
         {
             if (obj == buttonClicked.transform.parent.gameObject)
             {
-                //updown = -1;
                 quantity--;
                 reformatThePrice();
                 UpdateUI(obj);
                 UpdateArray();
+
+                if (quantity <= 0)
+                {
+                    instantiatedObjects.Remove(obj);
+                    Destroy(obj);
+                }
+
                 break;
             }
         }
