@@ -185,6 +185,6 @@ public class PlayerMove : MonoBehaviour
         }
         Vector3 playPos = new Vector3(transform.position.x + changePosX, transform.position.y, transform.position.z + changePosZ);
         transform.position = playPos;
-        Debug.Log(transform.position.x + transform.position.z);
+        //Debug.Log(transform.position.x + transform.position.z);
     }
 }
