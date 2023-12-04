@@ -9,20 +9,21 @@ using Unity.VisualScripting;
 public class SelectedOutline : MonoBehaviour
 {
 
-    public int selected = 0;
     public float baseLinerSpeed = 1;
     public float smoothness = 10;
     public GameObject buttonsContainer;
     public GameObject categoryButtonsLocation;
+    public SettingsMenuController settingsMenuController;
     public List<GameObject> buttonsGameObjects;
     public Vector2[] buttonLocations;
     private Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
+        settingsMenuController = GameObject.Find("Settings Menu Controller").GetComponent<SettingsMenuController>();
         canvas = gameObject.GetComponentInParent<Canvas>();
         StartCoroutine(init());
-        
+
     }
 
     IEnumerator init()
@@ -45,8 +46,9 @@ public class SelectedOutline : MonoBehaviour
             buttonLocations[i] = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldPos);
             buttonLocations[i] = new Vector2((float)Math.Round(buttonLocations[i].x), (float)Math.Round(buttonLocations[i].y));
 
+
         }
-        
+
     }
 
 
@@ -54,17 +56,18 @@ public class SelectedOutline : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, transform.position);
-        float difference = buttonLocations[selected].y - (float)Math.Round(screenPosition.y);
+        float difference = buttonLocations[settingsMenuController.selected].y - (float)Math.Round(screenPosition.y);
         difference += Math.Sign(difference) * baseLinerSpeed; // this is to make sure that it is possible to reach the target value
         if (Math.Abs(difference) < 0.5)
         {
             transform.localPosition += new Vector3(0, difference, 0);
-        } else
+        }
+        else
         {
             transform.localPosition += new Vector3(0, (float)Math.Round(difference / smoothness), 0);
         }
 
-        
+
 
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SettingsCategoryButton : MonoBehaviour
 {
     public SelectedOutline selectedOutlineScript;
+    public SettingsMenuController settingsMenuController;
     public int position = 0;
     void Start()
     {
@@ -12,7 +13,8 @@ public class SettingsCategoryButton : MonoBehaviour
     }
     public void setSelectedValue()
     {
-        selectedOutlineScript.selected = position;
+        settingsMenuController.selected = position;
+        settingsMenuController.updatePage();
     }
 
 }
