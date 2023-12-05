@@ -11,17 +11,24 @@ public class FireController : MonoBehaviour
     public float randSeed;
     public float totalTime;
 
+    public float lightIntensity;
+    public GameObject fireLight;
+
     void Start()
     {
         //randSeed = Random.Range(-1.0f, 1.0f);
-        fireObjects = new GameObject[transform.childCount];
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            fireObjects[i] = transform.GetChild(i).gameObject;
-        }
         if (objType == "fireCon") 
         {
+            fireObjects = new GameObject[transform.childCount];
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                fireObjects[i] = transform.GetChild(i).gameObject;
+            }
             InvokeRepeating("FireMovement", 0f, 0.08f);
+        }
+        else if (objType == "lightCon") 
+        {
+            InvokeRepeating("LightChanges", 0f, 0.08f);
         }
     }
 
@@ -39,5 +46,9 @@ public class FireController : MonoBehaviour
             //Debug.Log(fireHeight + fireWidth);
             fireObjects[i].transform.localScale = new Vector3(fireWidth, fireHeight, 1);
         }
+    }
+    public void LightChanges() 
+    { 
+        fireLight.GetComponent<Light>().intensity = 3.5f + 6 * (Mathf.Sin((randSeed) + 2 * totalTime) / (Random.Range(6.0f, 6.2f)));
     }
 }
