@@ -6,7 +6,9 @@ using UnityEngine.UIElements;
 public class SettingsMenuController : MonoBehaviour
 {
     public int selected = 1;
+    public MainMenuCamera MainMenuCameraScript;
     public GameObject settingsPageContainer;
+    public GameObject settingsGameObject;
     public List<GameObject> settingsPages;
     // Start is called before the first frame update
     void Start()
@@ -14,6 +16,7 @@ public class SettingsMenuController : MonoBehaviour
         foreach (Transform child in settingsPageContainer.transform)
         {
             settingsPages.Add(child.gameObject);
+            
         }
         updatePage();
     }
@@ -30,6 +33,19 @@ public class SettingsMenuController : MonoBehaviour
         {
             page.SetActive(index == selected);
             index++;
+        }
+    }
+
+    public void toggleSettingsOpen()
+    {
+        bool originalState = settingsGameObject.activeInHierarchy;
+        settingsGameObject.SetActive(!originalState);
+        if (originalState)
+        {
+            MainMenuCameraScript.pointToTable();
+        } else
+        {
+            MainMenuCameraScript.pointToCabnet();
         }
     }
 }

@@ -16,11 +16,18 @@ public class SliderScript : MonoBehaviour
     public float displayMinValue = 0;
     public string valueName;
     public string header;
+    public float defualtValue;
     public TMP_Text label;
     // Start is called before the first frame update
     void Start()
     {
+
         slider.onValueChanged.AddListener(UpdateValue);
+        if (!PlayerPrefs.HasKey(valueName))
+        {
+            PlayerPrefs.SetFloat(valueName, (defualtValue - displayMinValue) / displayMaxValue * ((maxValue - minValue) + minValue));
+        }
+
         slider.value = (PlayerPrefs.GetFloat(valueName) - minValue) / (maxValue - minValue);
     }
 

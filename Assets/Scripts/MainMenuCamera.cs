@@ -5,22 +5,26 @@ using System;
 
 public class MainMenuCamera : MonoBehaviour
 {
-    private Vector3 startRotation;
-    private Vector3 targetRotation;
+
+    public Vector3 targetRotation;
+    public Vector3 targetLocation;
+    public Vector3 tableLocation;
+    public Vector3 tableRotation;
+    public Vector3 cabnetLocation;
+    public Vector3 cabnetRotation;
     public float sensitivity;
-    public float smoothing = 20;
+    public float rotationSmoothing = 20;
+    public float transformSmoothing = 20;
     // Start is called before the first frame update
     void Start()
     {
-        startRotation = transform.eulerAngles;
+        pointToTable();
     }
 
 
     void FixedUpdate()
     {
         Vector3 mousePos = Input.mousePosition;
-
-        
 
         mousePos.x /= Screen.width;
         mousePos.y /= Screen.height;
@@ -32,11 +36,42 @@ public class MainMenuCamera : MonoBehaviour
 
         mousePos.x -= 0.5f;
         mousePos.y -= 0.5f;
+        Vector3 mouseAjustedTargetRotation = targetRotation + (new Vector3(-mousePos.y, mousePos.x, 0) * sensitivity);
+        transform.eulerAngles += FindRealDifference(transform.rotation.eulerAngles, mouseAjustedTargetRotation) / rotationSmoothing;
+        transform.position += (targetLocation - transform.position) / transformSmoothing;
+    }
+
+    public void pointToTable()
+    {
+        targetLocation = tableLocation;
+        targetRotation = tableRotation;
+    }
+    public void pointToCabnet()
+    {
+        targetLocation = cabnetLocation;
+        targetRotation = cabnetRotation;
+    }
 
 
-        
-        targetRotation = startRotation + (new Vector3(-mousePos.y, mousePos.x, 0) * sensitivity );
-        transform.eulerAngles += (targetRotation - transform.eulerAngles) / smoothing;
-
+    private Vector3 FindRealDifference(Vector3 v1, Vector3 v2)
+    {
+        Vector3 difference;
+        difference.x = FindRealDifference(v1.x, v2.x);
+        difference.y = FindRealDifference(v1.y, v2.y);
+        difference.z = FindRealDifference(v1.z, v2.z);
+        return difference;
+    }
+    private float FindRealDifference(float d1, float d2)
+    {
+        float difference = d2 - d1;
+        if (difference > 180)
+        {
+            difference -= 360;
+        }
+        if (difference < -180) 
+        {
+            difference += 360;
+        }
+        return difference;
     }
 }

@@ -13,11 +13,19 @@ public class SettingsKeybind : MonoBehaviour
     public string valueName;
     public TMP_Text displayedText;
     public TMP_InputField inputField;
+    public string defualtValue;
     // Start is called before the first frame update
     void Start()
     {
         inputField.caretWidth = 0;
+        if (!PlayerPrefs.HasKey(valueName))
+        {
+            PlayerPrefs.SetString(valueName, defualtValue);
+        }
+
         inputField.text = PlayerPrefs.GetString(valueName);
+
+
         Color selectionColor = inputField.selectionColor;
         selectionColor.a = 0;
         inputField.selectionColor = selectionColor;
@@ -25,10 +33,6 @@ public class SettingsKeybind : MonoBehaviour
         inputField.onValueChanged.AddListener(updateValue);
     }
 
-    void disableCaret()
-    {
-
-    }
     void updateValue(string input)
     {
         inputField.text = inputField.text.ToCharArray()[^1].ToString();
@@ -39,11 +43,8 @@ public class SettingsKeybind : MonoBehaviour
         } else
         {
             PlayerPrefs.SetString(valueName, inputField.text);
-        }
-        
-        
+        }  
     }
-
     void Update()
     {
 

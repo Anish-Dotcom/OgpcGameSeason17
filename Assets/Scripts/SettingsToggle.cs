@@ -6,9 +6,14 @@ using UnityEngine.UI;
 public class SettingsToggle : MonoBehaviour
 {
     public string valueName;
-    // Start is called before the first frame update
+    public int defualtValue;
     void Start()
     {
+        if (!PlayerPrefs.HasKey(valueName))
+        {
+            PlayerPrefs.SetInt(valueName, defualtValue);
+        }
+
         transform.GetComponent<Toggle>().isOn = PlayerPrefs.GetInt(valueName) == 1;
         transform.GetComponent<Toggle>().onValueChanged.AddListener(updateValue);
     }

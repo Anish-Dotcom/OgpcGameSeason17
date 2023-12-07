@@ -7,17 +7,23 @@ public class ButtonScript : MonoBehaviour
 {
     public int sceneToLoad;
     public bool isQuitButton;
+    public bool isSettingsButton;
+    public SettingsMenuController settingsMenuController;
     public GameObject objectToActivateOnHover;
 
-    public   void OnMouseUpAsButton()
+    public void OnMouseUpAsButton()
     {
-        if (!isQuitButton)
-        {
-            SceneManager.LoadScene(sceneToLoad);
-        }
-        else
+        if (isQuitButton)
         {
             Application.Quit();
+            
+        } else if (isSettingsButton)
+        {
+
+            settingsMenuController.toggleSettingsOpen();
+        } else
+        {
+            SceneManager.LoadScene(sceneToLoad);
         }
 
     }
