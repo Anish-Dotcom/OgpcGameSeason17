@@ -13,7 +13,7 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject callShopButton;
     public GameObject shopUI;
-    public AudioSource greeting;
+    public AudioClip greeting;
 
     private float moveSpeedSaved;
     private float sensXSaved;
@@ -48,6 +48,7 @@ public class telephoneScript : MonoBehaviour
     public bool GameIsPaused;
 
     public float secondsPer10Minutes;
+    private MusicController musicController;
 
     private void OnMouseUpAsButton()
     {
@@ -96,7 +97,7 @@ public class telephoneScript : MonoBehaviour
         callButton.interactable = false;
         awayButton.interactable = false;
         StartCoroutine(showText());
-        greeting.Play();
+        musicController.PlayDialog(greeting);
     }
 
     IEnumerator showText()
@@ -117,6 +118,7 @@ public class telephoneScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
         currentHourIndex = 0;
         currentMinutesIndex = 5;
         currentDayOfWeekIndex = 6;
