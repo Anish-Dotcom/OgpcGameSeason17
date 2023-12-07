@@ -17,6 +17,7 @@ public class FireController : MonoBehaviour
     public Sprite[] fireObjForAni1;
     public Sprite[,] fireObjectsForAnimation;//Make 2d array with all fire objects
     public int aniNum = 0;
+    public bool secondRun;
 
     void Start()
     {
@@ -66,10 +67,11 @@ public class FireController : MonoBehaviour
     }
     public void AnimateFire() 
     {
+        secondRun = false;
         for (int i = 0; i < fireObjects.Length; i++)
         {
             fireObjects[i].transform.GetComponent<UnityEngine.UI.Image>().sprite = fireObjectsForAnimation[i, aniNum];
-            if (aniNum == 1) 
+            if (aniNum == 1 && !secondRun) 
             {
                 Debug.Log(fireObjects[i].transform.eulerAngles);
                 Vector3 fireObj = fireObjects[i].transform.eulerAngles;
@@ -79,13 +81,21 @@ public class FireController : MonoBehaviour
                 fireObjects[i].transform.eulerAngles = fireObj;
             }
         }
+        if (aniNum == 1 && !secondRun)
+        {
+            secondRun = true;
+        }
         if (aniNum == 2)
         {
             aniNum = 0;
         }
-        else
+        else if (aniNum != 1 || secondRun)
         {
             aniNum++;
+        }
+        else if (aniNum == 1) 
+        {
+            secondRun = false;
         }
     }
 }
