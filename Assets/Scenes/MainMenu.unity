@@ -422,6 +422,11 @@ PrefabInstance:
       propertyPath: m_text
       value: "W\u200B"
       objectReference: {fileID: 0}
+    - target: {fileID: 1750420272839940879, guid: 5576146b51a7dc440a769b030c9acc70,
+        type: 3}
+      propertyPath: defualtValue
+      value: W
+      objectReference: {fileID: 0}
     - target: {fileID: 1750420272839940880, guid: 5576146b51a7dc440a769b030c9acc70,
         type: 3}
       propertyPath: m_Name
@@ -605,9 +610,9 @@ RectTransform:
   m_Father: {fileID: 1019562465}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.26446533, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -0.26446533, y: 36}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &403985232
@@ -627,7 +632,6 @@ MonoBehaviour:
   buttonsContainer: {fileID: 874639606}
   settingsMenuController: {fileID: 622724109}
   buttonsGameObjects: []
-  buttonLocations: []
 --- !u!114 &403985233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,6 +686,11 @@ PrefabInstance:
         type: 3}
       propertyPath: valueName
       value: interact keybind
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750420272839940879, guid: 5576146b51a7dc440a769b030c9acc70,
+        type: 3}
+      propertyPath: defualtValue
+      value: E
       objectReference: {fileID: 0}
     - target: {fileID: 1750420272839940880, guid: 5576146b51a7dc440a769b030c9acc70,
         type: 3}
@@ -1007,6 +1016,11 @@ PrefabInstance:
         type: 3}
       propertyPath: valueName
       value: fov
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088680155370219293, guid: cf08fcc2b91207c4bb2c89bba2680f06,
+        type: 3}
+      propertyPath: defualtValue
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 6088680155370219293, guid: cf08fcc2b91207c4bb2c89bba2680f06,
         type: 3}
@@ -1494,6 +1508,11 @@ PrefabInstance:
       propertyPath: valueName
       value: backward keybind
       objectReference: {fileID: 0}
+    - target: {fileID: 1750420272839940879, guid: 5576146b51a7dc440a769b030c9acc70,
+        type: 3}
+      propertyPath: defualtValue
+      value: S
+      objectReference: {fileID: 0}
     - target: {fileID: 1750420272839940880, guid: 5576146b51a7dc440a769b030c9acc70,
         type: 3}
       propertyPath: m_Name
@@ -1971,6 +1990,11 @@ PrefabInstance:
       propertyPath: valueName
       value: sensitivity
       objectReference: {fileID: 0}
+    - target: {fileID: 6088680155370219293, guid: cf08fcc2b91207c4bb2c89bba2680f06,
+        type: 3}
+      propertyPath: defualtValue
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6088680155501315095, guid: cf08fcc2b91207c4bb2c89bba2680f06,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2403,6 +2427,11 @@ PrefabInstance:
       propertyPath: valueName
       value: master volume
       objectReference: {fileID: 0}
+    - target: {fileID: 6088680155370219293, guid: cf08fcc2b91207c4bb2c89bba2680f06,
+        type: 3}
+      propertyPath: defualtValue
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6088680155501315095, guid: cf08fcc2b91207c4bb2c89bba2680f06,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2671,6 +2700,11 @@ PrefabInstance:
         type: 3}
       propertyPath: valueName
       value: sfx volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088680155370219293, guid: cf08fcc2b91207c4bb2c89bba2680f06,
+        type: 3}
+      propertyPath: defualtValue
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6088680155501315095, guid: cf08fcc2b91207c4bb2c89bba2680f06,
         type: 3}
@@ -3683,6 +3717,11 @@ PrefabInstance:
         type: 3}
       propertyPath: valueName
       value: dialog volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088680155370219293, guid: cf08fcc2b91207c4bb2c89bba2680f06,
+        type: 3}
+      propertyPath: defualtValue
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6088680155501315095, guid: cf08fcc2b91207c4bb2c89bba2680f06,
         type: 3}
@@ -4993,6 +5032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valueName: fps overlay
+  defualtValue: 0
 --- !u!114 &1699579574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5270,6 +5310,11 @@ PrefabInstance:
       propertyPath: valueName
       value: left keybind
       objectReference: {fileID: 0}
+    - target: {fileID: 1750420272839940879, guid: 5576146b51a7dc440a769b030c9acc70,
+        type: 3}
+      propertyPath: defualtValue
+      value: A
+      objectReference: {fileID: 0}
     - target: {fileID: 1750420272839940880, guid: 5576146b51a7dc440a769b030c9acc70,
         type: 3}
       propertyPath: m_Name
@@ -5419,6 +5464,11 @@ PrefabInstance:
       propertyPath: valueName
       value: right keybind
       objectReference: {fileID: 0}
+    - target: {fileID: 1750420272839940879, guid: 5576146b51a7dc440a769b030c9acc70,
+        type: 3}
+      propertyPath: defualtValue
+      value: D
+      objectReference: {fileID: 0}
     - target: {fileID: 1750420272839940880, guid: 5576146b51a7dc440a769b030c9acc70,
         type: 3}
       propertyPath: m_Name
@@ -5567,6 +5617,11 @@ PrefabInstance:
         type: 3}
       propertyPath: valueName
       value: commissions keybind
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750420272839940879, guid: 5576146b51a7dc440a769b030c9acc70,
+        type: 3}
+      propertyPath: defualtValue
+      value: C
       objectReference: {fileID: 0}
     - target: {fileID: 1750420272839940880, guid: 5576146b51a7dc440a769b030c9acc70,
         type: 3}
@@ -5976,6 +6031,11 @@ PrefabInstance:
         type: 3}
       propertyPath: valueName
       value: music volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088680155370219293, guid: cf08fcc2b91207c4bb2c89bba2680f06,
+        type: 3}
+      propertyPath: defualtValue
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6088680155501315095, guid: cf08fcc2b91207c4bb2c89bba2680f06,
         type: 3}
