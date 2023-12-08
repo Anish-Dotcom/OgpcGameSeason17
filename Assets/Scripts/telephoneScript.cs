@@ -118,7 +118,7 @@ public class telephoneScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
+        //musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
         currentHourIndex = 0;
         currentMinutesIndex = 5;
         currentDayOfWeekIndex = 6;

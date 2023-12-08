@@ -56,7 +56,7 @@ public class FireController : MonoBehaviour
         {
             //Debug.Log(totalTime);
             fireHeight = 0.7f + (Mathf.Sin((1.3f * totalTime) + 2 * randSeed) / (Random.Range(6.0f, 6.2f) + i / 4));
-            fireWidth = 0.7f + (Mathf.Cos((1.3f * totalTime) + 2 * randSeed) / (Random.Range(8.0f, 8.2f) + i / 4));
+            fireWidth = 0.7f + (Mathf.Cos(((1.3f * totalTime)) + 2 * randSeed) / (Random.Range(8.0f, 8.2f) + i / 4));
             //Debug.Log(fireHeight + fireWidth);
             fireObjects[i].transform.localScale = new Vector3(fireWidth, fireHeight, 1);
         }

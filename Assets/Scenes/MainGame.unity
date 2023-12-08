@@ -1529,7 +1529,7 @@ GameObject:
   - component: {fileID: 247658626}
   - component: {fileID: 247658625}
   m_Layer: 5
-  m_Name: Low Fire 1
+  m_Name: High Fire 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2122,7 +2122,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9588ed72f0e3e1144bfe6f6161b88969, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aa1a656a368460b4394d11e8f6d93163, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2673,7 +2673,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c43f1111714639e48abf8c653fd3b020, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 791f3139a97763541ab377338cd77a12, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2703,7 +2703,7 @@ GameObject:
   - component: {fileID: 494804660}
   - component: {fileID: 494804659}
   m_Layer: 5
-  m_Name: Low Fire 1
+  m_Name: High Fire 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3131,7 +3131,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c43f1111714639e48abf8c653fd3b020, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 998c682a10446b14f8883b63371d419c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3576,7 +3576,7 @@ GameObject:
   - component: {fileID: 690953481}
   - component: {fileID: 690953480}
   m_Layer: 5
-  m_Name: Low Fire 4
+  m_Name: High Fire 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3900,7 +3900,7 @@ GameObject:
   - component: {fileID: 729810258}
   - component: {fileID: 729810257}
   m_Layer: 5
-  m_Name: Fire
+  m_Name: Fire Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4000,7 +4000,7 @@ GameObject:
   - component: {fileID: 744161423}
   - component: {fileID: 744161422}
   m_Layer: 5
-  m_Name: Low Fire 3
+  m_Name: High Fire 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4465,7 +4465,7 @@ GameObject:
   - component: {fileID: 817284689}
   - component: {fileID: 817284688}
   m_Layer: 5
-  m_Name: Low Fire 4
+  m_Name: High Fire 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5501,7 +5501,7 @@ GameObject:
   - component: {fileID: 952354294}
   - component: {fileID: 952354293}
   m_Layer: 5
-  m_Name: Low Fire 3
+  m_Name: High Fire 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5758,7 +5758,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9588ed72f0e3e1144bfe6f6161b88969, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4dab29f6f691ffb4898d0462a0217962, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5834,7 +5834,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cd7b38d7881ef754fbd39d3283ec67fc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e09fe55c32c130340893f873724a520b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6760,7 +6760,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cd7b38d7881ef754fbd39d3283ec67fc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b45281bedd3a5345accec83897abe1f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10638,7 +10638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5f660239b5676c44caba6711b6513da3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09e0746a7b7965049ad8e846afa4a444, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11495,7 +11495,7 @@ GameObject:
   - component: {fileID: 1767187189}
   - component: {fileID: 1767187188}
   m_Layer: 5
-  m_Name: Low Fire 2
+  m_Name: High Fire 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11693,7 +11693,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1787878584
 Transform:
   m_ObjectHideFlags: 0
@@ -11731,7 +11731,19 @@ MonoBehaviour:
   totalTime: 0
   lightIntensity: 0
   fireLight: {fileID: 0}
-  fireObjForAni1: []
+  fireObjForAni1:
+  - {fileID: 21300000, guid: 09e0746a7b7965049ad8e846afa4a444, type: 3}
+  - {fileID: 21300000, guid: e09fe55c32c130340893f873724a520b, type: 3}
+  - {fileID: 21300000, guid: 4dab29f6f691ffb4898d0462a0217962, type: 3}
+  - {fileID: 21300000, guid: 791f3139a97763541ab377338cd77a12, type: 3}
+  - {fileID: 21300000, guid: 0b33a7a4e39ae9b4299fd501a895db7d, type: 3}
+  - {fileID: 21300000, guid: 7b45281bedd3a5345accec83897abe1f, type: 3}
+  - {fileID: 21300000, guid: aa1a656a368460b4394d11e8f6d93163, type: 3}
+  - {fileID: 21300000, guid: 998c682a10446b14f8883b63371d419c, type: 3}
+  - {fileID: 21300000, guid: da8dfd6cb216aa84f9e451d4f741ade5, type: 3}
+  - {fileID: 21300000, guid: 1ac7434177c58ab40b8b6b6eb6def43e, type: 3}
+  - {fileID: 21300000, guid: aa9e57d308054e84482efb39f7b5e4f8, type: 3}
+  - {fileID: 21300000, guid: 00ab99f34df7dd444bd1b036c383c701, type: 3}
   aniNum: 0
   secondRun: 0
 --- !u!1 &1803306572
@@ -11801,7 +11813,7 @@ GameObject:
   - component: {fileID: 1841829265}
   - component: {fileID: 1841829264}
   m_Layer: 5
-  m_Name: Low Fire 2
+  m_Name: High Fire 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12113,7 +12125,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5f660239b5676c44caba6711b6513da3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b33a7a4e39ae9b4299fd501a895db7d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12558,7 +12570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1950235129
 Transform:
   m_ObjectHideFlags: 0
@@ -12596,7 +12608,19 @@ MonoBehaviour:
   totalTime: 0
   lightIntensity: 0
   fireLight: {fileID: 0}
-  fireObjForAni1: []
+  fireObjForAni1:
+  - {fileID: 21300000, guid: 0b33a7a4e39ae9b4299fd501a895db7d, type: 3}
+  - {fileID: 21300000, guid: 7b45281bedd3a5345accec83897abe1f, type: 3}
+  - {fileID: 21300000, guid: aa1a656a368460b4394d11e8f6d93163, type: 3}
+  - {fileID: 21300000, guid: 998c682a10446b14f8883b63371d419c, type: 3}
+  - {fileID: 21300000, guid: da8dfd6cb216aa84f9e451d4f741ade5, type: 3}
+  - {fileID: 21300000, guid: 1ac7434177c58ab40b8b6b6eb6def43e, type: 3}
+  - {fileID: 21300000, guid: aa9e57d308054e84482efb39f7b5e4f8, type: 3}
+  - {fileID: 21300000, guid: 00ab99f34df7dd444bd1b036c383c701, type: 3}
+  - {fileID: 21300000, guid: 09e0746a7b7965049ad8e846afa4a444, type: 3}
+  - {fileID: 21300000, guid: e09fe55c32c130340893f873724a520b, type: 3}
+  - {fileID: 21300000, guid: 4dab29f6f691ffb4898d0462a0217962, type: 3}
+  - {fileID: 21300000, guid: 791f3139a97763541ab377338cd77a12, type: 3}
   aniNum: 0
   secondRun: 0
 --- !u!1 &1959185718
