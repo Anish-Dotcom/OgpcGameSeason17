@@ -6,6 +6,7 @@ public class PlayerCam : MonoBehaviour
 {
     public GameObject playerCamera;
     public Transform cameraPos;
+    public GameObject settingsMenu;
 
     public static float sensX;
     public static float sensY;
@@ -20,6 +21,7 @@ public class PlayerCam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -35,6 +37,7 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         playerCamera.transform.position = cameraPos.position;
 
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
