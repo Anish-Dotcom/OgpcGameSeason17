@@ -1491,6 +1491,8 @@ MonoBehaviour:
   settingsPageContainer: {fileID: 33680088}
   settingsGameObject: {fileID: 1019562464}
   settingsPages: []
+  playerMove: {fileID: 0}
+  playerCameraScript: {fileID: 0}
   isMainGame: 0
 --- !u!1001 &655178582
 PrefabInstance:
