@@ -2866,7 +2866,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 803185301}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: toggleSettingsOpen
         m_Mode: 1
@@ -6560,6 +6560,8 @@ MonoBehaviour:
   settingsPageContainer: {fileID: 77326570}
   settingsGameObject: {fileID: 1587402448}
   settingsPages: []
+  playerMove: {fileID: 1146929041}
+  playerCameraScript: {fileID: 1559247140}
   isMainGame: 1
 --- !u!224 &803185302
 RectTransform:
@@ -10085,6 +10087,7 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   orientation: {fileID: 1339100077}
   cam: {fileID: 1559247135}
+  isControllable: 1
   wrapAroundPosP: 0
   wrapAroundPosN: 0
   distToObject: 10000
@@ -13250,6 +13253,7 @@ MonoBehaviour:
   playerCamera: {fileID: 300920614}
   cameraPos: {fileID: 521975777}
   settingsMenu: {fileID: 1587402448}
+  playerMoveScript: {fileID: 1146929041}
   orientation: {fileID: 1339100077}
 --- !u!1 &1562871302
 GameObject:
@@ -17346,7 +17350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 882.18, y: 465}
+  m_AnchoredPosition: {x: 912.3, y: 360}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2003621271

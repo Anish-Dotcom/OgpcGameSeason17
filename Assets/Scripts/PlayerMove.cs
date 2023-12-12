@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject heldObject;
     public Transform orientation;
     public GameObject cam;
-
+    public bool isControllable = true;
     public float wrapAroundPosP;
     public float wrapAroundPosN;
 
@@ -50,38 +50,57 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         WrapAround();
-        PlayerInput();
+        
         SpeedControl();
-        if (Input.GetMouseButtonDown(0) && heldObject == null)//pickup object
+        if (isControllable)
         {
-            int layermask = -1;
-            layermask = layermask & ~(1 << 7);
-            Ray grabberRay = new Ray(cam.transform.position, cam.transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(grabberRay, out hit, objectPickupDistance, layermask))
+            PlayerInput();
+            if (Input.GetMouseButtonDown(0) && heldObject == null)//pickup object
             {
-                distToObject = Vector3.Distance(hit.transform.position, cam.transform.position);
-                if (hit.collider.CompareTag("Object"))//if pickup-able then pickup
+                int layermask = -1;
+                layermask = layermask & ~(1 << 7);
+                Ray grabberRay = new Ray(cam.transform.position, cam.transform.forward);
+                RaycastHit hit;
+                if (Physics.Raycast(grabberRay, out hit, objectPickupDistance, layermask))
                 {
-                    heldObject = hit.transform.gameObject;
-                    hit.collider.GetComponent<Rigidbody>().useGravity = false;
-                    heldObject.GetComponent<Rigidbody>().drag = 0;
-                    Debug.Log("pick up");
-                    currentObjectHoldDistance = Vector3.Distance(heldObject.transform.position, cam.transform.position);
+                    distToObject = Vector3.Distance(hit.transform.position, cam.transform.position);
+                    if (hit.collider.CompareTag("Object"))//if pickup-able then pickup
+                    {
+                        heldObject = hit.transform.gameObject;
+                        hit.collider.GetComponent<Rigidbody>().useGravity = false;
+                        heldObject.GetComponent<Rigidbody>().drag = 0;
+                        Debug.Log("pick up");
+                        currentObjectHoldDistance = Vector3.Distance(heldObject.transform.position, cam.transform.position);
+                    }
                 }
             }
+            else if (!Input.GetMouseButton(0) && heldObject != null)//put down object
+            {
+                currentObjectHoldDistance = objectHoldDistance;
+                heldObject.GetComponent<Rigidbody>().useGravity = true;
+                heldObject.GetComponent<Rigidbody>().drag = 0.1f;
+                heldObject = null;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f && heldObject != null)//change distance of object from player
+            {
+                float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
+                Gobackandforth(scrollDirection);
+            }
+
         }
-        else if (!Input.GetMouseButton(0) && heldObject != null)//put down object
+        
+    }
+
+    private void FixedUpdate()//physic based movements
+    {
+
+        if (isControllable)
         {
-            currentObjectHoldDistance = objectHoldDistance;
-            heldObject.GetComponent<Rigidbody>().useGravity = true;
-            heldObject.GetComponent<Rigidbody>().drag = 0.1f;
-            heldObject = null;
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") != 0f && heldObject != null)//change distance of object from player
-        {
-            float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
-            Gobackandforth(scrollDirection);
+            MovePlayer();
+            if (heldObject != null)//change object position
+            {
+                MoveHeldObject();
+            }
         }
     }
 
@@ -116,14 +135,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()//physic based movements
-    {
-        MovePlayer();
-        if (heldObject != null)//change object position
-        {
-            MoveHeldObject();
-        }
-    }
+
     private void PlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");

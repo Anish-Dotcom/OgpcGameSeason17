@@ -73,7 +73,7 @@ public class FireController : MonoBehaviour
             fireObjects[i].transform.GetComponent<UnityEngine.UI.Image>().sprite = fireObjectsForAnimation[i, aniNum];
             if (aniNum == 1 && !secondRun) 
             {
-                Debug.Log(fireObjects[i].transform.eulerAngles);
+                //Debug.Log(fireObjects[i].transform.eulerAngles);
                 Vector3 fireObj = fireObjects[i].transform.eulerAngles;
                 fireObj.x *= -1f;
                 fireObj.y += 180f;

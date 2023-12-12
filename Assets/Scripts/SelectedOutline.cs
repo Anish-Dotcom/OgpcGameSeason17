@@ -33,17 +33,15 @@ public class SelectedOutline : MonoBehaviour
     
     private void FixedUpdate()
     {
-        MoveRectTransformToAnother(transform.GetComponent<RectTransform>(), buttonsGameObjects[settingsMenuController.selected].GetComponent<RectTransform>(), canvas, 1 / smoothness);
+        MoveRectTransform(transform.GetComponent<RectTransform>(), buttonsGameObjects[settingsMenuController.selected].GetComponent<RectTransform>(), 1 / smoothness);
 
     }
 
-    public void MoveRectTransformToAnother(RectTransform source, RectTransform target, Canvas canvas, float percent)
+
+    public void MoveRectTransform(RectTransform source, RectTransform target, float percent)
     {
-        Vector3 targetWorldPosition = target.TransformPoint(target.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, targetWorldPosition), canvas.worldCamera, out Vector2 sourceLocalPosition);
-        sourceLocalPosition.x = 0; // idk this just works
-        Vector2 difference = sourceLocalPosition - source.anchoredPosition;
-        source.anchoredPosition += difference * percent;
+        Vector3 difference = target.position - source.position;
+        source.position += difference * percent;
     }
 }
 

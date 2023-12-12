@@ -7,7 +7,7 @@ public class PlayerCam : MonoBehaviour
     public GameObject playerCamera;
     public Transform cameraPos;
     public GameObject settingsMenu;
-
+    public PlayerMove playerMoveScript;
     public static float sensX;
     public static float sensY;
 
@@ -24,10 +24,15 @@ public class PlayerCam : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        updateSenstivity();
 
-        if (!PlayerPrefs.HasKey("sensitivity")) 
+    }
+
+    public void updateSenstivity()
+    {
+        if (!PlayerPrefs.HasKey("sensitivity"))
         {
-            PlayerPrefs.SetFloat("sensitivity",400);
+            PlayerPrefs.SetFloat("sensitivity", 400);
         }
 
         sensX = PlayerPrefs.GetFloat("sensitivity");
@@ -37,17 +42,21 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         playerCamera.transform.position = cameraPos.position;
+        if (playerMoveScript.isControllable)
+        {
+            
 
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        yRot += mouseX;
-        xRot -= mouseY;
-        xRot = Mathf.Clamp(xRot, -90f, 90f);
+            yRot += mouseX;
+            xRot -= mouseY;
+            xRot = Mathf.Clamp(xRot, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRot, yRot, 0);
-        orientation.rotation = Quaternion.Euler(0, yRot, 0);
+            transform.rotation = Quaternion.Euler(xRot, yRot, 0);
+            orientation.rotation = Quaternion.Euler(0, yRot, 0);
+        }
+
     }
 }

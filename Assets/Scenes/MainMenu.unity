@@ -1491,6 +1491,7 @@ MonoBehaviour:
   settingsPageContainer: {fileID: 33680088}
   settingsGameObject: {fileID: 1019562464}
   settingsPages: []
+  isMainGame: 0
 --- !u!1001 &655178582
 PrefabInstance:
   m_ObjectHideFlags: 0
