@@ -14,6 +14,7 @@ public class SettingsMenuController : MonoBehaviour
     public PlayerMove playerMove;
     public PlayerCam playerCameraScript;
     public bool isMainGame = false;
+    public bool settingsMenuOpen = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +29,7 @@ public class SettingsMenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isMainGame)
-        {
-            toggleSettingsOpen();
-            
-        }
+
     }
     public void updatePage()
     {
@@ -47,23 +44,18 @@ public class SettingsMenuController : MonoBehaviour
     public void toggleSettingsOpen()
     {
         bool originalState = settingsGameObject.activeInHierarchy;
+        settingsMenuOpen = !settingsMenuOpen;
         settingsGameObject.SetActive(!originalState);
         if (isMainGame)
         {
             if (originalState)
             {
-
+                playerCameraScript.updateSenstivity();
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 UnityEngine.Cursor.visible = false;
                 playerMove.isControllable = true;
-                playerCameraScript.updateSenstivity();
             }
-            if (!originalState)
-            {
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
-                UnityEngine.Cursor.visible = true;
-                playerMove.isControllable = false;
-            }
+            
         } else
         {
             if (originalState)
