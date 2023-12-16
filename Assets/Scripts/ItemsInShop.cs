@@ -94,15 +94,50 @@ public class ItemsInShop : MonoBehaviour
 
     public void UpdateArray()
     {
-        if (itemName == "cube")
+        if (itemName == "wind up part")
         {
-            ItemManager.cubeQuantity = quantity;
+            ItemManager.winduppartQuantity = quantity;
             ItemManager.costsStatic[0] = float.Parse(formattedPrice);
         }
-        if (itemName == "cylinder")
+        if (itemName == "spring")
         {
-            ItemManager.cylinderQuantity = quantity;
+            ItemManager.springQuantity = quantity;
             ItemManager.costsStatic[1] = float.Parse(formattedPrice);
+        }
+        if (itemName == "spring gear")
+        {
+            ItemManager.springgearQuantity = quantity;
+            ItemManager.costsStatic[2] = float.Parse(formattedPrice);
+        }
+        if (itemName == "small gear")
+        {
+            ItemManager.smallgearQuantity = quantity;
+            ItemManager.costsStatic[3] = float.Parse(formattedPrice);
+        }
+        if (itemName == "screw")
+        {
+            ItemManager.screwQuantity = quantity;
+            ItemManager.costsStatic[4] = float.Parse(formattedPrice);
+        }
+        if (itemName == "pole")
+        {
+            ItemManager.poleQuantity = quantity;
+            ItemManager.costsStatic[5] = float.Parse(formattedPrice);
+        }
+        if (itemName == "gear box top")
+        {
+            ItemManager.gearboxtopQuantity = quantity;
+            ItemManager.costsStatic[6] = float.Parse(formattedPrice);
+        }
+        if (itemName == "gear box bottom")
+        {
+            ItemManager.gearboxbottomQuantity = quantity;
+            ItemManager.costsStatic[7] = float.Parse(formattedPrice);
+        }
+        if (itemName == "big gear")
+        {
+            ItemManager.biggearQuantity = quantity;
+            ItemManager.costsStatic[8] = float.Parse(formattedPrice);
         }
     }
 
