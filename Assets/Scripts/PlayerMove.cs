@@ -36,6 +36,8 @@ public class PlayerMove : MonoBehaviour
     public float smoothTime = 0.5f;
     public float maxFollowSpeed = 20;
     public float[] maxDistances = new float[4];
+    private float objectStartYDirection = 0;
+    private float camStartYDirection = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +71,8 @@ public class PlayerMove : MonoBehaviour
                         heldObject = hit.transform.gameObject;
                         hit.collider.GetComponent<Rigidbody>().useGravity = false;
                         heldObject.GetComponent<Rigidbody>().drag = 0;
+                        objectStartYDirection = hit.collider.GetComponent<Transform>().rotation.eulerAngles.y;
+                        camStartYDirection = cam.transform.rotation.eulerAngles.y;
                         Debug.Log("pick up");
                         currentObjectHoldDistance = Vector3.Distance(heldObject.transform.position, cam.transform.position);
                     }
@@ -162,14 +166,15 @@ public class PlayerMove : MonoBehaviour
         newPos = cam.transform.position + (cam.transform.forward* currentObjectHoldDistance);
         int layermask = -1;
         layermask = layermask & ~(1 << 7);
-        Debug.Log(layermask);
         //bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
         //if (canMove)
         //{
         //
         //}
         heldObject.GetComponent<Rigidbody>().transform.position = Vector3.SmoothDamp(heldObject.GetComponent<Rigidbody>().transform.position, newPos, ref currentVelocity, smoothTime, maxFollowSpeed);
-            
+
+        heldObject.transform.eulerAngles = new Vector3 (heldObject.transform.eulerAngles.x, objectStartYDirection + (cam.transform.rotation.eulerAngles.y - camStartYDirection), heldObject.transform.eulerAngles.z);
+
     }
     private void WrapAround()
     {
