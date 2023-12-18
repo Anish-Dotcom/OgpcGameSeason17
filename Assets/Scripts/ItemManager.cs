@@ -22,7 +22,7 @@ public class ItemManager : MonoBehaviour
     public static int gearboxbottomQuantity;
     public static int biggearQuantity;
 
-    public int winduppartAmount; // i only have these duplicates because i wanted to see if it was working by checking the inspector
+    public int winduppartAmount;
     public int springAmount;
     public int springgearAmount;
     public int smallgearAmount;
@@ -32,7 +32,17 @@ public class ItemManager : MonoBehaviour
     public int gearboxbottomAmount;
     public int biggearAmount;
 
-    public float decreaseAmount;
+    public GameObject winduppart;
+    public GameObject spring;
+    public GameObject springgear;
+    public GameObject smallgear;
+    public GameObject screw;
+    public GameObject pole;
+    public GameObject gearboxtop;
+    public GameObject gearboxbottom;
+    public GameObject biggear;
+
+    public float decreaseamount;
     // Start is called before the first frame update
     void Start()
     {
@@ -81,7 +91,8 @@ public class ItemManager : MonoBehaviour
         costsStatic[7] = 0;
         costsStatic[8] = 0;
         current = PlayerMoney - payAmount;
-        decreaseAmount = payAmount / 300;
+        decreaseamount = payAmount / 300;
+        getSent();
         StartCoroutine(textRollDown());
     }
 
@@ -95,9 +106,40 @@ public class ItemManager : MonoBehaviour
         }
         else
         {
-            PlayerMoney = PlayerMoney - decreaseAmount;
+            PlayerMoney = PlayerMoney - decreaseamount;
             PlayerMoneyText.text = "$" + PlayerMoney.ToString("F2");
             StartCoroutine(textRollDown());
+        }
+    }
+
+    public void getSent()
+    {
+        float posY = 0.5f;
+
+        // Instantiate objects based on their amounts
+        InstantiateObjects(winduppartAmount, winduppart, ref posY);
+        InstantiateObjects(springAmount, spring, ref posY);
+        InstantiateObjects(springgearAmount, springgear, ref posY);
+        InstantiateObjects(smallgearAmount, smallgear, ref posY);
+        InstantiateObjects(screwAmount, screw, ref posY);
+        InstantiateObjects(poleAmount, pole, ref posY);
+        InstantiateObjects(gearboxtopAmount, gearboxtop, ref posY);
+        InstantiateObjects(gearboxbottomAmount, gearboxbottom, ref posY);
+        InstantiateObjects(biggearAmount, biggear, ref posY);
+    }
+
+    private void InstantiateObjects(int amount, GameObject prefab, ref float posY)
+    {
+        if (amount > 0 && prefab != null)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                float randomX = Random.Range(-2.5f, 1.5f);
+                float randomZ = Random.Range(-3, -1.5f);
+                Vector3 spawnPosition = new Vector3(randomX, posY, randomZ);
+                Instantiate(prefab, spawnPosition, Quaternion.identity);
+                posY += 0.5f; // Increase posY by 5 for each instantiated object
+            }
         }
     }
 }
