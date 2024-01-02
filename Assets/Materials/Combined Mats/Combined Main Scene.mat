@@ -178,7 +178,7 @@ Material:
     - _HalftoneColor: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 4.922973, g: 2.0253382, b: 3.7425942, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: -0.18724923, g: 2.025338, b: -0.4302909, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
