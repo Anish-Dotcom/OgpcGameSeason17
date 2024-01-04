@@ -9,6 +9,7 @@ public class ItemManager : MonoBehaviour
     public float PlayerMoney;
     public float payAmount;
     public float current;
+    public static int totalAmountObj;
 
     public float[] costs;
     public static float[] costsStatic;
@@ -126,6 +127,22 @@ public class ItemManager : MonoBehaviour
         InstantiateObjects(gearboxtopAmount, gearboxtop, ref posY);
         InstantiateObjects(gearboxbottomAmount, gearboxbottom, ref posY);
         InstantiateObjects(biggearAmount, biggear, ref posY);
+
+
+        for (int i = 0; i < totalAmountObj; i++)
+        {
+
+        }
+
+        winduppartQuantity = 0;
+        springQuantity = 0;
+        springgearQuantity = 0;
+        smallgearQuantity = 0;
+        screwQuantity = 0;
+        poleQuantity = 0;
+        gearboxtopQuantity = 0;
+        gearboxbottomQuantity = 0;
+        biggearQuantity = 0;
     }
 
     private void InstantiateObjects(int amount, GameObject prefab, ref float posY)

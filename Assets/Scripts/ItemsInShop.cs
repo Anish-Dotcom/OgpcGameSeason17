@@ -40,6 +40,7 @@ public class ItemsInShop : MonoBehaviour
         if (prefabToInstantiate != null && parentObject != null)
         {
             quantity++;
+            ItemManager.totalAmountObj++;
             bool found = false;
             foreach (GameObject obj in instantiatedObjects)
             {
@@ -148,6 +149,7 @@ public class ItemsInShop : MonoBehaviour
             if (obj == buttonClicked.transform.parent.gameObject)
             {
                 quantity--;
+                ItemManager.totalAmountObj--;
                 reformatThePrice();
                 UpdateUI(obj);
                 UpdateArray();
