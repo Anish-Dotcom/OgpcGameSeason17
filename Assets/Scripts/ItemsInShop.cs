@@ -20,6 +20,8 @@ public class ItemsInShop : MonoBehaviour
 
     public float totalPriceOfSingle;
 
+    public GameObject Telephone;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,50 +97,10 @@ public class ItemsInShop : MonoBehaviour
 
     public void UpdateArray()
     {
-        if (itemName == "wind up part")
+        for (int i = 0; i < Telephone.GetComponent<ItemManager>().numItemsInShop; i++)
         {
-            ItemManager.winduppartQuantity = quantity;
-            ItemManager.costsStatic[0] = float.Parse(formattedPrice);
-        }
-        if (itemName == "spring")
-        {
-            ItemManager.springQuantity = quantity;
-            ItemManager.costsStatic[1] = float.Parse(formattedPrice);
-        }
-        if (itemName == "spring gear")
-        {
-            ItemManager.springgearQuantity = quantity;
-            ItemManager.costsStatic[2] = float.Parse(formattedPrice);
-        }
-        if (itemName == "small gear")
-        {
-            ItemManager.smallgearQuantity = quantity;
-            ItemManager.costsStatic[3] = float.Parse(formattedPrice);
-        }
-        if (itemName == "screw")
-        {
-            ItemManager.screwQuantity = quantity;
-            ItemManager.costsStatic[4] = float.Parse(formattedPrice);
-        }
-        if (itemName == "pole")
-        {
-            ItemManager.poleQuantity = quantity;
-            ItemManager.costsStatic[5] = float.Parse(formattedPrice);
-        }
-        if (itemName == "gear box top")
-        {
-            ItemManager.gearboxtopQuantity = quantity;
-            ItemManager.costsStatic[6] = float.Parse(formattedPrice);
-        }
-        if (itemName == "gear box bottom")
-        {
-            ItemManager.gearboxbottomQuantity = quantity;
-            ItemManager.costsStatic[7] = float.Parse(formattedPrice);
-        }
-        if (itemName == "big gear")
-        {
-            ItemManager.biggearQuantity = quantity;
-            ItemManager.costsStatic[8] = float.Parse(formattedPrice);
+            ItemManager.partQuatities[i] = quantity;
+            Telephone.GetComponent<ItemManager>().costs[i] = float.Parse(formattedPrice);
         }
     }
 

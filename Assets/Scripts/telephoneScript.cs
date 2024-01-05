@@ -50,6 +50,8 @@ public class telephoneScript : MonoBehaviour
     public float secondsPer10Minutes;
     private MusicController musicController;
 
+    public GameObject Telephone;
+
     private void OnMouseUpAsButton()
     {
         distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
@@ -77,15 +79,10 @@ public class telephoneScript : MonoBehaviour
     public void PutTelephoneBackButton()
     {
         ItemsInShop.reset();
-        ItemManager.costsStatic[0] = 0;
-        ItemManager.costsStatic[1] = 0;
-        ItemManager.costsStatic[2] = 0;
-        ItemManager.costsStatic[3] = 0;
-        ItemManager.costsStatic[4] = 0;
-        ItemManager.costsStatic[5] = 0;
-        ItemManager.costsStatic[6] = 0;
-        ItemManager.costsStatic[7] = 0;
-        ItemManager.costsStatic[8] = 0;
+        for (int i = 0; i < Telephone.GetComponent<ItemManager>().costs.Length; i++)
+        {
+            Telephone.GetComponent<ItemManager>().costs[i] = 0;
+        }
         callButton.interactable = true;
         awayButton.interactable = true;
         telephoneIsOpen = false;

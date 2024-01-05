@@ -1636,6 +1636,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1 &138988826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,12 +1757,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175190195}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.000030517578, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 803185302}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &178608739
 GameObject:
@@ -2789,6 +2790,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1001 &387527946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3756,6 +3758,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1 &479124852
 GameObject:
   m_ObjectHideFlags: 0
@@ -6902,7 +6905,7 @@ Transform:
   m_Children:
   - {fileID: 1755730554}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &803185300
 GameObject:
@@ -6953,9 +6956,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 175190197}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8966,6 +8970,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1 &1051969213
 GameObject:
   m_ObjectHideFlags: 0
@@ -9028,6 +9033,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1 &1055848768
 GameObject:
   m_ObjectHideFlags: 0
@@ -10245,6 +10251,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1 &1145365932
 GameObject:
   m_ObjectHideFlags: 0
@@ -11174,6 +11181,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1 &1215486425
 GameObject:
   m_ObjectHideFlags: 0
@@ -12747,7 +12755,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1510360673
 GameObject:
@@ -13000,6 +13008,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!1 &1533992290
 GameObject:
   m_ObjectHideFlags: 0
@@ -15490,6 +15499,7 @@ MonoBehaviour:
   - empty
   GameIsPaused: 0
   secondsPer10Minutes: 0.5
+  Telephone: {fileID: 1755803307}
 --- !u!65 &1755803310
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15529,28 +15539,17 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  winduppartAmount: 0
-  springAmount: 0
-  springgearAmount: 0
-  smallgearAmount: 0
-  screwAmount: 0
-  poleAmount: 0
-  gearboxtopAmount: 0
-  gearboxbottomAmount: 0
-  biggearAmount: 0
-  winduppart: {fileID: 7779838477287716595, guid: b202047fd7c0fa341b944c314c600e62,
-    type: 3}
-  spring: {fileID: 131257905386391992, guid: 52d82015bbffbca438566fe334a81d0f, type: 3}
-  springgear: {fileID: 6371159960784103336, guid: e0566a00ac1f0c147b8c012db3ec2118,
-    type: 3}
-  smallgear: {fileID: 108765726906963, guid: 6e022de9b0f9e984eafd02fd74b995f3, type: 3}
-  screw: {fileID: 7345178397541060378, guid: 390358dcb696f3646ac7a1556de1eb0a, type: 3}
-  pole: {fileID: 6088244944877515314, guid: e5a1d4002a839a74f8e1a2f294817882, type: 3}
-  gearboxtop: {fileID: 6744142048672373906, guid: 368ac59b94327844382465418c90ca6d,
-    type: 3}
-  gearboxbottom: {fileID: 528912712889817095, guid: d3046ea0dfd89f746884bdb073f02614,
-    type: 3}
-  biggear: {fileID: 2248097371123033939, guid: f1ad4eb684930594bb2a7cd9faded111, type: 3}
+  numItemsInShop: 8
+  toyParts:
+  - {fileID: 7779838477287716595, guid: b202047fd7c0fa341b944c314c600e62, type: 3}
+  - {fileID: 131257905386391992, guid: 52d82015bbffbca438566fe334a81d0f, type: 3}
+  - {fileID: 6371159960784103336, guid: e0566a00ac1f0c147b8c012db3ec2118, type: 3}
+  - {fileID: 108765726906963, guid: 6e022de9b0f9e984eafd02fd74b995f3, type: 3}
+  - {fileID: 7345178397541060378, guid: 390358dcb696f3646ac7a1556de1eb0a, type: 3}
+  - {fileID: 6088244944877515314, guid: e5a1d4002a839a74f8e1a2f294817882, type: 3}
+  - {fileID: 6744142048672373906, guid: 368ac59b94327844382465418c90ca6d, type: 3}
+  - {fileID: 528912712889817095, guid: d3046ea0dfd89f746884bdb073f02614, type: 3}
+  - {fileID: 2248097371123033939, guid: f1ad4eb684930594bb2a7cd9faded111, type: 3}
   decreaseamount: 0
 --- !u!1 &1756790439
 GameObject:
@@ -18535,6 +18534,7 @@ MonoBehaviour:
     type: 3}
   parentObject: {fileID: 658659596}
   totalPriceOfSingle: 0
+  Telephone: {fileID: 1755803307}
 --- !u!4 &4195789157861296
 Transform:
   m_ObjectHideFlags: 0
