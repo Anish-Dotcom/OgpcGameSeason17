@@ -3440,6 +3440,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000030518, y: -60.099876}
   m_SizeDelta: {x: 434, y: 84.2898}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &437972183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 437972185}
+  - component: {fileID: 437972184}
+  m_Layer: 0
+  m_Name: DayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &437972184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437972183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0120ec9d683a9f4c8006c8a6030a3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayint: 0
+--- !u!4 &437972185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437972183}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.5058408, y: 0.7313962, z: 4.3505344}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &445382985
 GameObject:
   m_ObjectHideFlags: 0
@@ -10567,6 +10612,7 @@ GameObject:
   - component: {fileID: 1146929040}
   - component: {fileID: 1146929039}
   - component: {fileID: 1146929041}
+  - component: {fileID: 1146929042}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -10620,6 +10666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb8dbaa07b7654e8ece2c2623800ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FatigueController: {fileID: 1146929042}
   pullpower: 3.5
   objectPickupDistance: 3
   objectHoldDistance: 3
@@ -10640,6 +10687,20 @@ MonoBehaviour:
   - -12
   - -12
   - 12
+  fatigue: 0
+--- !u!114 &1146929042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146929038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d814b2dda5c691e4d85cc68fe0827546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fatigue: 0
 --- !u!1 &1151198135
 GameObject:
   m_ObjectHideFlags: 0

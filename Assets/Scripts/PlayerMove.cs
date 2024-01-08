@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
+    public FatigueController FatigueController;
+
     public float pullpower = 5;
 
     public static float moveSpeed;
@@ -38,6 +40,8 @@ public class PlayerMove : MonoBehaviour
     public float[] maxDistances = new float[4];
     private float objectStartYDirection = 0;
     private float camStartYDirection = 0;
+
+    public float fatigue;
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +78,7 @@ public class PlayerMove : MonoBehaviour
                         objectStartYDirection = hit.collider.GetComponent<Transform>().rotation.eulerAngles.y;
                         camStartYDirection = cam.transform.rotation.eulerAngles.y;
                         Debug.Log("pick up");
+                        FatigueController.fatigue+=250;
                         currentObjectHoldDistance = Vector3.Distance(heldObject.transform.position, cam.transform.position);
                     }
                 }
@@ -149,6 +154,7 @@ public class PlayerMove : MonoBehaviour
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        
     }
     private void SpeedControl()
     {
