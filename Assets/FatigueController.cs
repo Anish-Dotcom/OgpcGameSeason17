@@ -5,6 +5,8 @@ using UnityEngine;
 public class FatigueController : MonoBehaviour
 {
     public float fatigue = 0;
+    public GameObject shadowBorder;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +22,10 @@ public class FatigueController : MonoBehaviour
             print(fatigue);
             transform.hasChanged = false;
         }
-
-        if(fatigue> 10000) {
-            print("tired");
+        
+        if(fatigue> 1000) {
+            CanvasGroup CG = shadowBorder.GetComponent<CanvasGroup>();
+            CG.alpha += 0.01f;
         }
 
     }
