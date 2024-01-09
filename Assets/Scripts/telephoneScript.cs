@@ -101,7 +101,7 @@ public class telephoneScript : MonoBehaviour
         callButton.interactable = false;
         awayButton.interactable = false;
         StartCoroutine(showText());
-        //musicController.PlayDialog(greeting);
+        musicController.PlayDialog(greeting);
     }
 
     IEnumerator showText()

@@ -61,7 +61,7 @@ public class PlayerMove : MonoBehaviour
         if (isControllable)
         {
             PlayerInput();
-            if (Input.GetMouseButtonDown(0) && heldObject == null)//pickup object
+            /*if (Input.GetMouseButtonDown(0) && heldObject == null)//pickup object
             {
                 int layermask = -1;
                 layermask = layermask & ~(1 << 7);
@@ -94,7 +94,7 @@ public class PlayerMove : MonoBehaviour
             {
                 float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
                 Gobackandforth(scrollDirection);
-            }
+            }*/
 
         }
         
