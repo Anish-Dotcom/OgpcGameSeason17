@@ -5,7 +5,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro.EditorUtilities;
+//using TMPro.EditorUtilities;
 using UnityEngine.EventSystems;
 
 public class SettingsKeybind : MonoBehaviour

@@ -52,6 +52,8 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject Telephone;
 
+    public TMP_Text fpsCounter;
+
     private void OnMouseUpAsButton()
     {
         distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
@@ -128,6 +130,14 @@ public class telephoneScript : MonoBehaviour
         currentDayOfWeekIndex = 6;
         meridiem = "AM";
         timeGoes();
+        StartCoroutine(fpsReadable());
+    }
+
+    IEnumerator fpsReadable()
+    {
+        yield return new WaitForSeconds(0.5f);
+        fpsCounter.text = "FPS: " + (int)(1f / Time.deltaTime);
+        StartCoroutine(fpsReadable());
     }
 
     // Update is called once per frame
