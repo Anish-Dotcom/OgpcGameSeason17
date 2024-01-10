@@ -13,10 +13,6 @@ public class DissolveController : MonoBehaviour
         areaMat.SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
         areaMat.SetFloat("_Cutoff_Distance", dissolveDistance);
     }
-    void Update() 
-    {
-        areaMat.SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
-    }
     public void SetObjPos()
     {
         areaMat.SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
