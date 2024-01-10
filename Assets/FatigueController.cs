@@ -10,7 +10,7 @@ public class FatigueController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(Timer());
     }
 
     // Update is called once per frame
@@ -18,15 +18,24 @@ public class FatigueController : MonoBehaviour
     {
         if (transform.hasChanged)
         {
-            fatigue++;
+            fatigue+=0.001f;
             print(fatigue);
             transform.hasChanged = false;
         }
         
-        if(fatigue> 1000) {
+        if(fatigue> 500) {
             CanvasGroup CG = shadowBorder.GetComponent<CanvasGroup>();
             CG.alpha += 0.01f;
         }
 
+        
+    }
+
+    IEnumerator Timer()
+    {
+        fatigue++;
+        print(fatigue);
+        yield return new WaitForSeconds(1);
+        StartCoroutine(Timer());
     }
 }

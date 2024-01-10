@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectPickUp : MonoBehaviour
 {
+    public FatigueController FatigueController;
+
     public Rigidbody rb;
     public Collider coll;
     public Transform player, objectContainer, fpsCam;
@@ -57,7 +59,8 @@ public class ObjectPickUp : MonoBehaviour
 
         transform.SetParent(objectContainer);
         transform.localPosition = Vector3.zero;
-
+        FatigueController.fatigue += 20;
+        print(FatigueController.fatigue);
         rb.isKinematic = true;
         coll.isTrigger = true;
     }
