@@ -147,7 +147,7 @@ public class telephoneScript : MonoBehaviour
         currentHour = hour[currentHourIndex];
         currentMinutes = minutes[currentMinutesIndex];
 
-        dayOfWeekText.text = currentDayOfWeek;
+        //dayOfWeekText.text = currentDayOfWeek;
         time.text = currentHour + ":" + currentMinutes + " " + meridiem;
 
         if(currentHourIndex == 5)

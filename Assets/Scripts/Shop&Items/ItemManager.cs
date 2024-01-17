@@ -73,11 +73,6 @@ public class ItemManager : MonoBehaviour
             InstantiateObjects(partAmounts[i], toyParts[i], ref posY);
             partQuatities[i] = 0;
         }
-
-        for (int i = 0; i < totalAmountObj; i++)
-        {
-
-        }
     }
 
     private void InstantiateObjects(int amount, GameObject prefab, ref float posY)
