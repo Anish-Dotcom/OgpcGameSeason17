@@ -16,9 +16,14 @@ public class ObjectPickUp : MonoBehaviour
     public bool equipped;
     public static bool slotFull;
 
+    public GameObject interact;
+
+    public Vector3 originalScale;
+
     // Start is called before the first frame update
     void Start()
     {
+        originalScale = transform.localScale;
         if (!equipped)
         {
             rb.isKinematic = false;
@@ -35,20 +40,36 @@ public class ObjectPickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!equipped)
+        {
+            transform.localScale = originalScale;
+        }
+
         RaycastHit hit;
         Ray ray = new Ray(fpsCam.position, fpsCam.forward);
 
         Vector3 distanceToPlayer = player.position - transform.position;
         if(!equipped && Physics.Raycast(ray, out hit, pickUpRange))
         {
-            if (hit.collider.gameObject == gameObject && Input.GetMouseButtonDown(0) && !slotFull)
+            if (hit.collider.gameObject == gameObject && !slotFull)
             {
-                PickUp();
+                interact.SetActive(true);
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    PickUp();
+                    interact.SetActive(false);
+                }
             }
         }
         else if(equipped && Input.GetMouseButtonDown(0))
         {
+            transform.localScale = originalScale;
             Drop();
+        }
+        else
+        {
+            interact.SetActive(false);
         }
     }
 

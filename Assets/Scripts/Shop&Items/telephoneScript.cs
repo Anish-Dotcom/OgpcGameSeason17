@@ -54,6 +54,22 @@ public class telephoneScript : MonoBehaviour
 
     public TMP_Text fpsCounter;
 
+    public GameObject interact;
+
+    private void OnMouseOver()
+    {
+        distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
+
+        if (distFromObject <= 2.1 && !telephoneIsOpen)
+        {
+            interact.SetActive(true);
+        }
+        else
+        {
+            interact.SetActive(false);
+        }
+    }
+
     private void OnMouseUpAsButton()
     {
         distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
