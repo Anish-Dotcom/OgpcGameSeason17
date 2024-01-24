@@ -44,7 +44,7 @@ public class AssemblyController : MonoBehaviour
                     if (assemblyPartsInScene[i].name == toyNamesForFinal[b] && toyPartInFinalPos[i] == false) 
                     {
                         assemblyPartsInScene[i].transform.position = toyPartFinalPos[i];//make ease to position later, just sets straight to position
-                        //assemblyPartsInScene[i].transform.SetParent(AssemblyPartsInPosition.GetChild(i).transform);//sets to be a child of the assosciated
+                        assemblyPartsInScene[i].GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).GetComponent<Transform>());//sets to be a child of the assosciated
                         toyPartInFinalPos[i] = true;
 
                         bool assemblyDone = true;//true unless any is false
