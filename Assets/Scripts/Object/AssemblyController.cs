@@ -6,11 +6,15 @@ public class AssemblyController : MonoBehaviour
 {
     public static GameObject[] assemblyPartsInScene;
 
-    public GameObject parentAssemblyObj;
+    public GameObject RecipeForAssemblyObj;
+    public GameObject AssemblyPartsInPosition;
+
     public string[] toyNamesForFinal;
-    public Vector3[] toyPartFinalPos;
+    public Vector3[] toyPartFinalPos; 
     public bool[] toyPartInFinalPos;//in order for this to be okay you either have to be able to take toy parts out (dont like) or some sort of detection system for if the player wants to make an assembly (better, harder)
     public GameObject completedAssembly;
+
+    public GameObject emptyObj;//usingForFormating
 
 
     void Start()
@@ -39,15 +43,17 @@ public class AssemblyController : MonoBehaviour
                 {
                     if (assemblyPartsInScene[i].name == toyNamesForFinal[b] && toyPartInFinalPos[i] == false) 
                     {
-                        assemblyPartsInScene[i].transform.position = toyPartFinalPos[i];//make ease to position
+                        assemblyPartsInScene[i].transform.position = toyPartFinalPos[i];//make ease to position later, just sets straight to position
+                        //assemblyPartsInScene[i].transform.SetParent(AssemblyPartsInPosition.GetChild(i).transform);//sets to be a child of the assosciated
                         toyPartInFinalPos[i] = true;
 
-                        bool assemblyDone = true;
+                        bool assemblyDone = true;//true unless any is false
                         for (int c = 0; c < toyPartInFinalPos.Length; c++)
                         {
-                            if (!toyPartInFinalPos[c]) 
+                            if (!toyPartInFinalPos[c])//checking if all are true, if even one is false, return.
                             {
                                 assemblyDone = false;
+                                return;
                             }
                         }
                         if (assemblyDone)
@@ -58,6 +64,20 @@ public class AssemblyController : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+    public void SetAssembly(GameObject OutlineObjectRef)//have a gameobject which is of the completed toy part but with the hallow material and unpickupable + no grav, just transform and mesh. This means we can highlight the position the part will be moved to + edit it easier
+    {
+        GameObject OutlineObject = Instantiate(OutlineObjectRef, new Vector3(0, 0, 0), Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());
+        toyNamesForFinal = new string[OutlineObject.transform.childCount];//get children of gameobject, each child is a part of the assembly
+        toyPartFinalPos = new Vector3[OutlineObject.transform.childCount];
+
+        for (int i = 0; i < OutlineObject.transform.childCount; i++)
+        {
+            toyNamesForFinal[i] = OutlineObject.transform.GetChild(i).name;
+            toyPartFinalPos[i] = OutlineObject.transform.GetChild(i).transform.position;
+            GameObject Recent = Instantiate(emptyObj, new Vector3(0, 0, 0), Quaternion.identity, AssemblyPartsInPosition.GetComponent<Transform>());
+            Recent.name = toyNamesForFinal[i] + " " + i.ToString();//setNameToSameAsToyNames + something to differentiate
         }
     }
 }
