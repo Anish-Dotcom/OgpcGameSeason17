@@ -20,6 +20,8 @@ public class ObjectPickUp : MonoBehaviour
 
     public Vector3 originalScale;
 
+    public GameObject[] LocationsOnShelf;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +97,23 @@ public class ObjectPickUp : MonoBehaviour
 
         rb.isKinematic = false;
         coll.isTrigger = false;
+
+        RaycastHit hit;
+        Ray ray = new Ray(fpsCam.position, fpsCam.forward);
+
+        if (Physics.Raycast(ray, out hit, pickUpRange))
+        {
+            foreach (GameObject locationOnShelf in LocationsOnShelf)
+            {
+                if (hit.collider.gameObject == locationOnShelf)
+                {
+                    // Move the dropped object to the location on the shelf
+                    transform.position = locationOnShelf.transform.position;
+
+                    return;
+                }
+            }
+        }
 
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
