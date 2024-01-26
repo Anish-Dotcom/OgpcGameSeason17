@@ -11,6 +11,6 @@ public class MenuBlueprintScript : MonoBehaviour
     public void SetAssembly()
     {
         Debug.Log("Button pressed");
-        ac.SetAssembly(assembly);
+        //ac.SetAssembly(assembly); -- update to new perameters
     }
 }

@@ -19,7 +19,7 @@ public class FatigueController : MonoBehaviour
         if (transform.hasChanged)
         {
             fatigue+=0.001f;
-            print(fatigue);
+            //print(fatigue);
             transform.hasChanged = false;
         }
         
@@ -34,7 +34,7 @@ public class FatigueController : MonoBehaviour
     IEnumerator Timer()
     {
         fatigue++;
-        print(fatigue);
+        //print(fatigue);
         yield return new WaitForSeconds(1);
         StartCoroutine(Timer());
     }
