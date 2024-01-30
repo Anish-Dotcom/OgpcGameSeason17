@@ -8,6 +8,8 @@ public class EscapeMenu : MonoBehaviour
     public SettingsMenuController settingsMenuController;
     public GameObject escapeMenu;
     public PlayerMove playerMove;
+    public GameObject menuBlur;
+    public GameObject allOtherMenus;
 
     // Update is called once per frame
     void Update()
@@ -26,7 +28,9 @@ public class EscapeMenu : MonoBehaviour
     public void toggleEscapeMenu()
     {
         bool state = !escapeMenu.activeInHierarchy;
+        menuBlur.SetActive(state);
         escapeMenu.SetActive(state);
+        allOtherMenus.SetActive(!state);
         if (!state)
         {
 
