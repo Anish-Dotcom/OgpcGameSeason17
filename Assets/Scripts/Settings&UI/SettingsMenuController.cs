@@ -15,6 +15,9 @@ public class SettingsMenuController : MonoBehaviour
     public PlayerCam playerCameraScript;
     public bool isMainGame = false;
     public bool settingsMenuOpen = false;
+
+    public GameObject menuBlur;
+    public GameObject allOtherMenus;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,8 @@ public class SettingsMenuController : MonoBehaviour
         bool originalState = settingsGameObject.activeInHierarchy;
         settingsMenuOpen = !settingsMenuOpen;
         settingsGameObject.SetActive(!originalState);
+        menuBlur.SetActive(!originalState);
+        allOtherMenus.SetActive(originalState);
         if (isMainGame)
         {
             if (originalState)
