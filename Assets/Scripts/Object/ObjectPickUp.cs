@@ -17,6 +17,7 @@ public class ObjectPickUp : MonoBehaviour
     public static bool slotFull;
 
     public GameObject interact;
+    public GameObject store;
 
     public Vector3 originalScale;
 
@@ -73,6 +74,31 @@ public class ObjectPickUp : MonoBehaviour
         {
             interact.SetActive(false);
         }
+
+        RaycastHit hit2;
+        Ray ray2 = new Ray(fpsCam.position, fpsCam.forward);
+
+        if (Physics.Raycast(ray, out hit2, pickUpRange) && equipped)
+        {
+            foreach (GameObject locationOnShelf in LocationsOnShelf)
+            {
+                if (hit2.collider.gameObject == locationOnShelf)
+                {
+                    store.SetActive(true);
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        Drop();
+                        rb.isKinematic = true;
+                        transform.position = locationOnShelf.transform.position;
+                        store.SetActive(false);
+                    }
+                }
+            }
+        }
+        else
+        {
+            store.SetActive(false);
+        }
     }
 
     private void PickUp()
@@ -97,23 +123,6 @@ public class ObjectPickUp : MonoBehaviour
 
         rb.isKinematic = false;
         coll.isTrigger = false;
-
-        RaycastHit hit;
-        Ray ray = new Ray(fpsCam.position, fpsCam.forward);
-
-        if (Physics.Raycast(ray, out hit, pickUpRange))
-        {
-            foreach (GameObject locationOnShelf in LocationsOnShelf)
-            {
-                if (hit.collider.gameObject == locationOnShelf)
-                {
-                    // Move the dropped object to the location on the shelf
-                    transform.position = locationOnShelf.transform.position;
-
-                    return;
-                }
-            }
-        }
 
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
