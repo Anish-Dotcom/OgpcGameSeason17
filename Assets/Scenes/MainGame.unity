@@ -25508,7 +25508,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!4 &847879124391608346
@@ -26296,7 +26296,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!33 &1434625219499826863
@@ -28026,7 +28026,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!4 &2745983758396671910
@@ -29057,7 +29057,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!1 &3290251537873516369
@@ -30518,7 +30518,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!33 &3961438121433570570
@@ -31879,7 +31879,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!1001 &4800088817215196929
@@ -34960,7 +34960,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!33 &6714953368430927420
@@ -55542,7 +55542,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!4 &7565915827723084631
@@ -77482,7 +77482,7 @@ MonoBehaviour:
   dropUpwardForce: 1
   equipped: 0
   interact: {fileID: 1976911767}
-  store: {fileID: 0}
+  store: {fileID: 353880494}
   originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf: []
 --- !u!4 &9154912565081804982
