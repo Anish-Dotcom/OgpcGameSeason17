@@ -49,8 +49,11 @@ public class SettingsMenuController : MonoBehaviour
         bool originalState = settingsGameObject.activeInHierarchy;
         settingsMenuOpen = !settingsMenuOpen;
         settingsGameObject.SetActive(!originalState);
-        menuBlur.SetActive(!originalState);
-        allOtherMenus.SetActive(originalState);
+        if (isMainGame)
+        {
+            menuBlur.SetActive(!originalState);
+            allOtherMenus.SetActive(originalState);
+        }
         if (isMainGame)
         {
             if (originalState)
