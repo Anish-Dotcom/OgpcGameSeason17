@@ -116,6 +116,9 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Cutoff_Distance: 10
+    - _Cutoff_Distance_X: 10
+    - _Cutoff_Distance_Y: 10
+    - _Cutoff_Distance_Z: 5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DitherTexelSize: 4
