@@ -78,7 +78,7 @@ public class ObjectPickUp : MonoBehaviour
         RaycastHit hit2;
         Ray ray2 = new Ray(fpsCam.position, fpsCam.forward);
 
-        if (Physics.Raycast(ray, out hit2, pickUpRange) && equipped)
+        if (Physics.Raycast(ray2, out hit2, pickUpRange) && equipped)
         {
             foreach (GameObject locationOnShelf in LocationsOnShelf)
             {
@@ -95,7 +95,7 @@ public class ObjectPickUp : MonoBehaviour
                 }
             }
         }
-        else
+        else if (!Physics.Raycast(ray2, out hit2, pickUpRange) && !equipped)
         {
             store.SetActive(false);
         }
