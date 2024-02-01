@@ -14703,7 +14703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb8dbaa07b7654e8ece2c2623800ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FatigueController: {fileID: 0}
+  FatigueController: {fileID: 1146929042}
   pullpower: 3.5
   objectPickupDistance: 3
   objectHoldDistance: 3

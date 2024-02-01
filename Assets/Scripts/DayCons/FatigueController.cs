@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FatigueController : MonoBehaviour
 {
-    public float fatigue = 0;
+    public float fatigue = 0    ;
     public GameObject shadowBorder;
-
+    public DissolveController DissolveController;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +23,11 @@ public class FatigueController : MonoBehaviour
             transform.hasChanged = false;
         }
         
-        if(fatigue> 500) {
+        if(fatigue> 50) {
             CanvasGroup CG = shadowBorder.GetComponent<CanvasGroup>();
             CG.alpha += 0.01f;
+            DissolveController.areaMat.SetFloat("_Cutoff_Distance_X", DissolveController.dissolveDistances.x-2);
+            DissolveController.areaMat.SetFloat("_Cutoff_Distance_Z", DissolveController.dissolveDistances.z-2);
         }
 
         
