@@ -117,7 +117,7 @@ Material:
     - _Cutoff: 0.5
     - _Cutoff_Distance: 10
     - _Cutoff_Distance_X: 10
-    - _Cutoff_Distance_Y: 10
+    - _Cutoff_Distance_Y: 4
     - _Cutoff_Distance_Z: 5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -179,7 +179,7 @@ Material:
     - _HalftoneColor: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 0, g: 0.00000023841858, b: -0.0000011884499,
+    - _Object_Position_For_Ref_Dis: {r: -0.5799999, g: 0.00000023841858, b: 1.2099991,
         a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0.052}
     - _ShadowColor: {r: 0.2863564, g: 0.2899227, b: 0.31132078, a: 0.744}
