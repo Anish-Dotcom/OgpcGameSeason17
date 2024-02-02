@@ -3823,6 +3823,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306302027}
   m_CullTransparentMesh: 1
+--- !u!1 &312775337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 312775339}
+  - component: {fileID: 312775338}
+  m_Layer: 0
+  m_Name: Menu Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &312775338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312775337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b45f9448d7a4784eb8bae26115b4fa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMove: {fileID: 1146929041}
+  openMenus: []
+  menuOpen: 0
+  EscapeMenu: {fileID: 1514803315}
+--- !u!4 &312775339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312775337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.018024385, y: 3.2853231, z: 0.31529045}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &325449807 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7779838477287716595, guid: b202047fd7c0fa341b944c314c600e62,
@@ -4924,13 +4972,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 803185301}
-        m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
-        m_MethodName: toggleSettingsOpen
-        m_Mode: 1
+      - m_Target: {fileID: 312775338}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: closeMenu
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1587402448}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9719,13 +9767,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 175190196}
-        m_TargetAssemblyTypeName: EscapeMenu, Assembly-CSharp
-        m_MethodName: toggleEscapeMenu
-        m_Mode: 1
+      - m_Target: {fileID: 312775338}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: closeMenu
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1514803315}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -14739,6 +14787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fatigue: 0
   shadowBorder: {fileID: 377778942}
+  DissolveController: {fileID: 0}
 --- !u!1 &1151198135
 GameObject:
   m_ObjectHideFlags: 0
@@ -16121,10 +16170,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 175190196}
-        m_TargetAssemblyTypeName: EscapeMenu, Assembly-CSharp
-        m_MethodName: quitToMainMenu
-        m_Mode: 1
+      - m_Target: {fileID: 312775338}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: switchScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -22610,13 +22659,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 175190196}
-        m_TargetAssemblyTypeName: EscapeMenu, Assembly-CSharp
-        m_MethodName: openSettingsMenu
-        m_Mode: 1
+      - m_Target: {fileID: 312775338}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: openMenu
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1587402448}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
