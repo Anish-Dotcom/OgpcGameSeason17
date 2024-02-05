@@ -31,7 +31,8 @@ public class BurnController : MonoBehaviour
             {
                 if (i == 0)//instatiate canvas
                 {
-                    Instantiate(fireCanvas, new Vector3(0, 0, 0), Quaternion.identity, col.gameObject.GetComponent<Transform>());
+                    GameObject FireCanvas = Instantiate(fireCanvas, new Vector3(0, 0, 0), Quaternion.identity, col.gameObject.GetComponent<Transform>());
+                    FireCanvas.name = "Fire Canvas";
                     for (int b = 0; b < col.gameObject.GetComponent<Transform>().childCount; b++)
                     {
                         if (col.gameObject.GetComponent<Transform>().GetChild(b).name == "Fire Canvas")
@@ -42,7 +43,7 @@ public class BurnController : MonoBehaviour
                     }
                 }
                 int typeOfFlame = Random.Range(0, 2);//either 0, or 1 (0 is short, 1 is tall)
-                Instantiate(firePrefabs[typeOfFlame], new Vector3(0, 0, 0), Quaternion.identity, col.gameObject.GetComponent<Transform>().GetChild(fireCanvasIndex).GetChild(0));
+                Instantiate(firePrefabs[typeOfFlame], col.gameObject.transform.position, Quaternion.identity, col.gameObject.GetComponent<Transform>().GetChild(fireCanvasIndex).GetChild(0));
             }
             //make it look like its burning and then turn to ash, add particles to the fire.
         }
