@@ -34,7 +34,7 @@ public class BoxScript : MonoBehaviour
             {
                 interact.SetActive(true);
 
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.F))
                 {
                     isOpened = true;
                     interact.SetActive(false);

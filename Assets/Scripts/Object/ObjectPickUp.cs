@@ -7,7 +7,7 @@ public class ObjectPickUp : MonoBehaviour
     public FatigueController FatigueController;
 
     public Rigidbody rb;
-    public Collider coll;
+    public BoxCollider coll;
     public Transform player, objectContainer, fpsCam;
 
     public float pickUpRange;
@@ -85,12 +85,17 @@ public class ObjectPickUp : MonoBehaviour
                 if (hit2.collider.gameObject == locationOnShelf)
                 {
                     store.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E))
+                    if (Input.GetKeyDown(KeyCode.E)) // storing on shelf
                     {
                         Drop();
                         rb.isKinematic = true;
                         transform.position = locationOnShelf.transform.position;
                         store.SetActive(false);
+                        gameObject.transform.rotation = Quaternion.identity;
+
+                        float distance = (transform.position.y-coll.size.y/2)-locationOnShelf.transform.position.y;
+
+                        transform.position = new Vector3(transform.position.x, transform.position.y - distance, transform.position.z);
                     }
                 }
             }
@@ -103,6 +108,8 @@ public class ObjectPickUp : MonoBehaviour
 
     private void PickUp()
     {
+        gameObject.layer = 2;
+
         equipped = true;
         slotFull = true;
 
@@ -116,6 +123,8 @@ public class ObjectPickUp : MonoBehaviour
 
     private void Drop()
     {
+        gameObject.layer = 0;
+
         equipped = false;
         slotFull = false;
 
