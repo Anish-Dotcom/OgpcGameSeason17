@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour
 {
     public PlayerMove playerMove;
     public List<GameObject> openMenus;
+    public List<GameObject> openPopups;
     public bool menuOpen = false;
 
     // special function variables:
@@ -36,12 +37,20 @@ public class MenuController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             playerMove.isControllable = false;
+            foreach (GameObject popup in openPopups)
+            {
+                popup.SetActive(true);
+            }
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             playerMove.isControllable = true;
+            foreach (GameObject popup in openPopups)
+            {
+                popup.SetActive(false);
+            }
         }
 
         // key press actions
@@ -51,9 +60,6 @@ public class MenuController : MonoBehaviour
         }
     }
     // ---------------------------------- Menu Navigation Functions ----------------------------------
-
-
-
 
     // Open a menu. Closes all other menus.
     public void openMenu(GameObject menuObject)
@@ -91,7 +97,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-            throw new Exception("No top menu to close.");
+            Debug.LogError("No top menu to close.");
         }
 
 
@@ -105,7 +111,7 @@ public class MenuController : MonoBehaviour
         if (menuIndex == -1)
         {
             // we never found the menu :(
-            throw new Exception("Menu named " + menuObject.name + " is not open.");
+            Debug.LogError("Menu named " + menuObject.name + " is not open.");
         }
         // close all menus aove this menu.
         for (int i = 0; i < menuIndex + 1; i++)
@@ -138,6 +144,42 @@ public class MenuController : MonoBehaviour
         }
         menuOpen = false;
         openMenus.Clear();
+    }
+    // ----------------------------------      Pop Up Functions      ----------------------------------
+    // pop ups can only be opened when no other menu is open. Multiple can be opened at a time.
+
+    // open popup from GameObject
+    public void openPopup(GameObject popupObject)
+    {
+        int indexOfPopup = openPopups.IndexOf(popupObject);
+        if (indexOfPopup != -1)
+        {
+            openPopups.Add(popupObject);
+        }
+    }
+
+    // close popup from GameObject
+    public void closePopup(GameObject popupObject)
+    {
+        int indexOfPopup = openPopups.IndexOf(popupObject);
+        if (indexOfPopup != -1)
+        {
+            popupObject.SetActive(false);
+            openPopups.RemoveAt(indexOfPopup);
+        }
+    }
+
+    // toggle popup from GameObject
+    public void togglePopUp(GameObject popupObject)
+    {
+        int IndexOfPopup = openPopups.IndexOf(popupObject);
+        if (IndexOfPopup != -1)
+        {
+            openPopup(popupObject);
+        } else
+        {
+            closePopup(popupObject);
+        }
     }
 
     // ---------------------------------- Scene Navigation Functions ----------------------------------

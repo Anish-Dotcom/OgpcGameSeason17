@@ -3701,6 +3701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMove: {fileID: 1146929041}
   openMenus: []
+  openPopups: []
   menuOpen: 0
   EscapeMenu: {fileID: 1514803315}
 --- !u!4 &312775339
