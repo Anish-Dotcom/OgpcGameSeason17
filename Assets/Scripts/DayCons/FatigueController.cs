@@ -10,7 +10,8 @@ public class FatigueController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Timer());
+        InvokeRepeating("OutputTime", 1f, 1f);
+
     }
 
     // Update is called once per frame
@@ -26,18 +27,21 @@ public class FatigueController : MonoBehaviour
         if(fatigue> 50) {
             CanvasGroup CG = shadowBorder.GetComponent<CanvasGroup>();
             CG.alpha += 0.01f;
-            DissolveController.areaMat.SetFloat("_Cutoff_Distance_X", DissolveController.dissolveDistances.x-2);
-            DissolveController.areaMat.SetFloat("_Cutoff_Distance_Z", DissolveController.dissolveDistances.z-2);
+            StartCoroutine(Cutoff());
+            
         }
 
         
     }
-
-    IEnumerator Timer()
-    {
+    void OutputTime() {
         fatigue++;
-        //print(fatigue);
+    }
+
+    IEnumerator Cutoff ()
+    {
+        DissolveController.areaMat.SetFloat("_Cutoff_Distance_X", DissolveController.dissolveDistances.x - 1);
+        DissolveController.areaMat.SetFloat("_Cutoff_Distance_Z", DissolveController.dissolveDistances.z - 3);
         yield return new WaitForSeconds(1);
-        StartCoroutine(Timer());
+        StartCoroutine(Cutoff());
     }
 }
