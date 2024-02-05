@@ -43,7 +43,7 @@ public class BurnController : MonoBehaviour
                     }
                 }
                 int typeOfFlame = Random.Range(0, 2);//either 0, or 1 (0 is short, 1 is tall)
-                Instantiate(firePrefabs[typeOfFlame], col.gameObject.transform.position, Quaternion.identity, col.gameObject.GetComponent<Transform>().GetChild(fireCanvasIndex).GetChild(0));
+                Instantiate(firePrefabs[typeOfFlame], firePrefabs[typeOfFlame].transform.position, Quaternion.identity, col.gameObject.GetComponent<Transform>().GetChild(fireCanvasIndex).GetChild(0));
             }
             //make it look like its burning and then turn to ash, add particles to the fire.
         }
