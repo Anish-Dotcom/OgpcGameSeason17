@@ -6,8 +6,8 @@ public class ObjectPickUp : MonoBehaviour
 {
     public FatigueController FatigueController;
 
-    public Rigidbody rb;
-    public BoxCollider coll;
+    private Rigidbody rb;
+    private BoxCollider coll;
     public Transform player, objectContainer, fpsCam;
 
     public float pickUpRange;
@@ -23,52 +23,42 @@ public class ObjectPickUp : MonoBehaviour
 
     public GameObject[] LocationsOnShelf;
 
+    private GameObject currentObject;
+
     // Start is called before the first frame update
     void Start()
     {
-        originalScale = transform.localScale;
-        if (!equipped)
-        {
-            rb.isKinematic = false;
-            coll.isTrigger = false;
-        }
-        if (equipped)
-        {
-            rb.isKinematic = true;
-            coll.isTrigger = true;
-            slotFull = true;
-        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!equipped)
-        {
-            transform.localScale = originalScale;
-        }
-
         RaycastHit hit;
         Ray ray = new Ray(fpsCam.position, fpsCam.forward);
 
-        Vector3 distanceToPlayer = player.position - transform.position;
         if(!equipped && Physics.Raycast(ray, out hit, pickUpRange))
         {
-            if (hit.collider.gameObject == gameObject && !slotFull)
+            Debug.Log("asdf");
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Pickupable"))
             {
-                interact.SetActive(true);
 
-                if (Input.GetMouseButtonDown(0))
+                if (hit.collider.gameObject == gameObject && !slotFull)
                 {
-                    PickUp();
-                    interact.SetActive(false);
+                    interact.SetActive(true);
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        currentObject = hit.collider.gameObject;
+                        PickUp(currentObject);
+                        interact.SetActive(false);
+                    }
                 }
             }
         }
         else if(equipped && Input.GetMouseButtonDown(0))
         {
-            transform.localScale = originalScale;
-            Drop();
+            Drop(currentObject);
         }
         else
         {
@@ -87,15 +77,15 @@ public class ObjectPickUp : MonoBehaviour
                     store.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.E)) // storing on shelf
                     {
-                        Drop();
+                        Drop(currentObject);
                         rb.isKinematic = true;
-                        transform.position = locationOnShelf.transform.position;
+                        currentObject.transform.position = locationOnShelf.transform.position;
                         store.SetActive(false);
-                        gameObject.transform.rotation = Quaternion.identity;
+                        currentObject.transform.rotation = Quaternion.identity;
 
                         float distance = (transform.position.y-coll.size.y/2)-locationOnShelf.transform.position.y;
 
-                        transform.position = new Vector3(transform.position.x, transform.position.y - distance, transform.position.z);
+                        currentObject.transform.position = new Vector3(transform.position.x, transform.position.y - distance, transform.position.z);
                     }
                 }
             }
@@ -106,29 +96,32 @@ public class ObjectPickUp : MonoBehaviour
         }
     }
 
-    private void PickUp()
+    private void PickUp(GameObject item)
     {
-        gameObject.layer = 2;
+        rb = item.GetComponent<Rigidbody>();
+        coll = item.GetComponent<BoxCollider>();
+
+        item.gameObject.layer = 2;
 
         equipped = true;
         slotFull = true;
 
-        transform.SetParent(objectContainer);
-        transform.localPosition = Vector3.zero;
+        item.transform.SetParent(objectContainer);
+        item.transform.localPosition = Vector3.zero;
         FatigueController.fatigue += 20;
         print(FatigueController.fatigue);
         rb.isKinematic = true;
         coll.isTrigger = true;
     }
 
-    private void Drop()
+    private void Drop(GameObject item)
     {
-        gameObject.layer = 0;
+        item.gameObject.layer = 6;
 
         equipped = false;
         slotFull = false;
 
-        transform.SetParent(null);
+        item.transform.SetParent(null);
 
         rb.isKinematic = false;
         coll.isTrigger = false;
