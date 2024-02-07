@@ -56,10 +56,20 @@ public class MenuController : MonoBehaviour
 
         // ----------------------------------   Key Press actions   ----------------------------------
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (EscapeMenu.activeInHierarchy)
         {
-            toggleMenu(EscapeMenu);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                closeMenu(EscapeMenu);
+            }
+        } else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && !menuOpen)
+            {
+                openMenu(EscapeMenu);
+            }
         }
+
 
         if (Input.GetKeyDown(KeyCode.C))
         {

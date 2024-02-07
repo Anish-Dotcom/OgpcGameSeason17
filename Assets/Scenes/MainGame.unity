@@ -17016,11 +17016,10 @@ MonoBehaviour:
   interact: {fileID: 348502412}
   blueprintMenu: {fileID: 113583803}
   blueprintIsOpen: 0
+  lookingAtBox: 0
   distFromObject: 0
   playerCam: {fileID: 1559247135}
-  moveSpeedSaved: 0
-  sensXSaved: 0
-  sensYSaved: 0
+  menuController: {fileID: 312775338}
 --- !u!65 &1432952060
 BoxCollider:
   m_ObjectHideFlags: 0

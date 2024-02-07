@@ -24,8 +24,16 @@ public class BlueprintBox : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        lookingAtBox = true;
+
+        
         distFromObject = Vector3.Distance(playerCam.transform.position, transform.position);
+        if (distFromObject <= 3.5)
+        {
+            lookingAtBox = true;
+        } else
+        {
+            lookingAtBox = false;
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             distFromObject = Vector3.Distance(playerCam.transform.position, transform.position);
@@ -36,6 +44,14 @@ public class BlueprintBox : MonoBehaviour
                 blueprintIsOpen = true;
             }
             else if (blueprintIsOpen)
+            {
+                menuController.closeMenu(blueprintMenu);
+                blueprintIsOpen = false;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (blueprintIsOpen)
             {
                 menuController.closeMenu(blueprintMenu);
                 blueprintIsOpen = false;
