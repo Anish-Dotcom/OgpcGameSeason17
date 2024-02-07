@@ -3200,6 +3200,7 @@ MonoBehaviour:
   - {fileID: 2017793540360973455, guid: b5f30b9a7115c5b42b5d54575c6596a3, type: 3}
   fireCanvas: {fileID: 6754673993306331859, guid: 75ed557e926c89144bbe0b3bbe0ad633,
     type: 3}
+  colli: {fileID: 1723918674}
 --- !u!65 &256964327
 BoxCollider:
   m_ObjectHideFlags: 0
