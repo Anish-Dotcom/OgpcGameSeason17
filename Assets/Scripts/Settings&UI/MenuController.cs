@@ -13,6 +13,7 @@ public class MenuController : MonoBehaviour
 
     // special function variables:
     public GameObject EscapeMenu;
+    public GameObject commissionsUI;
 
     /*
      * The menu controller is used to open and close menus. It also handles the cursors lock and visability state.
@@ -39,7 +40,7 @@ public class MenuController : MonoBehaviour
             playerMove.isControllable = false;
             foreach (GameObject popup in openPopups)
             {
-                popup.SetActive(true);
+                popup.SetActive(false);
             }
         }
         else
@@ -49,15 +50,22 @@ public class MenuController : MonoBehaviour
             playerMove.isControllable = true;
             foreach (GameObject popup in openPopups)
             {
-                popup.SetActive(false);
+                popup.SetActive(true);
             }
         }
 
-        // key press actions
+        // ----------------------------------   Key Press actions   ----------------------------------
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             toggleMenu(EscapeMenu);
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            togglePopUp(commissionsUI);
+        }
+
     }
     // ---------------------------------- Menu Navigation Functions ----------------------------------
 
@@ -124,14 +132,13 @@ public class MenuController : MonoBehaviour
     // Overload of toggleMenu to use the GameObject
     public void toggleMenu(GameObject menuObject)
     {
-        GameObject menuToToggle = menuObject;
-        if (menuToToggle.activeInHierarchy)
+        if (menuObject.activeInHierarchy)
         {
-            closeMenu(menuToToggle);
+            closeMenu(menuObject);
         }
         else
         {
-            openMenu(menuToToggle);
+            openMenu(menuObject);
         }
     }
 
@@ -152,7 +159,7 @@ public class MenuController : MonoBehaviour
     public void openPopup(GameObject popupObject)
     {
         int indexOfPopup = openPopups.IndexOf(popupObject);
-        if (indexOfPopup != -1)
+        if (indexOfPopup == -1)
         {
             openPopups.Add(popupObject);
         }
@@ -173,7 +180,7 @@ public class MenuController : MonoBehaviour
     public void togglePopUp(GameObject popupObject)
     {
         int IndexOfPopup = openPopups.IndexOf(popupObject);
-        if (IndexOfPopup != -1)
+        if (IndexOfPopup == -1)
         {
             openPopup(popupObject);
         } else

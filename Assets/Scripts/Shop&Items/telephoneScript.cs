@@ -175,17 +175,7 @@ public class telephoneScript : MonoBehaviour
             meridiem = "AM";
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && callButton.interactable && !shopUI.activeInHierarchy) // show commissions
-        {
-            if (commissionsUI.activeInHierarchy)
-            {
-                commissionsUI.SetActive(false);
-            }
-            else
-            {
-                commissionsUI.SetActive(true);
-            }
-        }
+        
     }
 
     public void timeGoes()
