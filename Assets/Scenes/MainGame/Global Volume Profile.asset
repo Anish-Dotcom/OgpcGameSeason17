@@ -59,27 +59,7 @@ MonoBehaviour:
   clamp:
     m_OverrideState: 1
     m_Value: 0.05
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Global Volume Profile
-  m_EditorClassIdentifier: 
-  components:
-  - {fileID: 8928783240413570702}
-  - {fileID: 1889751375015565592}
-  - {fileID: 8033305786959669270}
-  - {fileID: -8585824860885732632}
-  - {fileID: 7234417103433479797}
-  - {fileID: -7611116744075223055}
-  - {fileID: 8370463394864919042}
---- !u!114 &1889751375015565592
+--- !u!114 &-6623498883018390677
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,19 +74,39 @@ MonoBehaviour:
   active: 1
   color:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0.016265435, b: 0.23584908, a: 1}
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
   center:
     m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.296
+    m_Value: 0.3
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.176
+    m_Value: 0.2
   rounded:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Global Volume Profile
+  m_EditorClassIdentifier: 
+  components:
+  - {fileID: 8928783240413570702}
+  - {fileID: -6623498883018390677}
+  - {fileID: 8033305786959669270}
+  - {fileID: -8585824860885732632}
+  - {fileID: 7234417103433479797}
+  - {fileID: -7611116744075223055}
+  - {fileID: 8370463394864919042}
 --- !u!114 &7234417103433479797
 MonoBehaviour:
   m_ObjectHideFlags: 3
