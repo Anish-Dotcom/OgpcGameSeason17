@@ -39,7 +39,6 @@ public class ObjectPickUp : MonoBehaviour
 
         if(!equipped && Physics.Raycast(ray, out hit, pickUpRange))
         {
-            Debug.Log("asdf");
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Pickupable"))
             {
 

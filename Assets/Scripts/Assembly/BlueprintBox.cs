@@ -14,6 +14,7 @@ public class BlueprintBox : MonoBehaviour
 
     void Update()
     {
+        distFromObject = Vector3.Distance(playerCam.transform.position, transform.position);
         if (lookingAtBox)
         {
             menuController.openPopup(interact);
@@ -21,12 +22,29 @@ public class BlueprintBox : MonoBehaviour
         {
             menuController.closePopup(interact);
         }
+
+        if (blueprintIsOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.E)|| Input.GetKeyUp(KeyCode.Escape))
+            {
+
+                menuController.closeMenu(blueprintMenu);
+                blueprintIsOpen = false;
+
+            }
+        } else if (distFromObject <= 3.5)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                menuController.openMenu(blueprintMenu);
+                blueprintIsOpen = true;
+            }
+        }
+
     }
     private void OnMouseOver()
     {
 
-        
-        distFromObject = Vector3.Distance(playerCam.transform.position, transform.position);
         if (distFromObject <= 3.5)
         {
             lookingAtBox = true;
@@ -34,33 +52,12 @@ public class BlueprintBox : MonoBehaviour
         {
             lookingAtBox = false;
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            distFromObject = Vector3.Distance(playerCam.transform.position, transform.position);
 
-            if (distFromObject <= 3.5 && !blueprintIsOpen)
-            {
-                menuController.openMenu(blueprintMenu);
-                blueprintIsOpen = true;
-            }
-            else if (blueprintIsOpen)
-            {
-                menuController.closeMenu(blueprintMenu);
-                blueprintIsOpen = false;
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            if (blueprintIsOpen)
-            {
-                menuController.closeMenu(blueprintMenu);
-                blueprintIsOpen = false;
-            }
-        }
     }
 
     public void OnMouseExit()
     {
         lookingAtBox = false;
+
     }
 }

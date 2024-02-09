@@ -20075,6 +20075,7 @@ MonoBehaviour:
   boxTop2onopen: {fileID: 2102214581}
   tape: {fileID: 7225266788984796307}
   isOpened: 0
+  menuController: {fileID: 312775338}
 --- !u!1 &1727924709
 GameObject:
   m_ObjectHideFlags: 0
@@ -32278,14 +32279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e8b2db01bafa74a9bd73a0763ff82b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distFromObject: 0
-  z: 0
-  transparent: {fileID: 604342862}
-  GlobalVolume: {fileID: 1755730553}
-  Blur: {fileID: 946511059}
-  playerCam: {fileID: 1559247135}
-  profile: {fileID: 11400000, guid: f492e43e1f3731243963ff315241c0de, type: 2}
-  vig: {fileID: 0}
 --- !u!23 &5020365334961960841
 MeshRenderer:
   m_ObjectHideFlags: 0

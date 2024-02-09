@@ -14,6 +14,7 @@ public class BoxScript : MonoBehaviour
     public GameObject boxTop2onopen;
     public GameObject tape;
     public bool isOpened;
+    public MenuController menuController;
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +33,12 @@ public class BoxScript : MonoBehaviour
         {
             if (hit.collider.gameObject == gameObject)
             {
-                interact.SetActive(true);
+                menuController.openPopup(interact);
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     isOpened = true;
-                    interact.SetActive(false);
+                    menuController.closePopup(interact);
 
                     tape.SetActive(false);
                     boxTop1.SetActive(false);
@@ -49,12 +50,12 @@ public class BoxScript : MonoBehaviour
             }
             else
             {
-                interact.SetActive(false);
+                menuController.closePopup(interact);
             }
         }
         else
         {
-            interact.SetActive(false);
+            menuController.closePopup(interact);
         }
     }
 }
