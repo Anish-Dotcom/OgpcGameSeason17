@@ -15,6 +15,7 @@ public class bedScript : MonoBehaviour
     public GameObject playerCam;
     public VolumeProfile profile;
     public Vignette vig;
+    public bool sleepy;
     public void Start()
     {
         if (profile.TryGet<Vignette>(out vig))
@@ -61,4 +62,5 @@ public class bedScript : MonoBehaviour
             StartCoroutine(transparentDown());
         }
     }
+    
 }
