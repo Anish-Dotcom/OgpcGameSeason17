@@ -13935,9 +13935,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d814b2dda5c691e4d85cc68fe0827546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  z: 0
   fatigue: 0
   shadowBorder: {fileID: 377778942}
   DissolveController: {fileID: 2012124011}
+  bedScript: {fileID: 4985786856929160619}
+  transparent: {fileID: 377778942}
 --- !u!114 &1146929043
 MonoBehaviour:
   m_ObjectHideFlags: 0

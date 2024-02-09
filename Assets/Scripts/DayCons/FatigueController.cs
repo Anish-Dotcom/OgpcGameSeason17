@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class FatigueController : MonoBehaviour
 {
+    public int z = 0;
     public float fatigue = 0    ;
     public GameObject shadowBorder;
     public DissolveController DissolveController;
     public bedScript bedScript;
+    public GameObject transparent;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,9 @@ public class FatigueController : MonoBehaviour
             transform.hasChanged = false;
         }
         
-        if(fatigue> 50) {
+        if(fatigue> 10) {
+            StartCoroutine(transparentUp());
+            transparent.GetComponent<CanvasGroup>().alpha += 0.1f;
             bedScript.sleepy = true;
             StartCoroutine(Cutoff());
         }
@@ -33,6 +37,18 @@ public class FatigueController : MonoBehaviour
     }
     void OutputTime() {
         fatigue++;
+    }
+
+    IEnumerator transparentUp()
+    {
+        
+        transparent.GetComponent<CanvasGroup>().alpha += 0.00000015f;
+        yield return new WaitForSeconds(0.5f);
+        z++;
+        if (z <= 100)
+        {
+            StartCoroutine(transparentUp());
+        }
     }
 
     IEnumerator Cutoff ()

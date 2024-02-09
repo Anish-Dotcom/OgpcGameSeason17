@@ -15,18 +15,22 @@ public class bedScript : MonoBehaviour
     public GameObject playerCam;
     public VolumeProfile profile;
     public Vignette vig;
-    public bool sleepy;
+    public bool sleepy = false;
     public void Start()
     {
         if (profile.TryGet<Vignette>(out vig))
         {
             vig.intensity.value = 0.3f;
         }
+        InvokeRepeating("checkSleep", 0, 1);
     }
     private void OnMouseUpAsButton()
     {
-        StartCoroutine(transparentUp());
-
+        if (sleepy)
+        {
+            print("sleep");
+            StartCoroutine(transparentUp());
+        }
         //Add animation or whatever here
     }
     IEnumerator transparentUp ()
@@ -62,5 +66,8 @@ public class bedScript : MonoBehaviour
             StartCoroutine(transparentDown());
         }
     }
-    
+    void checkSleep()
+    {
+        
+    }
 }
