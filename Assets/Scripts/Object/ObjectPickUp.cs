@@ -22,36 +22,34 @@ public class ObjectPickUp : MonoBehaviour
     public Vector3 originalScale;
 
     public GameObject[] LocationsOnShelf;
-
+    public GameObject[] pickupableObject;
     private GameObject currentObject;
+
+    public LayerMask mask;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        mask = LayerMask.GetMask("Pickupable");
     }
 
     // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
-        Ray ray = new Ray(fpsCam.position, fpsCam.forward);
-
-        if(!equipped && Physics.Raycast(ray, out hit, pickUpRange))
+        Debug.DrawRay(fpsCam.position, fpsCam.forward*pickUpRange);
+        if(!equipped && Physics.Raycast(fpsCam.position, fpsCam.forward, out hit, pickUpRange, mask))
         {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Pickupable"))
+            Debug.Log("asdf");
+            if (!slotFull)
             {
+                interact.SetActive(true);
 
-                if (hit.collider.gameObject == gameObject && !slotFull)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    interact.SetActive(true);
-
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        currentObject = hit.collider.gameObject;
-                        PickUp(currentObject);
-                        interact.SetActive(false);
-                    }
+                    currentObject = hit.collider.gameObject;
+                    PickUp(currentObject);
+                    interact.SetActive(false);
                 }
             }
         }
@@ -65,9 +63,8 @@ public class ObjectPickUp : MonoBehaviour
         }
 
         RaycastHit hit2;
-        Ray ray2 = new Ray(fpsCam.position, fpsCam.forward);
 
-        if (Physics.Raycast(ray2, out hit2, pickUpRange) && equipped)
+        if (Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange) && equipped)
         {
             foreach (GameObject locationOnShelf in LocationsOnShelf)
             {
@@ -79,17 +76,18 @@ public class ObjectPickUp : MonoBehaviour
                         Drop(currentObject);
                         rb.isKinematic = true;
                         currentObject.transform.position = locationOnShelf.transform.position;
+                        Debug.Log(locationOnShelf.transform.position);
                         store.SetActive(false);
                         currentObject.transform.rotation = Quaternion.identity;
 
-                        float distance = (transform.position.y-coll.size.y/2)-locationOnShelf.transform.position.y;
+                        float distance = (currentObject.transform.position.y-coll.size.y/2)-locationOnShelf.transform.position.y;
 
-                        currentObject.transform.position = new Vector3(transform.position.x, transform.position.y - distance, transform.position.z);
+                        currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
                     }
                 }
             }
         }
-        else if (!Physics.Raycast(ray2, out hit2, pickUpRange) && !equipped)
+        if (!Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange) || !equipped)
         {
             store.SetActive(false);
         }
