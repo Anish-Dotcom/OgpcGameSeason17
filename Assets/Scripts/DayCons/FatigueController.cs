@@ -37,8 +37,8 @@ public class FatigueController : MonoBehaviour
 
     IEnumerator Cutoff ()
     {
-        DissolveController.areaMat.SetFloat("_Cutoff_Distance_X", DissolveController.dissolveDistances.x - 1);
-        DissolveController.areaMat.SetFloat("_Cutoff_Distance_Z", DissolveController.dissolveDistances.z - 3);
+        Vector3 cutDistanceChanges = new Vector3(-1, 0, -3);
+        DissolveController.SetCutoffDist(cutDistanceChanges);
         yield return new WaitForSeconds(1);
         StartCoroutine(Cutoff());
     }

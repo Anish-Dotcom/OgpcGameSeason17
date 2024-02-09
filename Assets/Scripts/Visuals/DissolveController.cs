@@ -6,7 +6,7 @@ public class DissolveController : MonoBehaviour
 {
     public Vector3 dissolveDistances;//The distance in radius around the centralPos that things will apear
     public GameObject centralObj;//able to change positon to cleanly make something appear
-    public Material areaMat;
+    public Material[] areaMats;
 
     void Update()
     {
@@ -14,20 +14,32 @@ public class DissolveController : MonoBehaviour
     }
     void Start()
     {
-        areaMat.SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
-        Debug.Log(areaMat.GetVector("_Object_Position_For_Ref_Dis"));
-        areaMat.SetFloat("_Cutoff_Distance_X", dissolveDistances.x);
-        areaMat.SetFloat("_Cutoff_Distance_Y", dissolveDistances.y);
-        areaMat.SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
+        for (int i = 0; i < areaMats.Length; i++)
+        {
+            areaMats[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
+            Debug.Log(areaMats[i].GetVector("_Object_Position_For_Ref_Dis"));
+            areaMats[i].SetFloat("_Cutoff_Distance_X", dissolveDistances.x);
+            areaMats[i].SetFloat("_Cutoff_Distance_Y", dissolveDistances.y);
+            areaMats[i].SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
+        }
     }
     public void SetObjPos()
     {
-        areaMat.SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
+        for (int i = 0; i < areaMats.Length; i++)
+        {
+            areaMats[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
+            Debug.Log(areaMats[i].GetVector("_Object_Position_For_Ref_Dis"));
+        }
     }
-    public void SetCutoffDist() 
+    public void SetCutoffDist(Vector3 distanceChanges)
     {
-        areaMat.SetFloat("_Cutoff_Distance_X", dissolveDistances.x);
-        areaMat.SetFloat("_Cutoff_Distance_Y", dissolveDistances.y);
-        areaMat.SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
+        for (int i = 0; i < areaMats.Length; i++)
+        {
+            dissolveDistances -= distanceChanges;
+
+            areaMats[i].SetFloat("_Cutoff_Distance_X", dissolveDistances.x);
+            areaMats[i].SetFloat("_Cutoff_Distance_Y", dissolveDistances.y);
+            areaMats[i].SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
+        }
     }
 }
