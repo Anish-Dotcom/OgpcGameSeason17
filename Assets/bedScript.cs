@@ -26,7 +26,7 @@ public class bedScript : MonoBehaviour
     {
         StartCoroutine(transparentUp());
 
-        playerCam.transform.position = new Vector3(-0.384f, 0.787f, 1.406f);
+        //Add animation or whatever here
     }
     IEnumerator transparentUp ()
     {
@@ -34,6 +34,7 @@ public class bedScript : MonoBehaviour
         {
             vig.intensity.value += 0.01f;
         }
+        transparent.GetComponent<CanvasGroup>().alpha += 0.015f;
         yield return new WaitForSeconds(0.01f);
         z++;
         if(z <= 100)
@@ -51,6 +52,7 @@ public class bedScript : MonoBehaviour
         {
             vig.intensity.value -= 0.01f;
         }
+        transparent.GetComponent<CanvasGroup>().alpha -= 0.015f;
         yield return new WaitForSeconds(0.01f);
         z--;
 
