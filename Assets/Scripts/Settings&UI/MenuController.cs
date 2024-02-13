@@ -10,6 +10,7 @@ public class MenuController : MonoBehaviour
     public List<GameObject> openMenus;
     public List<GameObject> openPopups;
     public bool menuOpen = false;
+    public GameObject blur;
 
     // special function variables:
     public GameObject EscapeMenu;
@@ -35,6 +36,7 @@ public class MenuController : MonoBehaviour
     {
         if (menuOpen)
         {
+            blur.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             playerMove.isControllable = false;
@@ -45,6 +47,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
+            blur.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             playerMove.isControllable = true;
