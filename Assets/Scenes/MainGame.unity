@@ -2906,10 +2906,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: {fileID: 62802925}
-  assembly: {fileID: 6860886102526396456, guid: f1459f2dcda39eb4da7154879afa3bd0,
+  assembly: {fileID: 5179379575291795054, guid: 30dd1e9ec8cac43478bdcdbbf634cde3,
     type: 3}
-  finalObjWithParts: {fileID: 0}
-  finalObj: {fileID: 0}
+  finalObj: {fileID: 4995364190673618756, guid: 22fce205c609c0747a82b410e18d744d,
+    type: 3}
 --- !u!1 &247658623
 GameObject:
   m_ObjectHideFlags: 0

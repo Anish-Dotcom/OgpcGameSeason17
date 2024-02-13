@@ -113,7 +113,7 @@ public class AssemblyController : MonoBehaviour
     public void SetAssembly(GameObject RecipeObj, GameObject CompletedAssembly)
     {
         completedAssembly = CompletedAssembly;
-        GameObject RecipeObject = Instantiate(RecipeObj, new Vector3(0, 0, 0), Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
+        GameObject RecipeObject = Instantiate(RecipeObj, RecipeForAssemblyObj.transform.position, Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
         toyNamesForFinal = new string[RecipeObject.transform.childCount];//get children of gameobject, each child is a part of the assembly
         toyPartPreFinalPos = new Vector3[RecipeObject.transform.childCount];
         toyPartFinalPos = new Vector3[completedAssembly.transform.childCount];
