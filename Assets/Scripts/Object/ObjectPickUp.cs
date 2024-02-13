@@ -5,9 +5,9 @@ using UnityEngine;
 public class ObjectPickUp : MonoBehaviour
 {
     public FatigueController FatigueController;
-
     private Rigidbody rb;
-    private BoxCollider coll;
+    public Collider[] coll;
+    public BoxCollider boxColl;
     public Transform player, objectContainer, fpsCam;
 
     public float pickUpRange;
@@ -80,8 +80,7 @@ public class ObjectPickUp : MonoBehaviour
                         store.SetActive(false);
                         currentObject.transform.rotation = Quaternion.identity;
 
-                        float distance = (currentObject.transform.position.y-coll.size.y/2)-locationOnShelf.transform.position.y;
-
+                        float distance = (currentObject.transform.position.y - boxColl.size.y / 2) - locationOnShelf.transform.position.y;
                         currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
                     }
                 }
@@ -96,7 +95,16 @@ public class ObjectPickUp : MonoBehaviour
     private void PickUp(GameObject item)
     {
         rb = item.GetComponent<Rigidbody>();
-        coll = item.GetComponent<BoxCollider>();
+        coll = item.GetComponents<Collider>();
+
+        if (coll.Length == 1)
+        {
+            boxColl = (BoxCollider)coll[0];
+        }
+        else
+        {
+            boxColl = (BoxCollider)coll[1];
+        }
 
         item.gameObject.layer = 2;
 
@@ -108,7 +116,7 @@ public class ObjectPickUp : MonoBehaviour
         FatigueController.fatigue += 20;
         print(FatigueController.fatigue);
         rb.isKinematic = true;
-        coll.isTrigger = true;
+        coll[0].isTrigger = true;
     }
 
     private void Drop(GameObject item)
@@ -121,7 +129,7 @@ public class ObjectPickUp : MonoBehaviour
         item.transform.SetParent(null);
 
         rb.isKinematic = false;
-        coll.isTrigger = false;
+        coll[0].isTrigger = false;
 
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
