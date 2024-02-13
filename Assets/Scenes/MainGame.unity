@@ -3540,6 +3540,7 @@ MonoBehaviour:
   openMenus: []
   openPopups: []
   menuOpen: 0
+  blur: {fileID: 946511059}
   EscapeMenu: {fileID: 1514803315}
   commissionsUI: {fileID: 692164734}
 --- !u!4 &312775339
@@ -7118,7 +7119,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &604342865
 MonoBehaviour:
