@@ -17,7 +17,7 @@ public class AssemblyController : MonoBehaviour
     public GameObject completedAssembly;
     public float timeToEaseToFinal;
     public float timePassed;
-    private float storedTime = 1000000000;//use for finding how much time has passed
+    private float storedTime = 10000000;//use for finding how much time has passed
 
     public GameObject emptyObj;//usingForFormating
 
@@ -34,7 +34,7 @@ public class AssemblyController : MonoBehaviour
         {
             //clear all variables
             summonAssembly();
-            storedTime = 1000000000;
+            storedTime = 10000000;
         }
     }
 
@@ -63,7 +63,7 @@ public class AssemblyController : MonoBehaviour
                         Vector3 velocity = Vector3.zero;
 
                         assemblyPartsInScene[i].transform.position = Vector3.SmoothDamp(assemblyPartsInScene[i].transform.position, toyPartPreFinalPos[i], ref velocity, 1);
-                        RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);
+                        RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);//disable outline same as obj
 
                         assemblyPartsInScene[i].GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).GetComponent<Transform>());//sets to be a child of the assosciated
                         toyPartInFinalPos[i] = true;
@@ -87,29 +87,42 @@ public class AssemblyController : MonoBehaviour
                 }
             }
         }
+        else if (col.gameObject.CompareTag("Player"))
+        {
+            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
+            {
+                if (!toyPartInFinalPos[i])
+                {
+                    RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(true);//enable all outlines 
+                }
+            }
+        }
     }
     private void OnTriggerExit(Collider col)
     {
-        Debug.Log("exit");
-        for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().childCount; i++)
+        Debug.Log("exit");//only if its the player
+        if (col.gameObject.CompareTag("Player"))
         {
-            RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);//disable all outlines 
+            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
+            {
+                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);//disable all outlines 
+            }
         }
     }
-
-    public void SetAssembly(GameObject OutlineObjectRef, GameObject FinalPosObj, GameObject CompletedAssembly)//have a gameobject which is of the completed toy part but with the hallow material and unpickupable + no grav, just transform and mesh. This means we can highlight the position the part will be moved to + edit it easier
+    //outline
+    public void SetAssembly(GameObject RecipeObj, GameObject CompletedAssembly)
     {
         completedAssembly = CompletedAssembly;
-        GameObject OutlineObject = Instantiate(OutlineObjectRef, new Vector3(0, 0, 0), Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
-        toyNamesForFinal = new string[OutlineObject.transform.childCount];//get children of gameobject, each child is a part of the assembly
-        toyPartPreFinalPos = new Vector3[OutlineObject.transform.childCount];
+        GameObject RecipeObject = Instantiate(RecipeObj, new Vector3(0, 0, 0), Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
+        toyNamesForFinal = new string[RecipeObject.transform.childCount];//get children of gameobject, each child is a part of the assembly
+        toyPartPreFinalPos = new Vector3[RecipeObject.transform.childCount];
         toyPartFinalPos = new Vector3[completedAssembly.transform.childCount];
 
-        for (int i = 0; i < OutlineObject.transform.childCount; i++)
+        for (int i = 0; i < RecipeObject.transform.childCount; i++)
         {
-            toyNamesForFinal[i] = OutlineObject.transform.GetChild(i).name;
-            toyPartPreFinalPos[i] = OutlineObject.transform.GetChild(i).transform.position;
-            toyPartFinalPos[i] = FinalPosObj.transform.GetChild(i).transform.position;
+            toyNamesForFinal[i] = RecipeObject.transform.GetChild(i).name;
+            toyPartPreFinalPos[i] = RecipeObject.transform.GetChild(i).transform.position;
+            toyPartFinalPos[i] = CompletedAssembly.transform.GetChild(i).transform.position;
             GameObject Recent = Instantiate(emptyObj, new Vector3(0, 0, 0), Quaternion.identity, AssemblyPartsInPosition.GetComponent<Transform>());
             Recent.name = toyNamesForFinal[i] + " " + i.ToString();//setNameToSameAsToyNames + something to differentiate
         }
