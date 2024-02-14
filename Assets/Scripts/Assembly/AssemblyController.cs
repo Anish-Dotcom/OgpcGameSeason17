@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class AssemblyController : MonoBehaviour
 {
+    public bool lookingAt = false;
+    public float distFromPlayer;
+    public GameObject playerCam;
+    public bool outlinesAreShown = false;
+    public GameObject heldObjContainer;
+    public GameObject addPart;
+
+    public MenuController menuController;
+
     public GameObject[] assemblyPartsInScene;
 
     public GameObject RecipeForAssemblyObj;
@@ -29,6 +38,23 @@ public class AssemblyController : MonoBehaviour
     }
     void Update()
     {
+        distFromPlayer = Vector3.Distance(playerCam.transform.position, transform.position);
+        if (distFromPlayer <= 4 && outlinesAreShown == false)
+        {
+            outlinesAreShown = true;
+            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
+            {
+                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(true);//enable all outlines 
+            }
+        }
+        else if (distFromPlayer > 4 && outlinesAreShown == true)
+        {
+            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
+            {
+                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);//disable all outlines 
+            }
+        }
+
         timePassed += Time.deltaTime;
         if (storedTime <= timePassed - timeToEaseToFinal)//after parts ease to position summon combined assembly
         {
@@ -87,44 +113,44 @@ public class AssemblyController : MonoBehaviour
                 }
             }
         }
-        else if (col.gameObject.CompareTag("Player"))
-        {
-            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
-            {
-                if (!toyPartInFinalPos[i])
-                {
-                    RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(true);//enable all outlines 
-                }
-            }
-        }
     }
-    private void OnTriggerExit(Collider col)
-    {
-        Debug.Log("exit");//only if its the player
-        if (col.gameObject.CompareTag("Player"))
-        {
-            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
-            {
-                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);//disable all outlines 
-            }
-        }
-    }
+
     //outline
     public void SetAssembly(GameObject RecipeObj, GameObject CompletedAssembly)
     {
         completedAssembly = CompletedAssembly;
-        GameObject RecipeObject = Instantiate(RecipeObj, RecipeForAssemblyObj.transform.position, Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
+        GameObject RecipeObject = Instantiate(RecipeObj, RecipeForAssemblyObj.transform.position + RecipeObj.transform.position, Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
         toyNamesForFinal = new string[RecipeObject.transform.childCount];//get children of gameobject, each child is a part of the assembly
         toyPartPreFinalPos = new Vector3[RecipeObject.transform.childCount];
         toyPartFinalPos = new Vector3[completedAssembly.transform.childCount];
+        toyPartInFinalPos = new bool[RecipeObject.transform.childCount];
 
         for (int i = 0; i < RecipeObject.transform.childCount; i++)
         {
             toyNamesForFinal[i] = RecipeObject.transform.GetChild(i).name;
             toyPartPreFinalPos[i] = RecipeObject.transform.GetChild(i).transform.position;
             toyPartFinalPos[i] = CompletedAssembly.transform.GetChild(i).transform.position;
+            toyPartInFinalPos[i] = false;
             GameObject Recent = Instantiate(emptyObj, new Vector3(0, 0, 0), Quaternion.identity, AssemblyPartsInPosition.GetComponent<Transform>());
             Recent.name = toyNamesForFinal[i] + " " + i.ToString();//setNameToSameAsToyNames + something to differentiate
         }
+    }
+
+    private void OnMouseOver()
+    {
+        if (distFromPlayer <= 3.5 && heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
+        {
+            lookingAt = true;
+            menuController.openPopup(addPart);
+        }
+        else
+        {
+            lookingAt = false;
+            menuController.openPopup(addPart);
+        }
+    }
+    public void OnMouseExit()
+    {
+        lookingAt = false;
     }
 }

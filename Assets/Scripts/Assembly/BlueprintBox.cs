@@ -58,6 +58,5 @@ public class BlueprintBox : MonoBehaviour
     public void OnMouseExit()
     {
         lookingAtBox = false;
-
     }
 }
