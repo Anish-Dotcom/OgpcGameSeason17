@@ -55,6 +55,39 @@ public class AssemblyController : MonoBehaviour
             }
         }
 
+        RaycastHit hit;
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))
+        {
+            if (heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0 && hit.collider.gameObject.CompareTag("assemblyStation"))
+            {
+                Debug.Log("1st step true");
+                if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
+                {
+                    lookingAt = true;
+                    menuController.openPopup(addPart);
+                    Debug.Log("2nd step true");
+                }
+                else
+                {
+                    lookingAt = false;
+                    menuController.closePopup(addPart);
+                    Debug.Log("2nd step false");
+                }
+            }
+            else
+            {
+                lookingAt = false;
+                menuController.closePopup(addPart);
+                Debug.Log("1st step false");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && lookingAt)
+        {
+            AddToAssembly(heldObjContainer.GetComponent<Transform>().GetChild(0).gameObject);
+        }
+
+
         timePassed += Time.deltaTime;
         if (storedTime <= timePassed - timeToEaseToFinal)//after parts ease to position summon combined assembly
         {
@@ -75,10 +108,10 @@ public class AssemblyController : MonoBehaviour
     }
     //---
 
-    private void OnTriggerEnter(Collider col)//assembly
+    private void AddToAssembly(GameObject objToAdd)//not working yet, everything else in script should work
     {
         Debug.Log("enter");
-        if (col.gameObject.CompareTag("assemblyPart"))
+        if (objToAdd.CompareTag("assemblyPart"))
         {
             for (int i = 0; i < assemblyPartsInScene.Length; i++)
             {
@@ -136,31 +169,6 @@ public class AssemblyController : MonoBehaviour
         }
     }
 
-    private void OnMouseOver()
-    {
-        if (distFromPlayer <= 3.5 && heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0)
-        {
-            Debug.Log("1st step true");
-            if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
-            {
-                lookingAt = true;
-                menuController.openPopup(addPart);
-                Debug.Log("2nd step true");
-            }
-            else
-            {
-                lookingAt = false;
-                menuController.closePopup(addPart);
-                Debug.Log("2nd step false");
-            }
-        }
-        else
-        {
-            lookingAt = false;
-            menuController.closePopup(addPart);
-            Debug.Log("1st step false");
-        }
-    }
     public void OnMouseExit()
     {
         lookingAt = false;
