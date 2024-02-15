@@ -19,7 +19,7 @@ public class ObjectPickUp : MonoBehaviour
     public GameObject interact;
     public GameObject store;
 
-    public Vector3 originalScale;
+    private Vector3 originalScale;
 
     public GameObject[] LocationsOnShelf;
     public GameObject[] pickupableObject;
@@ -40,13 +40,13 @@ public class ObjectPickUp : MonoBehaviour
         Debug.DrawRay(fpsCam.position, fpsCam.forward*pickUpRange);
         if(!equipped && Physics.Raycast(fpsCam.position, fpsCam.forward, out hit, pickUpRange, mask))
         {
-            Debug.Log("asdf");
             if (!slotFull)
             {
                 interact.SetActive(true);
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    originalScale = hit.transform.localScale;
                     currentObject = hit.collider.gameObject;
                     PickUp(currentObject);
                     interact.SetActive(false);
@@ -135,5 +135,7 @@ public class ObjectPickUp : MonoBehaviour
 
         rb.AddForce(fpsCam.forward * dropForwardForce, ForceMode.Impulse);
         rb.AddForce(fpsCam.up * dropUpwardForce, ForceMode.Impulse);
+
+        item.transform.localScale = originalScale;
     }
 }
