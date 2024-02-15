@@ -138,23 +138,27 @@ public class AssemblyController : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (distFromPlayer <= 3.5 && heldObjContainer.transform.childCount > 0)
+        if (distFromPlayer <= 3.5 && heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0)
         {
+            Debug.Log("1st step true");
             if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
             {
                 lookingAt = true;
                 menuController.openPopup(addPart);
+                Debug.Log("2nd step true");
             }
             else
             {
                 lookingAt = false;
                 menuController.closePopup(addPart);
+                Debug.Log("2nd step false");
             }
         }
         else
         {
             lookingAt = false;
             menuController.closePopup(addPart);
+            Debug.Log("1st step false");
         }
     }
     public void OnMouseExit()
