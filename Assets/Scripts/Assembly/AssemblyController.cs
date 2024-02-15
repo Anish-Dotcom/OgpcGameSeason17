@@ -39,7 +39,7 @@ public class AssemblyController : MonoBehaviour
     void Update()
     {
         distFromPlayer = Vector3.Distance(playerCam.transform.position, transform.position);
-        if (distFromPlayer <= 4 && outlinesAreShown == false)
+        if (distFromPlayer <= 4 && outlinesAreShown == false && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)
         {
             outlinesAreShown = true;
             for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
@@ -138,15 +138,23 @@ public class AssemblyController : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (distFromPlayer <= 3.5 && heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
+        if (distFromPlayer <= 3.5 && heldObjContainer.transform.childCount > 0)
         {
-            lookingAt = true;
-            menuController.openPopup(addPart);
+            if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
+            {
+                lookingAt = true;
+                menuController.openPopup(addPart);
+            }
+            else
+            {
+                lookingAt = false;
+                menuController.closePopup(addPart);
+            }
         }
         else
         {
             lookingAt = false;
-            menuController.openPopup(addPart);
+            menuController.closePopup(addPart);
         }
     }
     public void OnMouseExit()
