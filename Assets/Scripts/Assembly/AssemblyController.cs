@@ -55,6 +55,39 @@ public class AssemblyController : MonoBehaviour
             }
         }
 
+        RaycastHit hit;
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))
+        {
+            if (heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0 && hit.collider.gameObject.CompareTag("assemblyStation"))
+            {
+                Debug.Log("1st step true");
+                if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
+                {
+                    lookingAt = true;
+                    menuController.openPopup(addPart);
+                    Debug.Log("2nd step true");
+                }
+                else
+                {
+                    lookingAt = false;
+                    menuController.closePopup(addPart);
+                    Debug.Log("2nd step false");
+                }
+            }
+            else
+            {
+                lookingAt = false;
+                menuController.closePopup(addPart);
+                Debug.Log("1st step false");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && lookingAt)
+        {
+            AddToAssembly(heldObjContainer.GetComponent<Transform>().GetChild(0).gameObject);
+        }
+
+
         timePassed += Time.deltaTime;
         if (storedTime <= timePassed - timeToEaseToFinal)//after parts ease to position summon combined assembly
         {
@@ -75,41 +108,38 @@ public class AssemblyController : MonoBehaviour
     }
     //---
 
-    private void OnTriggerEnter(Collider col)//assembly
+    private void AddToAssembly(GameObject objToAdd)//not working yet, everything else in script should work
     {
         Debug.Log("enter");
-        if (col.gameObject.CompareTag("assemblyPart"))
+        if (objToAdd.CompareTag("assemblyPart"))
         {
-            for (int i = 0; i < assemblyPartsInScene.Length; i++)
+            for (int b = 0; b < toyNamesForFinal.Length; b++)
             {
-                for (int b = 0; b < toyNamesForFinal.Length; b++)
+                if (objToAdd.name == toyNamesForFinal[b] && toyPartInFinalPos[b] == false)//
                 {
-                    if (assemblyPartsInScene[i].name == toyNamesForFinal[b] && toyPartInFinalPos[i] == false)//as soon as it goes inside it does this, should need button press --------------------------- while in the place otherwise it has the corasponding outline enabled
+                    Vector3 velocity = objToAdd.GetComponent<Rigidbody>().velocity;
+
+                    objToAdd.transform.position = Vector3.SmoothDamp(objToAdd.transform.position, toyPartPreFinalPos[b], ref velocity, 1);
+                    RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).gameObject.SetActive(false);//disable outline same as obj
+
+                    objToAdd.GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(b).GetComponent<Transform>());//sets to be a child of the assosciated
+                    toyPartInFinalPos[b] = true;
+
+                    bool assemblyDone = true;//true unless any is false
+                    for (int c = 0; c < toyPartInFinalPos.Length; c++)
                     {
-                        Vector3 velocity = Vector3.zero;
-
-                        assemblyPartsInScene[i].transform.position = Vector3.SmoothDamp(assemblyPartsInScene[i].transform.position, toyPartPreFinalPos[i], ref velocity, 1);
-                        RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);//disable outline same as obj
-
-                        assemblyPartsInScene[i].GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).GetComponent<Transform>());//sets to be a child of the assosciated
-                        toyPartInFinalPos[i] = true;
-
-                        bool assemblyDone = true;//true unless any is false
-                        for (int c = 0; c < toyPartInFinalPos.Length; c++)
+                        if (!toyPartInFinalPos[c])//checking if all are true, if even one is false, return.
                         {
-                            if (!toyPartInFinalPos[c])//checking if all are true, if even one is false, return.
-                            {
-                                assemblyDone = false;
-                            }
+                            assemblyDone = false;
                         }
-                        if (assemblyDone)
-                        {
-                            //Clear RecipeForAssemblyObj
-                            Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0));
-                            storedTime = timePassed;
-                        }
-                        return;
                     }
+                    if (assemblyDone)
+                    {
+                        //Clear RecipeForAssemblyObj
+                        Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0));
+                        storedTime = timePassed;
+                    }
+                    return;
                 }
             }
         }
@@ -136,31 +166,6 @@ public class AssemblyController : MonoBehaviour
         }
     }
 
-    private void OnMouseOver()
-    {
-        if (distFromPlayer <= 3.5 && heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0)
-        {
-            Debug.Log("1st step true");
-            if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
-            {
-                lookingAt = true;
-                menuController.openPopup(addPart);
-                Debug.Log("2nd step true");
-            }
-            else
-            {
-                lookingAt = false;
-                menuController.closePopup(addPart);
-                Debug.Log("2nd step false");
-            }
-        }
-        else
-        {
-            lookingAt = false;
-            menuController.closePopup(addPart);
-            Debug.Log("1st step false");
-        }
-    }
     public void OnMouseExit()
     {
         lookingAt = false;
