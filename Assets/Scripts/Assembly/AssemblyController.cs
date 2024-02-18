@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class AssemblyController : MonoBehaviour
 {
+
+    public GameObject assembly;
+    public GameObject finalObj;
+
+    //above are for testing
+
+
+
     public bool lookingAt = false;
     public float distFromPlayer;
     public GameObject playerCam;
@@ -35,6 +43,9 @@ public class AssemblyController : MonoBehaviour
     void Start()
     {
         assemblyPartsInScene = GameObject.FindGameObjectsWithTag("assemblyPart");//call this whenever new objects get added to scene as well
+
+        //for testing:
+        SetAssembly(assembly, finalObj);
     }
     void Update()
     {
@@ -44,7 +55,7 @@ public class AssemblyController : MonoBehaviour
             outlinesAreShown = true;
             for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
             {
-                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(true);//enable all outlines 
+                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(true);//enable all outlines
             }
         }
         else if (distFromPlayer > 4 && outlinesAreShown == true)
@@ -56,35 +67,33 @@ public class AssemblyController : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//working
         {
             if (heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0 && hit.collider.gameObject.CompareTag("assemblyStation"))
             {
-                Debug.Log("1st step true");
                 if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
                 {
                     lookingAt = true;
                     menuController.openPopup(addPart);
-                    Debug.Log("2nd step true");
                 }
                 else
                 {
                     lookingAt = false;
                     menuController.closePopup(addPart);
-                    Debug.Log("2nd step false");
                 }
             }
             else
             {
                 lookingAt = false;
                 menuController.closePopup(addPart);
-                Debug.Log("1st step false");
             }
         }
 
         if (Input.GetKeyDown(KeyCode.E) && lookingAt)
         {
             AddToAssembly(heldObjContainer.GetComponent<Transform>().GetChild(0).gameObject);
+            ObjectPickUp.equipped = false;
+            ObjectPickUp.slotFull = false;
         }
 
 
@@ -117,12 +126,31 @@ public class AssemblyController : MonoBehaviour
             {
                 if (objToAdd.name == toyNamesForFinal[b] && toyPartInFinalPos[b] == false)//
                 {
+                    Collider[] coll = objToAdd.GetComponents<Collider>();
+
+                    if (coll.Length == 1)//only a box collider
+                    {
+                        coll[0].isTrigger = false;
+                    }
+                    else//also another type
+                    {
+                        if (coll[0].GetType() == typeof(BoxCollider))//if is a box collider, make other not a trigger
+                        {
+                            coll[1].isTrigger = false;
+                        }
+                        else//2nd collider is a box collider, 1st is other type, !!!- means that there cannot be two box colliders
+                        {
+                            coll[0].isTrigger = false;
+                        }
+                    }
+
+                    objToAdd.GetComponent<Rigidbody>().isKinematic = true;
                     Vector3 velocity = objToAdd.GetComponent<Rigidbody>().velocity;
 
-                    objToAdd.transform.position = Vector3.SmoothDamp(objToAdd.transform.position, toyPartPreFinalPos[b], ref velocity, 1);
                     RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).gameObject.SetActive(false);//disable outline same as obj
 
                     objToAdd.GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(b).GetComponent<Transform>());//sets to be a child of the assosciated
+                    objToAdd.transform.position = Vector3.SmoothDamp(objToAdd.transform.position, RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position, ref velocity, 1);
                     toyPartInFinalPos[b] = true;
 
                     bool assemblyDone = true;//true unless any is false

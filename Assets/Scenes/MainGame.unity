@@ -962,6 +962,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059a5b6a942de4d45adf2fdf72f93b0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assembly: {fileID: 3697188818787746271, guid: c7fbddf87d175114cbfc242dc69442ef,
+    type: 3}
+  finalObj: {fileID: 4995364190673618756, guid: 22fce205c609c0747a82b410e18d744d,
+    type: 3}
   lookingAt: 0
   distFromPlayer: 0
   playerCam: {fileID: 1559247135}
@@ -14277,10 +14281,8 @@ MonoBehaviour:
   pickUpRange: 3
   dropForwardForce: 2
   dropUpwardForce: 1
-  equipped: 0
   interact: {fileID: 1976911767}
   store: {fileID: 353880494}
-  originalScale: {x: 0, y: 0, z: 0}
   LocationsOnShelf:
   - {fileID: 436954423}
   - {fileID: 1072282141}
@@ -23885,6 +23887,7 @@ MonoBehaviour:
   areaMats:
   - {fileID: 2100000, guid: d10b8c165cd4c8545a5b5a0e697258be, type: 2}
   - {fileID: 2100000, guid: eb0b37a4616266c449b189115ac8bd8a, type: 2}
+  - {fileID: 2100000, guid: 05fee0981606bdf43ba5b109b91e9918, type: 2}
 --- !u!1 &2039938837
 GameObject:
   m_ObjectHideFlags: 0

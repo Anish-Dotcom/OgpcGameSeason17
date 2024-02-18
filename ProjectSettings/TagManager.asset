@@ -9,6 +9,8 @@ TagManager:
   - assemblyPart
   - Box
   - assemblyStation
+  - Outline
+  - RecipePart
   layers:
   - Default
   - TransparentFX

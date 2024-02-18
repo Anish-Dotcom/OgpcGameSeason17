@@ -13,7 +13,7 @@ public class ObjectPickUp : MonoBehaviour
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
 
-    public bool equipped;
+    public static bool equipped;
     public static bool slotFull;
 
     public GameObject interact;
