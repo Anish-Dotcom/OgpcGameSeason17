@@ -150,7 +150,9 @@ public class AssemblyController : MonoBehaviour
                     RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).gameObject.SetActive(false);//disable outline same as obj
 
                     objToAdd.GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(b).GetComponent<Transform>());//sets to be a child of the assosciated
-                    objToAdd.transform.position = Vector3.SmoothDamp(objToAdd.transform.position, RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position, ref velocity, 1);
+                    objToAdd.transform.rotation = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.rotation;
+                    objToAdd.transform.position = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position;
+                    //objToAdd.transform.position = Vector3.SmoothDamp(objToAdd.transform.position, RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position, ref velocity, 1);
                     toyPartInFinalPos[b] = true;
 
                     bool assemblyDone = true;//true unless any is false
