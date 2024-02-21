@@ -10,12 +10,11 @@ public class AssemblyController : MonoBehaviour
 
     //above are for testing
 
-
+    public Material recipeMat;
 
     public bool lookingAt = false;
     public float distFromPlayer;
     public GameObject playerCam;
-    public bool outlinesAreShown = false;
     public GameObject heldObjContainer;
     public GameObject addPart;
 
@@ -50,20 +49,18 @@ public class AssemblyController : MonoBehaviour
     void Update()
     {
         distFromPlayer = Vector3.Distance(playerCam.transform.position, transform.position);
-        if (distFromPlayer <= 4 && outlinesAreShown == false && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)
+        if (distFromPlayer <= 3.8 && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)
         {
-            outlinesAreShown = true;
-            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
-            {
-                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(true);//enable all outlines
-            }
+            RecipeForAssemblyObj.transform.GetChild(0).gameObject.SetActive(true);
+            recipeMat.SetFloat("_Transparency", 0.5f / (distFromPlayer * distFromPlayer * distFromPlayer));
         }
-        else if (distFromPlayer > 4 && outlinesAreShown == true)
+        else if (distFromPlayer <= 4 && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)
         {
-            for (int i = 0; i > RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().childCount; i++)
-            {
-                RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(i).gameObject.SetActive(false);//disable all outlines 
-            }
+            recipeMat.SetFloat("_Transparency", 0.5f / (distFromPlayer * distFromPlayer * distFromPlayer * 2));
+        }
+        else if (distFromPlayer > 4)
+        {
+            RecipeForAssemblyObj.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         RaycastHit hit;
@@ -119,7 +116,7 @@ public class AssemblyController : MonoBehaviour
 
     private void AddToAssembly(GameObject objToAdd)//not working yet, everything else in script should work
     {
-        Debug.Log("enter");
+        Debug.Log("addItemFunctionCalled" + timePassed);
         if (objToAdd.CompareTag("assemblyPart"))
         {
             for (int b = 0; b < toyNamesForFinal.Length; b++)
