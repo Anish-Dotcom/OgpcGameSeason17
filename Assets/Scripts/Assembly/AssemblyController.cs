@@ -54,8 +54,14 @@ public class AssemblyController : MonoBehaviour
             RecipeForAssemblyObj.transform.GetChild(0).gameObject.SetActive(true);
             recipeMat.SetFloat("_Transparency", 0.5f / (distFromPlayer * distFromPlayer * distFromPlayer));
         }
+        else if (distFromPlayer <= 3.9 && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)
+        {
+            RecipeForAssemblyObj.transform.GetChild(0).gameObject.SetActive(true);
+            recipeMat.SetFloat("_Transparency", 0.5f / (distFromPlayer * distFromPlayer * distFromPlayer * 1.5f));
+        }
         else if (distFromPlayer <= 4 && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)
         {
+            RecipeForAssemblyObj.transform.GetChild(0).gameObject.SetActive(true);
             recipeMat.SetFloat("_Transparency", 0.5f / (distFromPlayer * distFromPlayer * distFromPlayer * 2));
         }
         else if (distFromPlayer > 4)
