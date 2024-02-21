@@ -16,6 +16,7 @@ public class bedScript : MonoBehaviour
     public VolumeProfile profile;
     public Vignette vig;
     public bool sleepy = false;
+    public CaledarScript caledarScript;
     public void Start()
     {
         if (profile.TryGet<Vignette>(out vig))
@@ -28,13 +29,13 @@ public class bedScript : MonoBehaviour
     {
         if (sleepy)
         {
-            print("sleep");
             StartCoroutine(transparentUp());
         }
         //Add animation or whatever here
     }
     IEnumerator transparentUp ()
     {
+
         if (profile.TryGet<Vignette> (out vig))
         {
             vig.intensity.value += 0.01f;
@@ -61,10 +62,15 @@ public class bedScript : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         z--;
 
-        if (z <= 100)
+        if (z <= 100 && z >= 0)
         {
             StartCoroutine(transparentDown());
         }
+        if(z == 0)
+        {
+
+        }
+
     }
     void checkSleep()
     {
