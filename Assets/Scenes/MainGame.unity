@@ -966,10 +966,10 @@ MonoBehaviour:
     type: 3}
   finalObj: {fileID: 4995364190673618756, guid: 22fce205c609c0747a82b410e18d744d,
     type: 3}
+  recipeMat: {fileID: 2100000, guid: 05fee0981606bdf43ba5b109b91e9918, type: 2}
   lookingAt: 0
   distFromPlayer: 0
   playerCam: {fileID: 1559247135}
-  outlinesAreShown: 0
   heldObjContainer: {fileID: 146505513}
   addPart: {fileID: 140519148}
   menuController: {fileID: 312775338}
