@@ -62,13 +62,13 @@ public class bedScript : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         z--;
 
-        if (z <= 100 && z >= 0)
+        if (z <= 100 && z > 0)
         {
             StartCoroutine(transparentDown());
         }
         if(z == 0)
         {
-
+            caledarScript.text = caledarScript.text + " /";
         }
 
     }

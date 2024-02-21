@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class FatigueController : MonoBehaviour
 {
-    public int z = 0;
+    public int iter = 0;
     public float fatigue = 0    ;
     public GameObject shadowBorder;
     public DissolveController DissolveController;
     public bedScript bedScript;
     public GameObject transparent;
+    float x;
+    float z;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,15 +24,19 @@ public class FatigueController : MonoBehaviour
         if (transform.hasChanged)
         {
             fatigue+=0.01f;
-            //print(fatigue);
             transform.hasChanged = false;
         }
         
         if(fatigue> 10) {
-            StartCoroutine(transparentUp());
-            transparent.GetComponent<CanvasGroup>().alpha += 0.1f;
-            bedScript.sleepy = true;
+
+           
+
+
+            print("sleepy");
+            //StartCoroutine(transparentUp());
+            //bedScript.sleepy = true;
             StartCoroutine(Cutoff());
+            fatigue = 0;
         }
 
         
@@ -42,10 +48,10 @@ public class FatigueController : MonoBehaviour
     IEnumerator transparentUp()
     {
         
-        transparent.GetComponent<CanvasGroup>().alpha += 0.00000015f;
+
         yield return new WaitForSeconds(0.5f);
-        z++;
-        if (z <= 100)
+        iter++;
+        if (iter <= 100)
         {
             StartCoroutine(transparentUp());
         }
@@ -53,9 +59,13 @@ public class FatigueController : MonoBehaviour
 
     IEnumerator Cutoff ()
     {
-        Vector3 cutDistanceChanges = new Vector3(-1, 0, -3);
+        
+
+        print("cutoff");
+        Vector3 cutDistanceChanges = new Vector3(fatigue/2000, 0, fatigue/1000);
         DissolveController.SetCutoffDist(cutDistanceChanges);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
         StartCoroutine(Cutoff());
+        
     }
 }
