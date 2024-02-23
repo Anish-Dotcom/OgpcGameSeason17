@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 6465904751038653868}
   - component: {fileID: 8037347799227259367}
   m_Layer: 0
-  m_Name: screw.003
+  m_Name: screw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 5757770383958495908}
   - component: {fileID: 3883750634270886721}
   m_Layer: 0
-  m_Name: winduppart3
+  m_Name: winduppart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1185,7 +1185,7 @@ GameObject:
   - component: {fileID: 3645348472223755918}
   - component: {fileID: 7710574680371133250}
   m_Layer: 0
-  m_Name: screw.002
+  m_Name: screw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1742,7 +1742,7 @@ GameObject:
   - component: {fileID: 931684582547001175}
   - component: {fileID: 8121364344810579314}
   m_Layer: 0
-  m_Name: screw.001
+  m_Name: screw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -37,19 +37,30 @@ public class AssemblyController : MonoBehaviour
 
     public GameObject emptyObj;//usingForFormating
 
+    //smoothdamp variables:
+    public GameObject[] objectsBeingMoved;
+    public Vector3[] positionMovingTo;
+    public float[] timeBeenMoved;
+
 
 
     void Start()
     {
         assemblyPartsInScene = GameObject.FindGameObjectsWithTag("assemblyPart");//call this whenever new objects get added to scene as well
+        objectsBeingMoved = new GameObject[assemblyPartsInScene.Length];
+        positionMovingTo = = new GameObject[assemblyPartsInScene.Length];
 
         //for testing:
         SetAssembly(assembly, finalObj);
+        for (int i = 0; i < assemblyPartsInScene.Length; i++)
+        {
+            AddToAssembly(assemblyPartsInScene[i]);
+        }
     }
     void Update()
     {
         distFromPlayer = Vector3.Distance(playerCam.transform.position, transform.position);
-        if (distFromPlayer <= 3.8 && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)
+        if (distFromPlayer <= 3.8 && RecipeForAssemblyObj.GetComponent<Transform>().childCount > 0)//controls transparency
         {
             RecipeForAssemblyObj.transform.GetChild(0).gameObject.SetActive(true);
             recipeMat.SetFloat("_Transparency", 0.5f / (distFromPlayer * distFromPlayer * distFromPlayer));
@@ -70,7 +81,7 @@ public class AssemblyController : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//working
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//add part?
         {
             if (heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0 && hit.collider.gameObject.CompareTag("assemblyStation"))
             {
@@ -92,13 +103,17 @@ public class AssemblyController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && lookingAt)
+        if (Input.GetKeyDown(KeyCode.E) && lookingAt)//add the object command
         {
             AddToAssembly(heldObjContainer.GetComponent<Transform>().GetChild(0).gameObject);
             ObjectPickUp.equipped = false;
             ObjectPickUp.slotFull = false;
         }
 
+        for (int i = 0; i < objectsBeingMoved.Length; i++)
+        {
+            objectsBeingMoved[i].transform.position = Vector3.SmoothDamp(objToAdd.transform.position, positionMovingTo[i], ref velocity, 1);
+        }
 
         timePassed += Time.deltaTime;
         if (storedTime <= timePassed - timeToEaseToFinal)//after parts ease to position summon combined assembly
@@ -112,23 +127,26 @@ public class AssemblyController : MonoBehaviour
     //---
     public void summonAssembly()
     {
-        for (int i = 0; i < AssemblyPartsInPosition.GetComponent<Transform>().childCount; i++)//removes old parts that finished easing to position
+        Vector3 position = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).position;
+        for (int i = 0; i < AssemblyPartsInPosition.GetComponent<Transform>().childCount; i++)
         {
-            Destroy(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i));
+            Destroy(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).gameObject);
         }
-        Instantiate(completedAssembly, new Vector3(0, 0, 0), Quaternion.identity);//parent
+        Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).gameObject);
+        Instantiate(completedAssembly, position, Quaternion.identity);//parent
     }
     //---
 
-    private void AddToAssembly(GameObject objToAdd)//not working yet, everything else in script should work
+    private void AddToAssembly(GameObject objToAdd)//works
     {
         Debug.Log("addItemFunctionCalled" + timePassed);
         if (objToAdd.CompareTag("assemblyPart"))
         {
             for (int b = 0; b < toyNamesForFinal.Length; b++)
             {
-                if (objToAdd.name == toyNamesForFinal[b] && toyPartInFinalPos[b] == false)//
+                if (objToAdd.name == toyNamesForFinal[b] && toyPartInFinalPos[b] == false)
                 {
+                    objToAdd.gameObject.layer = 2;
                     Collider[] coll = objToAdd.GetComponents<Collider>();
 
                     if (coll.Length == 1)//only a box collider
@@ -154,8 +172,16 @@ public class AssemblyController : MonoBehaviour
 
                     objToAdd.GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(b).GetComponent<Transform>());//sets to be a child of the assosciated
                     objToAdd.transform.rotation = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.rotation;
-                    objToAdd.transform.position = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position;
-                    //objToAdd.transform.position = Vector3.SmoothDamp(objToAdd.transform.position, RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position, ref velocity, 1);
+                    for (int j = 0; j < objectsBeingMoved.Length; j++)
+                    { 
+                        if (objectsBeingMoved == null)  
+                        }
+                        
+                            objectsBeingMoved[j] = objToAdd;
+                            positionMovingTo[j] = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position;
+                            timeBeenMoved[j] = 0;
+                        }
+                    }
                     toyPartInFinalPos[b] = true;
 
                     bool assemblyDone = true;//true unless any is false
@@ -169,7 +195,6 @@ public class AssemblyController : MonoBehaviour
                     if (assemblyDone)
                     {
                         //Clear RecipeForAssemblyObj
-                        Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0));
                         storedTime = timePassed;
                     }
                     return;
@@ -179,7 +204,7 @@ public class AssemblyController : MonoBehaviour
     }
 
     //outline
-    public void SetAssembly(GameObject RecipeObj, GameObject CompletedAssembly)
+    public void SetAssembly(GameObject RecipeObj, GameObject CompletedAssembly)//works
     {
         completedAssembly = CompletedAssembly;
         GameObject RecipeObject = Instantiate(RecipeObj, RecipeForAssemblyObj.transform.position + RecipeObj.transform.position, Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
