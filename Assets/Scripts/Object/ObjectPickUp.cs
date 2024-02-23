@@ -80,8 +80,9 @@ public class ObjectPickUp : MonoBehaviour
                         store.SetActive(false);
                         currentObject.transform.rotation = Quaternion.identity;
 
-                        float distance = (boxColl.size.y)-(locationOnShelf.GetComponent<BoxCollider>().size.y);
-                        currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y + distance, currentObject.transform.position.z);
+                        float distance = ((locationOnShelf.GetComponent<BoxCollider>().size.y * locationOnShelf.transform.localScale.y)/2) - ((boxColl.size.y * currentObject.transform.localScale.y)/2);
+                        Debug.Log(distance);
+                        currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
                     }
                 }
             }
