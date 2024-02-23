@@ -17,6 +17,7 @@ public class bedScript : MonoBehaviour
     public Vignette vig;
     public bool sleepy = false;
     public CaledarScript caledarScript;
+    public FatigueController fatigueController;
     public void Start()
     {
         if (profile.TryGet<Vignette>(out vig))
@@ -35,18 +36,20 @@ public class bedScript : MonoBehaviour
     }
     IEnumerator transparentUp ()
     {
+        fatigueController.resetTransparency();
 
-        if (profile.TryGet<Vignette> (out vig))
+        if (profile.TryGet<Vignette>(out vig))
         {
             vig.intensity.value += 0.01f;
         }
         transparent.GetComponent<CanvasGroup>().alpha += 0.015f;
         yield return new WaitForSeconds(0.01f);
         z++;
-        if(z <= 100)
+        if (z <= 100)
         {
             StartCoroutine(transparentUp());
-        } else
+        }
+        else
         {
             StartCoroutine(transparentDown());
         }
@@ -62,13 +65,13 @@ public class bedScript : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         z--;
 
-        if (z <= 100 && z >= 0)
+        if (z <= 100 && z > 0)
         {
             StartCoroutine(transparentDown());
         }
-        if(z == 0)
+        if (z == 0)
         {
-
+            caledarScript.text = caledarScript.text + " /";
         }
 
     }
