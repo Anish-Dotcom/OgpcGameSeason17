@@ -986,6 +986,9 @@ MonoBehaviour:
   timePassed: 0
   emptyObj: {fileID: 2890387174845647376, guid: f01badfd36cec474e9eecc0a5cf776b8,
     type: 3}
+  objectsBeingMoved: []
+  positionMovingTo: []
+  timeBeenMoved: []
 --- !u!65 &62802926
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14448,7 +14451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d814b2dda5c691e4d85cc68fe0827546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  z: 0
+  iter: 0
   fatigue: 0
   shadowBorder: {fileID: 377778942}
   DissolveController: {fileID: 2012124011}
@@ -32423,7 +32426,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6643758593381358241, guid: 89a771ad1b859524c91a2e4cdbd3c95f, type: 3}
+  - {fileID: 2100000, guid: d10b8c165cd4c8545a5b5a0e697258be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -32481,6 +32484,7 @@ MonoBehaviour:
   vig: {fileID: 0}
   sleepy: 0
   caledarScript: {fileID: 85846891}
+  fatigueController: {fileID: 0}
 --- !u!23 &5020365334961960841
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35390,7 +35394,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6643758593381358241, guid: 89a771ad1b859524c91a2e4cdbd3c95f, type: 3}
+  - {fileID: 2100000, guid: d10b8c165cd4c8545a5b5a0e697258be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74810,7 +74814,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6643758593381358241, guid: 89a771ad1b859524c91a2e4cdbd3c95f, type: 3}
+  - {fileID: 2100000, guid: d10b8c165cd4c8545a5b5a0e697258be, type: 2}
   - {fileID: -8524579484423619496, guid: 89a771ad1b859524c91a2e4cdbd3c95f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0

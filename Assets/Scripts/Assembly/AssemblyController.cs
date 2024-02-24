@@ -48,7 +48,7 @@ public class AssemblyController : MonoBehaviour
     {
         assemblyPartsInScene = GameObject.FindGameObjectsWithTag("assemblyPart");//call this whenever new objects get added to scene as well
         objectsBeingMoved = new GameObject[assemblyPartsInScene.Length];
-        positionMovingTo = = new GameObject[assemblyPartsInScene.Length];
+        positionMovingTo = new Vector3[assemblyPartsInScene.Length];
 
         //for testing:
         SetAssembly(assembly, finalObj);
@@ -110,9 +110,13 @@ public class AssemblyController : MonoBehaviour
             ObjectPickUp.slotFull = false;
         }
 
+        Vector3 velocity = new Vector3(0, 0, 0);
         for (int i = 0; i < objectsBeingMoved.Length; i++)
         {
-            objectsBeingMoved[i].transform.position = Vector3.SmoothDamp(objToAdd.transform.position, positionMovingTo[i], ref velocity, 1);
+            if (objectsBeingMoved[i] != null)
+            {
+                objectsBeingMoved[i].transform.position = Vector3.SmoothDamp(objectsBeingMoved[i].transform.position, positionMovingTo[i], ref velocity, 1);
+            }
         }
 
         timePassed += Time.deltaTime;
@@ -174,9 +178,8 @@ public class AssemblyController : MonoBehaviour
                     objToAdd.transform.rotation = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.rotation;
                     for (int j = 0; j < objectsBeingMoved.Length; j++)
                     { 
-                        if (objectsBeingMoved == null)  
-                        }
-                        
+                        if (objectsBeingMoved == null)
+                        { 
                             objectsBeingMoved[j] = objToAdd;
                             positionMovingTo[j] = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.position;
                             timeBeenMoved[j] = 0;
