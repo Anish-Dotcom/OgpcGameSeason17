@@ -6,16 +6,16 @@ using TMPro;
 
 public class telephoneScript : MonoBehaviour
 {
-    public GameObject playerCam;
-    public GameObject telephone;
-    public GameObject telephoneOutline;
-    public GameObject telephoneUI;
+    public GameObject playerCam; // this is the actual camera used to view the scene
+    public GameObject telephone; // this is the telephone object. in scene this is "telephone (1)" this is used to remove that object when picking up the telephone to make it look like you actually picked up the telephone
+    public GameObject telephoneOutline; // since the outline of the telephone is a seperate object, i used this game object to set active false as well
+    public GameObject telephoneUI; // this is the canvas ui menu that pops up when you open the telephone
 
-    public GameObject callShopButton;
-    public GameObject shopUI;
+    public GameObject callShopButton; // i have this button as a gameobject so i can set it active false whenever you open up the shop
+    public GameObject shopUI; // this is the canvas ui menu that pops up when you open the shop
     public AudioClip greeting;
 
-    private float moveSpeedSaved;
+    private float moveSpeedSaved; // the following variables are here to store what the sens was and then set it to 0 so that they cant look around when inside the menu and then goes back when the ui is closed
     private float sensXSaved;
     private float sensYSaved;
 
@@ -26,35 +26,18 @@ public class telephoneScript : MonoBehaviour
     public TMP_Text subtitles;
     public GameObject subtitlesHighlight;
 
-    public Button callButton;
+    public Button callButton; // buttons in the telephone menu
     public Button awayButton;
 
-    public GameObject commissionsUI;
+    public GameObject commissionsUI; // this was the commissions menu but its prolly gon get removed cause brady had a better idea
 
-    public string[] daysOfWeek;
-    private string currentDayOfWeek;
-    public TMP_Text dayOfWeekText;
-    public TMP_Text time;
-    public string[] hour;
-    public string[] minutes;
-    private string currentHour;
-    private string currentMinutes;
-    private string meridiem;
-
-    private int currentDayOfWeekIndex;
-    private int currentHourIndex;
-    private int currentMinutesIndex;
-
-    public bool GameIsPaused;
-
-    public float secondsPer10Minutes;
     private MusicController musicController;
 
-    public GameObject Telephone;
+    public GameObject Telephone; // this is the actual telephone object that has this script attached to it. it was used to reference the item manager script also attached to this object.
 
     public TMP_Text fpsCounter;
 
-    public GameObject interact;
+    public GameObject interact; // this is what set active true when you hover over the telephone
 
     private void OnMouseOver()
     {
@@ -141,15 +124,10 @@ public class telephoneScript : MonoBehaviour
     void Start()
     {
         //musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
-        currentHourIndex = 0;
-        currentMinutesIndex = 5;
-        currentDayOfWeekIndex = 6;
-        meridiem = "AM";
-        timeGoes();
         StartCoroutine(fpsReadable());
     }
 
-    IEnumerator fpsReadable()
+    IEnumerator fpsReadable() // this is a really random script to have this code but basically this is for showing the fps
     {
         yield return new WaitForSeconds(0.5f);
         fpsCounter.text = "FPS: " + (int)(1f / Time.deltaTime);
@@ -159,63 +137,6 @@ public class telephoneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentDayOfWeek = daysOfWeek[currentDayOfWeekIndex]; // time system
-        currentHour = hour[currentHourIndex];
-        currentMinutes = minutes[currentMinutesIndex];
-
-        //dayOfWeekText.text = currentDayOfWeek;
-        time.text = currentHour + ":" + currentMinutes + " " + meridiem;
-
-        if(currentHourIndex == 5)
-        {
-            meridiem = "PM";
-        }
-        if(currentHourIndex == 17)
-        {
-            meridiem = "AM";
-        }
-
         
-    }
-
-    public void timeGoes()
-    {
-        if (currentHourIndex == 0 && currentMinutesIndex == 5) // if its a new day
-        {
-            if (currentDayOfWeekIndex == 6)
-            {
-                currentDayOfWeekIndex = 0;
-            }
-            else
-            {
-                currentDayOfWeekIndex = currentDayOfWeekIndex + 1;
-            }
-            currentHourIndex = 1;
-            currentMinutesIndex = 0;
-        }
-
-        StartCoroutine(minutesPass());
-    }
-
-    IEnumerator minutesPass()
-    {
-        if (!GameIsPaused)
-        {
-            yield return new WaitForSeconds(secondsPer10Minutes);
-            currentMinutesIndex = currentMinutesIndex + 1;
-            if(currentMinutesIndex == 6)
-            {
-                currentHourIndex = currentHourIndex + 1;
-                currentMinutesIndex = 0;
-            }
-            if(currentHourIndex == 19)
-            {
-                // falls on floor from sleepiness
-            }
-            else
-            {
-                StartCoroutine(minutesPass());
-            }
-        }
     }
 }

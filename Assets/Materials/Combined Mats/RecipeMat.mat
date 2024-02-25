@@ -86,9 +86,9 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Cutoff_Distance_X: 5459
+    - _Cutoff_Distance_X: 5
     - _Cutoff_Distance_Y: 4
-    - _Cutoff_Distance_Z: 16372
+    - _Cutoff_Distance_Z: 10
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -108,7 +108,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Transparency: 0.100726224
+    - _Transparency: 0.0039142314
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
