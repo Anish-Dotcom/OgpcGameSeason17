@@ -38,7 +38,7 @@ public class ObjectPickUp : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(fpsCam.position, fpsCam.forward*pickUpRange);
-        if(!equipped && Physics.Raycast(fpsCam.position, fpsCam.forward, out hit, pickUpRange, mask))
+        if(!equipped && Physics.Raycast(fpsCam.position, fpsCam.forward, out hit, pickUpRange, mask)) // checks whether its an object to be picked up
         {
             if (!slotFull)
             {
@@ -53,7 +53,7 @@ public class ObjectPickUp : MonoBehaviour
                 }
             }
         }
-        else if(equipped && Input.GetMouseButtonDown(0))
+        else if(equipped && Input.GetMouseButtonDown(0)) // drop the object picked up
         {
             Drop(currentObject);
         }
@@ -64,24 +64,24 @@ public class ObjectPickUp : MonoBehaviour
 
         RaycastHit hit2;
 
-        if (Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange) && equipped)
+        if (Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange) && equipped) // storing object on shelf/boxes
         {
             foreach (GameObject locationOnShelf in LocationsOnShelf)
             {
                 if (hit2.collider.gameObject == locationOnShelf)
                 {
                     store.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E)) // storing on shelf
+                    if (Input.GetKeyDown(KeyCode.E))
                     {
                         Drop(currentObject);
                         rb.isKinematic = true;
-                        currentObject.transform.position = locationOnShelf.transform.position;
-                        Debug.Log(locationOnShelf.transform.position);
+                        currentObject.transform.position = locationOnShelf.transform.position; // 1. sets the location to the same location as the shelf slot
+                        
                         store.SetActive(false);
-                        currentObject.transform.rotation = Quaternion.identity;
+                        currentObject.transform.rotation = Quaternion.identity; // 2. sets all rotation axis to 0
 
-                        float distance = ((locationOnShelf.GetComponent<BoxCollider>().size.y * locationOnShelf.transform.localScale.y)/2) - ((boxColl.size.y * currentObject.transform.localScale.y)/2);
-                        Debug.Log(distance);
+                        float distance = ((locationOnShelf.GetComponent<BoxCollider>().size.y * locationOnShelf.transform.localScale.y)/2) - ((boxColl.size.y * currentObject.transform.localScale.y)/2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
+                        
                         currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
                     }
                 }
@@ -93,12 +93,12 @@ public class ObjectPickUp : MonoBehaviour
         }
     }
 
-    private void PickUp(GameObject item)
+    private void PickUp(GameObject item) // pick up function
     {
         rb = item.GetComponent<Rigidbody>();
         coll = item.GetComponents<Collider>();
 
-        if (coll.Length == 1)
+        if (coll.Length == 1) // sets the box collider of the object that we use for storing
         {
             boxColl = (BoxCollider)coll[0];
         }
@@ -120,7 +120,7 @@ public class ObjectPickUp : MonoBehaviour
         coll[0].isTrigger = true;
     }
 
-    private void Drop(GameObject item)
+    private void Drop(GameObject item) // drop item function
     {
         item.gameObject.layer = 6;
 
@@ -134,7 +134,7 @@ public class ObjectPickUp : MonoBehaviour
 
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
-        rb.AddForce(fpsCam.forward * dropForwardForce, ForceMode.Impulse);
+        rb.AddForce(fpsCam.forward * dropForwardForce, ForceMode.Impulse); // throws the object forward when dropped
         rb.AddForce(fpsCam.up * dropUpwardForce, ForceMode.Impulse);
 
         item.transform.localScale = originalScale;

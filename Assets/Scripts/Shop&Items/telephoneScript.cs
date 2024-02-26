@@ -35,8 +35,6 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject Telephone; // this is the actual telephone object that has this script attached to it. it was used to reference the item manager script also attached to this object.
 
-    public TMP_Text fpsCounter;
-
     public GameObject interact; // this is what set active true when you hover over the telephone
 
     private void OnMouseOver()
@@ -79,7 +77,7 @@ public class telephoneScript : MonoBehaviour
 
     public void PutTelephoneBackButton()
     {
-        ItemsInShop.reset();
+        //ItemsInShop.reset();
         for (int i = 0; i < Telephone.GetComponent<ItemManager>().costs.Length; i++)
         {
             Telephone.GetComponent<ItemManager>().costs[i] = 0;
@@ -124,14 +122,7 @@ public class telephoneScript : MonoBehaviour
     void Start()
     {
         //musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
-        StartCoroutine(fpsReadable());
-    }
-
-    IEnumerator fpsReadable() // this is a really random script to have this code but basically this is for showing the fps
-    {
-        yield return new WaitForSeconds(0.5f);
-        fpsCounter.text = "FPS: " + (int)(1f / Time.deltaTime);
-        StartCoroutine(fpsReadable());
+        
     }
 
     // Update is called once per frame
