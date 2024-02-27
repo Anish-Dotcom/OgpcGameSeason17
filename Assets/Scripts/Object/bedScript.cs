@@ -18,6 +18,7 @@ public class bedScript : MonoBehaviour
     public bool sleepy = false;
     public CaledarScript caledarScript;
     public FatigueController fatigueController;
+    public bool lookingAt;
     public void Start()
     {
         if (profile.TryGet<Vignette>(out vig))
@@ -28,11 +29,27 @@ public class bedScript : MonoBehaviour
     }
     private void OnMouseUpAsButton()
     {
-        if (sleepy)
+        if (sleepy && lookingAt) ;
         {
             StartCoroutine(transparentUp());
         }
         //Add animation or whatever here
+    }
+
+    public void Update()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//working
+        {
+            if (hit.collider.gameObject.CompareTag("assemblyStation"))
+            {
+                lookingAt = true;
+            }
+            else
+            {
+                lookingAt = false;
+            }
+        }
     }
     IEnumerator transparentUp ()
     {
