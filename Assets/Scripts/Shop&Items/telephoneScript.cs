@@ -37,6 +37,8 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject interact; // this is what set active true when you hover over the telephone
 
+    public MenuController menuController; // for controlling menus
+
     private void OnMouseOver()
     {
         distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
@@ -55,23 +57,16 @@ public class telephoneScript : MonoBehaviour
     {
         distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
 
-        if(distFromObject <= 2.1 && !telephoneIsOpen)
+        if(distFromObject <= 2.1 && !telephoneIsOpen && !menuController.menuOpen)
         {
-            commissionsUI.SetActive(false);
-            shopUI.SetActive(false);
+            //commissionsUI.SetActive(false);
+            //shopUI.SetActive(false);
             callShopButton.SetActive(true);
             telephoneIsOpen = true;
             telephone.SetActive(false);
             telephoneOutline.SetActive(false);
-            telephoneUI.SetActive(true);
-            moveSpeedSaved = PlayerMove.moveSpeed;
-            PlayerMove.moveSpeed = 0f;
-            sensXSaved = PlayerCam.sensX;
-            sensYSaved = PlayerCam.sensY;
-            PlayerCam.sensX = 0f;
-            PlayerCam.sensY = 0f;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            menuController.openMenu(telephoneUI);
+
         }
     }
 
@@ -85,14 +80,9 @@ public class telephoneScript : MonoBehaviour
         callButton.interactable = true;
         awayButton.interactable = true;
         telephoneIsOpen = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        PlayerMove.moveSpeed = moveSpeedSaved;
-        PlayerCam.sensX = sensXSaved;
-        PlayerCam.sensY = sensYSaved;
         telephone.SetActive(true);
         telephoneOutline.SetActive(true);
-        telephoneUI.SetActive(false);
+        menuController.closeMenu(telephoneUI);
     }
 
     public void CallShopButton()
@@ -113,7 +103,7 @@ public class telephoneScript : MonoBehaviour
         yield return new WaitForSeconds(2.3f);
         subtitlesHighlight.SetActive(false);
         subtitles.text = "";
-        shopUI.SetActive(true);
+        menuController.openMenu(shopUI);
         callShopButton.SetActive(false);
         awayButton.interactable = true;
     }
@@ -125,9 +115,15 @@ public class telephoneScript : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (shopUI.activeInHierarchy)// close shop menu if escape pressed. IDK were it was programmed to close before
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                menuController.closeMenu(shopUI);
+                menuController.closeMenu(telephoneUI);
+            }
+        }
     }
 }
