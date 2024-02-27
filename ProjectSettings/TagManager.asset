@@ -11,6 +11,7 @@ TagManager:
   - assemblyStation
   - Outline
   - RecipePart
+  - blueprintBox
   layers:
   - Default
   - TransparentFX
