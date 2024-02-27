@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
 [System.Serializable]
 public class ItemProperties
 {
@@ -16,7 +16,8 @@ public class ItemProperties
 
 public class ItemsInShop : MonoBehaviour
 {
-    public List<ItemProperties> properties = new List<ItemProperties>();
+    public GameObject prefabButtonInShop; // viewable button you see when you enter shop
+    public List<ItemProperties> properties = new List<ItemProperties>(); // list of all the item in shops properties
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class ItemsInShop : MonoBehaviour
     }
 }
 
-/*public class ItemsInShop : MonoBehaviour
+public class ItemsInShop : MonoBehaviour
 {
     public Text nameAsText;
     public Text priceAsText;
@@ -100,7 +101,7 @@ public class ItemsInShop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void reformatThePrice()
