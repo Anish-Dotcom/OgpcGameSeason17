@@ -42,4 +42,15 @@ public class DissolveController : MonoBehaviour
             areaMats[i].SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
         }
     }
+    public void setCutoffNoChange(Vector3 distanceChanges)
+    {
+        for (int i = 0; i < areaMats.Length; i++)
+        {
+            dissolveDistances = distanceChanges;
+
+            areaMats[i].SetFloat("_Cutoff_Distance_X", dissolveDistances.x);
+            areaMats[i].SetFloat("_Cutoff_Distance_Y", dissolveDistances.y);
+            areaMats[i].SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
+        }
+    }
 }
