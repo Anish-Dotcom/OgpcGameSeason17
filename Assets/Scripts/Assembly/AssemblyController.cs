@@ -50,10 +50,10 @@ public class AssemblyController : MonoBehaviour
         timeBeenMoved = new float[assemblyPartsInScene.Length];
 
         //for testing:
-        SetAssembly(assembly, finalObj);
+        //SetAssembly(assembly, finalObj);
         for (int i = 0; i < assemblyPartsInScene.Length; i++)
         {
-            AddToAssembly(assemblyPartsInScene[i]);
+            //AddToAssembly(assemblyPartsInScene[i]);
         }
     }
     void Update()
@@ -179,9 +179,6 @@ public class AssemblyController : MonoBehaviour
         }
         Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).gameObject);//Destroy previous assembly
         GameObject completed = Instantiate(completedAssembly, position + completedAssembly.transform.position, Quaternion.identity);//parent
-
-        Vector3 directionForce = new Vector3(Random.Range(-2.0f, 2.0f), 5f + Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
-        completed.GetComponent<Rigidbody>().AddForce(directionForce);
     }
     //---
 

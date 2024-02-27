@@ -117,6 +117,19 @@ public class telephoneScript : MonoBehaviour
 
     void Update()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 2.1f))//add part?
+        {
+            if (hit.collider.gameObject.CompareTag("telephone") && !telephoneIsOpen)
+            {
+                interact.SetActive(true);
+            }
+            else
+            {
+                interact.SetActive(false);
+            }
+        }
+
         if (shopUI.activeInHierarchy)// close shop menu if escape pressed. IDK were it was programmed to close before
         {
             if (Input.GetKey(KeyCode.Escape))
