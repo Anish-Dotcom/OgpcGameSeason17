@@ -34,7 +34,6 @@ public class bedScript : MonoBehaviour
         {
             StartCoroutine(transparentUp());
         }
-        //Add animation or whatever here
     }
 
     public void Update()
@@ -57,7 +56,7 @@ public class bedScript : MonoBehaviour
     }
     IEnumerator transparentUp ()
     {
-        fatigueController.resetTransparency();
+        print("transparentUp");
 
         if (profile.TryGet<Vignette>(out vig))
         {
@@ -77,6 +76,8 @@ public class bedScript : MonoBehaviour
     }
     IEnumerator transparentDown()
     {
+
+        fatigueController.resetTransparency();
         StopCoroutine(transparentUp());
         if (profile.TryGet<Vignette>(out vig))
         {

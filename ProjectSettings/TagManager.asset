@@ -12,6 +12,7 @@ TagManager:
   - Outline
   - RecipePart
   - blueprintBox
+  - telephone
   layers:
   - Default
   - TransparentFX

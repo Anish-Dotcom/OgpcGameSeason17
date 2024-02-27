@@ -43,15 +43,15 @@ public class FatigueController : MonoBehaviour
         fatugueUnchanged++;//Keeps original fatigue
     }
 
-    IEnumerator transparentUp()
-    {
-        yield return new WaitForSeconds(0.5f);
-        iter++;
-        if (iter <= 100)
-        {
-            StartCoroutine(transparentUp());
-        }
-    }
+    //IEnumerator transparentUp()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    iter++;
+    //    if (iter <= 100)
+    //    {
+    //        StartCoroutine(transparentUp());
+    //    }
+    //}
 
     IEnumerator Cutoff ()
     {//Begins a cutoff
@@ -66,7 +66,8 @@ public class FatigueController : MonoBehaviour
     {//Resets transpareny referenced in bedscript
         Vector3 cutDistanceChanges = new Vector3(5, 4, 10);
         fatugueUnchanged = 0;
-        DissolveController.SetCutoffDist(cutDistanceChanges);
+        fatigue = 0;
+        DissolveController.setCutoffNoChange(cutDistanceChanges);
         StopAllCoroutines();
 
     }
