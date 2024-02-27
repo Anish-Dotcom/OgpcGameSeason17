@@ -3,7 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class ItemProperties
+{
+    public bool isForWindupToy;
+    public string itemName;
+    public GameObject itemObject;
+    public float itemPrice;
+    public Sprite itemImage;
+    public string[] daysSold; // days of the week
+}
+
 public class ItemsInShop : MonoBehaviour
+{
+    public List<ItemProperties> properties = new List<ItemProperties>();
+
+    void Start()
+    {
+        
+    }
+}
+
+/*public class ItemsInShop : MonoBehaviour
 {
     public Text nameAsText;
     public Text priceAsText;
@@ -139,4 +160,4 @@ public class ItemsInShop : MonoBehaviour
             item.quantity = 0;
         }
     }
-}
+}*/

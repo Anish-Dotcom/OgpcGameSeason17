@@ -38,7 +38,7 @@ public class ItemManager : MonoBehaviour
             payAmount += costs[i];
         }
 
-        ItemsInShop.reset();
+        //ItemsInShop.reset();
         for (int i = 0; i < costs.Length; i++)
         {
             costs[i] = 0;

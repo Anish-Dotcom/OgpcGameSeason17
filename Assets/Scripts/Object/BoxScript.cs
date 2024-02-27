@@ -35,7 +35,7 @@ public class BoxScript : MonoBehaviour
             {
                 menuController.openPopup(interact);
 
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     isOpened = true;
                     menuController.closePopup(interact);
