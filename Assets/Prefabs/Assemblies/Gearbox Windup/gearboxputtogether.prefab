@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 8131023468898796314}
   - component: {fileID: 6465904751038653868}
   - component: {fileID: 8037347799227259367}
+  - component: {fileID: 483527365135583859}
   m_Layer: 0
   m_Name: screw
   m_TagString: Untagged
@@ -334,6 +335,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &483527365135583859
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082828930010688749}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.063508525, y: 0.055, z: 0.03}
+  m_Center: {x: -0.000014841557, y: 0.00003423076, z: 0.09}
 --- !u!1 &1827391261898453596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,6 +1198,7 @@ GameObject:
   - component: {fileID: 2614288874785705269}
   - component: {fileID: 3645348472223755918}
   - component: {fileID: 7710574680371133250}
+  - component: {fileID: 689391488534610685}
   m_Layer: 0
   m_Name: screw
   m_TagString: Untagged
@@ -1257,6 +1272,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &689391488534610685
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3939138514054907877}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.063508525, y: 0.055, z: 0.03}
+  m_Center: {x: -0.000014841557, y: 0.00003423076, z: 0.09}
 --- !u!1 &4304022118671726253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,6 +1558,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5627469764184940030}
+  - component: {fileID: 8519079896964680764}
+  - component: {fileID: 3804255413657312658}
   m_Layer: 0
   m_Name: gearboxputtogether
   m_TagString: Untagged
@@ -1545,7 +1575,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4995364190673618756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1564,6 +1594,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &8519079896964680764
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4995364190673618756}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &3804255413657312658
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4995364190673618756}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.09, z: 0.2}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!1 &5280750932282794354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,6 +1800,7 @@ GameObject:
   - component: {fileID: 5798182039277647742}
   - component: {fileID: 931684582547001175}
   - component: {fileID: 8121364344810579314}
+  - component: {fileID: 905642895210634298}
   m_Layer: 0
   m_Name: screw
   m_TagString: Untagged
@@ -1814,6 +1874,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &905642895210634298
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077080893593273416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.063508525, y: 0.055, z: 0.03}
+  m_Center: {x: -0.000014841557, y: 0.00003423076, z: 0.09}
 --- !u!1 &6205942160566767833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,6 +2064,7 @@ GameObject:
   - component: {fileID: 2397695344116360391}
   - component: {fileID: 7023519991319306308}
   - component: {fileID: 1778736582873694107}
+  - component: {fileID: 1267142334436042560}
   m_Layer: 0
   m_Name: screw
   m_TagString: Untagged
@@ -2064,6 +2138,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1267142334436042560
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523857518383736869}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.063508525, y: 0.055, z: 0.03}
+  m_Center: {x: -0.000014841557, y: 0.00003423076, z: 0.09}
 --- !u!1 &7219401816412719385
 GameObject:
   m_ObjectHideFlags: 0

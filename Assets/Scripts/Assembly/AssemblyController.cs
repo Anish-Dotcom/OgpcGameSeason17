@@ -160,7 +160,6 @@ public class AssemblyController : MonoBehaviour
         {
             for (int i = 0; i < AssemblyPartsInPosition.transform.childCount; i++)
             {
-                //AssemblyPartsInPosition.transform.GetChild(i).GetChild(0).gameObject;
                 if (AssemblyPartsInPosition.transform.GetChild(i).GetChild(0).position != completedAssembly.transform.GetChild(i).position)
                 {
                     velocity[i] = AssemblyPartsInPosition.transform.GetChild(i).GetChild(0).gameObject.GetComponent<Rigidbody>().velocity;
@@ -176,10 +175,13 @@ public class AssemblyController : MonoBehaviour
         Vector3 position = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).position;
         for (int i = 0; i < AssemblyPartsInPosition.GetComponent<Transform>().childCount; i++)
         {
-            Destroy(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).gameObject);
+            Destroy(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).gameObject);//destroy all previous parts
         }
-        Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).gameObject);
-        Instantiate(completedAssembly, position, Quaternion.identity);//parent
+        Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).gameObject);//Destroy previous assembly
+        GameObject completed = Instantiate(completedAssembly, position + completedAssembly.transform.position, Quaternion.identity);//parent
+
+        Vector3 directionForce = new Vector3(Random.Range(-2.0f, 2.0f), 5f + Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
+        completed.GetComponent<Rigidbody>().AddForce(directionForce);
     }
     //---
 
@@ -193,28 +195,10 @@ public class AssemblyController : MonoBehaviour
                 if (objToAdd.name == toyNamesForFinal[b] && toyPartInFinalPos[b] == false)
                 {
                     objToAdd.gameObject.layer = 2;
-                    Collider[] coll = objToAdd.GetComponents<Collider>();
-
-                    if (coll.Length == 1)//only a box collider
-                    {
-                        coll[0].isTrigger = false;
-                    }
-                    else//also another type
-                    {
-                        if (coll[0].GetType() == typeof(BoxCollider))//if is a box collider, make other not a trigger
-                        {
-                            coll[1].isTrigger = false;
-                        }
-                        else//2nd collider is a box collider, 1st is other type, !!!- means that there cannot be two box colliders
-                        {
-                            coll[0].isTrigger = false;
-                        }
-                    }
+                    ChangeColliderTrigger(objToAdd, false);
 
                     objToAdd.GetComponent<Rigidbody>().isKinematic = true;
                     Vector3 velocity = objToAdd.GetComponent<Rigidbody>().velocity;
-
-                    //RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).gameObject.SetActive(false);//disable outline same as obj---------------------------------------------
 
                     objToAdd.GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(b).GetComponent<Transform>());//sets to be a child of the assosciated
                     objToAdd.transform.rotation = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.rotation;
@@ -249,5 +233,26 @@ public class AssemblyController : MonoBehaviour
     public void OnMouseExit()
     {
         lookingAt = false;
+    }
+
+    public void ChangeColliderTrigger(GameObject collObj, bool setToType)
+    {
+        Collider[] coll = collObj.GetComponents<Collider>();
+
+        if (coll.Length == 1)//only a box collider
+        {
+            coll[0].isTrigger = setToType;
+        }
+        else//also another type
+        {
+            if (coll[0].GetType() == typeof(BoxCollider))//if is a box collider, make other not a trigger
+            {
+                coll[1].isTrigger = setToType;
+            }
+            else//2nd collider is a box collider, 1st is other type, !!!- means that there cannot be two box colliders
+            {
+                coll[0].isTrigger = setToType;
+            }
+        }
     }
 }
