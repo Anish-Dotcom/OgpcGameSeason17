@@ -17,11 +17,49 @@ public class ItemProperties
 public class ItemsInShop : MonoBehaviour
 {
     public GameObject prefabButtonInShop; // viewable button you see when you enter shop
+    private GameObject[] prefabButtons; // editted prefab of standard
+    public Button[] itemButtons;
     public List<ItemProperties> properties = new List<ItemProperties>(); // list of all the item in shops properties
 
     void Start()
     {
-        
+        for(int i = 0; i < properties.Count; i++)
+        {
+            prefabButtons[i] = Instantiate(prefabButtonInShop, transform);
+            if(prefabButtons[i].GetComponentInChildren<GameObject>().name == "itemname")
+            {
+                prefabButtons[i].GetComponentInChildren<Text>().text = properties[i].itemName;
+            }
+            if (prefabButtons[i].GetComponentInChildren<GameObject>().name == "itemprice")
+            {
+                prefabButtons[i].GetComponentInChildren<Text>().text = properties[i].itemPrice.ToString();
+            }
+            itemButtons[i] = prefabButtons[i].GetComponentInChildren<Button>();
+            itemButtons[i].onClick.AddListener(() => OnButtonClick(itemButtons[i].gameObject));
+        }
+    }
+
+    void OnButtonClick(GameObject buttonClicked)
+    {
+        foreach (GameObject obj in prefabButtons)
+        {
+            if (obj == buttonClicked.transform.parent.gameObject)
+            {
+                quantity--;
+                ItemManager.totalAmountObj--;
+                reformatThePrice();
+                UpdateUI(obj);
+                UpdateArray();
+
+                if (quantity <= 0)
+                {
+                    instantiatedObjects.Remove(obj);
+                    Destroy(obj);
+                }
+
+                break;
+            }
+        }
     }
 }
 
