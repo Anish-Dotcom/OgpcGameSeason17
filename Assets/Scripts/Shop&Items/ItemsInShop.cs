@@ -36,6 +36,11 @@ public class ItemsInShop : MonoBehaviour
 
     public List<ItemProperties> properties = new List<ItemProperties>(); // list of all the item in shops properties
 
+    private Dictionary<string, GameObject> instantiatedBuyingButtons = new Dictionary<string, GameObject>();
+    private Dictionary<string, string> instantiatedBuyingPrices = new Dictionary<string, string>();
+    private float current;
+    private float decreaseamount;
+
     void Start()
     {
         CreateShopButtons();
@@ -57,86 +62,76 @@ public class ItemsInShop : MonoBehaviour
 
             //itemImage.sprite = properties[i].itemImage;
             itemNameText.text = properties[i].itemName;
-            itemPriceText.text = properties[i].itemPrice.ToString();
+            itemPriceText.text = "$" + properties[i].itemPrice.ToString("F2");
 
             int index = i; // Capturing the correct index for whats below
             buyButton.onClick.AddListener(() => BuyItem(index));
         }
     }
 
-    void BuyItem(int index) 
+    void BuyItem(int index) // add to the quantity of the item when bought and run the function to add it to the buying side on the right
     {
-        ItemProperties item = properties[index];
-        if (playerMoney >= item.itemPrice)
-        {
-            playerMoney -= item.itemPrice;
-            UpdatePlayerMoney();
-
-            item.currentItemQuantity++;
-            UpdateBuyingUI(item);
-        }
-        else
-        {
-            Debug.Log("Not enough money to buy this item!");
-        }
+        properties[index].currentItemQuantity++;
+        UpdateBuyingUI(index);
     }
 
-    void UpdateBuyingUI(ItemProperties item)
+    void UpdateBuyingUI(int index) // update the buying section on the right side
     {
+        if (instantiatedBuyingButtons.ContainsKey(properties[index].itemName))
+        {
+            Destroy(instantiatedBuyingButtons[properties[index].itemName]);
+            instantiatedBuyingButtons.Remove(properties[index].itemName);
+            instantiatedBuyingPrices.Remove(properties[index].itemName);
+        }
         GameObject buyingButton = Instantiate(prefabBuying, prefabToGoBuyingObject);
+        instantiatedBuyingButtons.Add(properties[index].itemName, buyingButton);
+        instantiatedBuyingPrices.Add(properties[index].itemName, (properties[index].itemPrice * properties[index].currentItemQuantity).ToString("F2"));
         Transform buyingButtonTransform = buyingButton.transform;
         Text itemNameText = buyingButtonTransform.GetChild(0).GetComponent<Text>();
         Text itemPriceText = buyingButtonTransform.GetChild(1).GetComponent<Text>();
-        Button noBuyButton = buyingButtonTransform.GetChild(3).GetComponent<Button>();
+        Button noBuyButton = buyingButtonTransform.GetChild(2).GetComponent<Button>();
 
-        itemNameText.text = "- " + item.itemName + " (" + item.currentItemQuantity + ")";
-        itemPriceText.text = (item.itemPrice * item.currentItemQuantity).ToString();
-        noBuyButton.onClick.AddListener(() => RemoveItem(item));
+        itemNameText.text = "- " + properties[index].itemName + " (" + properties[index].currentItemQuantity + ")";
+        itemPriceText.text = "$" + (properties[index].itemPrice * properties[index].currentItemQuantity).ToString("F2");
+        noBuyButton.onClick.AddListener(() => RemoveItem(index));
     }
 
-    void RemoveItem(ItemProperties item)
+    void RemoveItem(int index) // pressing the button on the instantiated one in the buying section which will remove one quantity.
     {
-        item.currentItemQuantity--;
-        UpdateBuyingUI(item);
-        if (item.currentItemQuantity == 0)
+        properties[index].currentItemQuantity--;
+        UpdateBuyingUI(index);
+        if (properties[index].currentItemQuantity == 0)
         {
-            ResetShop();
-        }
-        else
-        {
-            foreach (GameObject button in prefabButtons)
-            {
-                Destroy(button);
-            }
-            prefabButtons.Clear();
-            CreateShopButtons();
+            Destroy(instantiatedBuyingButtons[properties[index].itemName]);
+            instantiatedBuyingButtons.Remove(properties[index].itemName);
+            instantiatedBuyingPrices.Remove(properties[index].itemName);
         }
     }
 
     public void Purchase()
     {
-        float totalPrice = 0;
-        foreach (Transform child in prefabToGoBuyingObject)
+        float totalCost = 0;
+        // Iterate over the values (prices) in the instantiatedBuyingPrices dictionary
+        foreach (string price in instantiatedBuyingPrices.Values)
         {
-            Destroy(child.gameObject);
+            float priceValue;
+            if (float.TryParse(price, out priceValue))
+            {
+                totalCost += priceValue; // Add the parsed price value to the total cost
+            }
         }
 
-        foreach (ItemProperties item in properties)
-        {
-            totalPrice += item.itemPrice * item.currentItemQuantity;
-            item.currentItemQuantity = 0;
-        }
-
-        playerMoney -= totalPrice;
-        UpdatePlayerMoney();
+        current = playerMoney - totalCost;
+        decreaseamount = totalCost / 300;
+        StartCoroutine(textRollDown());
     }
 
-    public void UpdatePlayerMoney()
+    public void UpdatePlayerMoney() // updated the players money
     {
-        playerMoneyText.text = "$" + playerMoney.ToString();
+        playerMoneyText.text = "$" + playerMoney.ToString("F2");
     }
 
-    public void ResetShop()
+    public void ResetShop() // reset everything within the shop
     {
         foreach (GameObject button in prefabButtons)
         {
@@ -144,6 +139,22 @@ public class ItemsInShop : MonoBehaviour
         }
         prefabButtons.Clear();
         CreateShopButtons();
+    }
+
+    IEnumerator textRollDown()
+    {
+        yield return new WaitForSeconds(0.0001f);
+        if (playerMoney <= current)
+        {
+            playerMoney = current;
+            playerMoneyText.text = "$" + playerMoney.ToString("F2");
+        }
+        else
+        {
+            playerMoney = playerMoney - decreaseamount;
+            playerMoneyText.text = "$" + playerMoney.ToString("F2");
+            StartCoroutine(textRollDown());
+        }
     }
 }
 
