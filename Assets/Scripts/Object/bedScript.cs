@@ -41,7 +41,7 @@ public class bedScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//working
         {
-            print("Ray");
+            //print("Ray");
             if (hit.collider.gameObject.CompareTag("Bed"))
             {
                 lookingAt = true;
@@ -56,7 +56,7 @@ public class bedScript : MonoBehaviour
     }
     IEnumerator transparentUp ()
     {
-        print("transparentUp");
+        //print("transparentUp");
 
         if (profile.TryGet<Vignette>(out vig))
         {
