@@ -81,7 +81,7 @@ public class ItemsInShop : MonoBehaviour
         {
             Destroy(instantiatedBuyingButtons[properties[index].itemName]);
             instantiatedBuyingButtons.Remove(properties[index].itemName);
-            instantiatedBuyingPrices.Remove(properties[index].itemName);
+            instantiatedBuyingPrices.Remove(properties[index].itemName); // where the price is stored
         }
         GameObject buyingButton = Instantiate(prefabBuying, prefabToGoBuyingObject);
         instantiatedBuyingButtons.Add(properties[index].itemName, buyingButton);

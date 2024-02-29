@@ -30,6 +30,7 @@ public class ObjectPickUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //CollectObjectsWithTagOnStart();
         mask = LayerMask.GetMask("Pickupable");
     }
 
@@ -92,6 +93,41 @@ public class ObjectPickUp : MonoBehaviour
             store.SetActive(false);
         }
     }
+
+    /*public void CollectObjectsWithTagOnStart() // putting the boxes store slots into the shelf slots array (i used 2 functions)
+    {
+        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Box");
+
+        int currentLength = LocationsOnShelf != null ? LocationsOnShelf.Length : 0;
+        int additionalLocations = 0;
+
+        if (objectsWithTag.Length > 0)
+        {
+            foreach (GameObject obj in objectsWithTag)
+            {
+                additionalLocations += Mathf.Min(3, obj.transform.childCount);
+            }
+
+            int newSize = currentLength + additionalLocations;
+
+            System.Array.Resize(ref LocationsOnShelf, newSize);
+
+            int index = currentLength;
+
+            foreach (GameObject obj in objectsWithTag)
+            {
+                for (int i = 0; i < Mathf.Min(3, obj.transform.childCount); i++)
+                {
+                    LocationsOnShelf[index] = obj.transform.GetChild(i).gameObject;
+                    index++;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No objects found with tag: Box");
+        }
+    }*/
 
     private void PickUp(GameObject item) // pick up function
     {
