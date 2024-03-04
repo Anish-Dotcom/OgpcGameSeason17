@@ -12200,7 +12200,7 @@ MonoBehaviour:
   DissolveController: {fileID: 2012124011}
   bedScript: {fileID: 4985786856929160619}
   transparent: {fileID: 377778942}
-  dayTime: 420
+  dayTime: 250
 --- !u!114 &1146929043
 MonoBehaviour:
   m_ObjectHideFlags: 0

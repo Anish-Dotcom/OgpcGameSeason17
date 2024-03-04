@@ -20,7 +20,9 @@ public class bedScript : MonoBehaviour
     public FatigueController fatigueController;
     public bool lookingAt;
     public GameObject sleepQuestionMark;
+    public static int Day = 0;
     public void Start()
+
     {
         if (profile.TryGet<Vignette>(out vig))
         {
@@ -30,7 +32,7 @@ public class bedScript : MonoBehaviour
     }
     private void OnMouseUpAsButton()
     {
-        if (sleepy) 
+        if (sleepy&&lookingAt) 
         {
             StartCoroutine(transparentUp());
         }
@@ -94,6 +96,7 @@ public class bedScript : MonoBehaviour
         if (z == 0)
         {
             caledarScript.text = caledarScript.text + " /";
+            Day++;
         }
 
     }
