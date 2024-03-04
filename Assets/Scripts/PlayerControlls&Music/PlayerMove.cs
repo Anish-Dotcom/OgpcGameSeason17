@@ -106,29 +106,7 @@ public class PlayerMove : MonoBehaviour
         if (isControllable)
         {
             MovePlayer();
-            if (heldObject != null)//change object position
-            {
-                MoveHeldObject();
-            }
         }
-    }
-
-    private void Gobackandforth(float Direction)
-    {
-        Vector3 scrollOffset = cam.transform.forward * Direction * pullpower * 5f;
-        newPos = heldObject.transform.position + scrollOffset;
-
-        int layermask = -1;
-        layermask = layermask & ~(1 << 7);
-        bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(scrollOffset), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(scrollOffset), layermask);
-
-        if (canMove)
-        {
-            // keep distance in range
-            currentObjectHoldDistance += Direction * pullpower;
-            currentObjectHoldDistance = Math.Min(Math.Max(currentObjectHoldDistance, minObjectHoldDistnace), maxObjectHoldDistnace);
-        }
-
     }
 
     private void OnDrawGizmos()
@@ -149,11 +127,11 @@ public class PlayerMove : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        if(Input.GetKey("Shift"))
+        /*if(Input.GetKey("Shift"))
         {
 
         }
-
+        */
     }
     private void MovePlayer()
     {
@@ -169,23 +147,6 @@ public class PlayerMove : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
-    }
-    private void MoveHeldObject()
-    {
-        heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        newPos = cam.transform.position + (cam.transform.forward* currentObjectHoldDistance);
-        int layermask = -1;
-        layermask = layermask & ~(1 << 7);
-        //bool canMove = !Physics.BoxCast(heldObject.transform.position, new Vector3(0.5f, 0.5f, 0.5f), Vector3.Normalize(newPos - heldObject.transform.position), new Quaternion(0, 0, 0, 0), Vector3.Magnitude(heldObject.transform.position - newPos), layermask);
-        //if (canMove)
-        //{
-        //
-        //}
-        heldObject.GetComponent<Rigidbody>().transform.position = Vector3.SmoothDamp(heldObject.GetComponent<Rigidbody>().transform.position, newPos, ref currentVelocity, smoothTime, maxFollowSpeed);
-
-        heldObject.transform.eulerAngles = new Vector3 (heldObject.transform.eulerAngles.x, objectStartYDirection + (cam.transform.rotation.eulerAngles.y - camStartYDirection), heldObject.transform.eulerAngles.z);
-
     }
     private void WrapAround()
     {

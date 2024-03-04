@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ComissionController : MonoBehaviour
 {
+    public List<int> inputNums = new List<int>();
+
     public string[] names;//names of people for comission text
     public string[] toyTypes;//types of toys that can be requested 
     public string[] colors;//Color you want for the toy
@@ -20,47 +22,26 @@ public class ComissionController : MonoBehaviour
     {
         numberOfComissions = 0;
         SetNewComission();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SetNewComission();
     }
 
     public void SetNewComission()
     {
         numberOfComissions++;
-        int[] inputNums = new int[4];//random name of person, type of toy, and color, can add more perameters
-        for (int i = 0; i < 4; i++)
-        {
-            if (i == 0)
-            {
-                inputNums[i] = Random.Range(0, names.Length);
-            }
-            else if (i == 1)
-            {
-                inputNums[i] = Random.Range(0, toyTypes.Length);
-            }
-            else if (i == 2)
-            {
-                inputNums[i] = Random.Range(0, colors.Length);
-            }
-            else if (i == 3)
-            {
-                inputNums[i] = Random.Range(0, flavorText.Length);
-            }
-            Debug.Log(inputNums[i]);
-        }
 
-        int sentenceStructureRand = Random.Range(0, 5);
+        inputNums.Add(Random.Range(0, names.Length));
+        inputNums.Add(Random.Range(0, toyTypes.Length));
+        inputNums.Add(Random.Range(0, colors.Length));
+        inputNums.Add(Random.Range(0, flavorText.Length));
+
+        int sentenceStructureRand = Random.Range(0, 5);//can be int 0, 1, 2, 3, or 4
         sentenceStructureRand = 0;//for testing
         if (sentenceStructureRand == 0)
         {
-            requestText = "Hey I'm " + names[inputNums[0]] + ". " + flavorText[inputNums[3]] + " I want a " + toyTypes[inputNums[1]] + " in the color " + colors[inputNums[2]] + ".";
+            requestText = "Hey I'm " + names[inputNums[Current(0)]] + ". " + flavorText[inputNums[Current(3)]] + " I want a " + toyTypes[inputNums[Current(1)]] + " in the color " + colors[inputNums[Current(2)]] + ".";
             Debug.Log(requestText);
         }
-        else if (sentenceStructureRand == 1)
+        else if (sentenceStructureRand == 1)//do other sentence structures later
         {
             //requestText = ;
         }
@@ -76,11 +57,17 @@ public class ComissionController : MonoBehaviour
         {
             //requestText = ;
         }
-        currectCommission.text = names[inputNums[0]] + " requested a " + colors[inputNums[2]] + ", " + toyTypes[inputNums[1]] + ".";
+        currectCommission.text = names[inputNums[Current(0)]] + " requested a " + colors[inputNums[Current(2)]] + ", " + toyTypes[inputNums[Current(1)]] + ".";
     }
 
     public void RemoveOldComission()
     {
         numberOfComissions--;
+    }
+
+    public int Current(int input)
+    {
+        int current = input + (4 * (numberOfComissions - 1));
+        return current;
     }
 }

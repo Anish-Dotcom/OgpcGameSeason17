@@ -5037,6 +5037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405a8d04c0413d240bdecc54354c7920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputNums: 
   names:
   - Robert William
   - Aaron Massey
@@ -5065,7 +5066,7 @@ MonoBehaviour:
   - purple
   - indigo
   - cyan
-  - magenta
+  - violet
   - maroon
   - black
   - white
@@ -5079,25 +5080,25 @@ MonoBehaviour:
   - saphire
   colorRGBValues:
   - {x: 255, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 255, y: 165, z: 0}
+  - {x: 255, y: 255, z: 0}
+  - {x: 0, y: 255, z: 0}
+  - {x: 0, y: 0, z: 255}
+  - {x: 255, y: 0, z: 255}
+  - {x: 75, y: 0, z: 130}
+  - {x: 0, y: 255, z: 255}
+  - {x: 127, y: 0, z: 255}
   - {x: 128, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 255, y: 255, z: 255}
+  - {x: 128, y: 128, z: 128}
+  - {x: 192, y: 192, z: 192}
+  - {x: 255, y: 215, z: 0}
+  - {x: 226, y: 223, z: 210}
+  - {x: 137, y: 207, z: 240}
+  - {x: 255, y: 192, z: 203}
+  - {x: 250, y: 128, z: 114}
+  - {x: 15, y: 82, z: 186}
   flavorText:
   - My daughter has her birthday coming up next week
   - My little cousin is visiting soon and I want to get him a gift.
