@@ -13,6 +13,7 @@ TagManager:
   - RecipePart
   - blueprintBox
   - telephone
+  - Bed
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Pickupable
   - Player
   - Camera
-  - 
+  - Storage
   - 
   - 
   - 

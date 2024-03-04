@@ -62,22 +62,26 @@ public class ObjectPickUp : MonoBehaviour
 
         RaycastHit hit2;
 
-        if (Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange) && equipped) // storing object on shelf/boxes
+        if (Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange, LayerMask.GetMask("Storage")) && equipped) // storing object on shelf/boxes
         {
-            if (hit2.transform.parent.name == "ShelfSystem" || hit2.transform.parent.name == "BoxSlots")
+            Debug.Log("object hit: " + hit2.collider.gameObject);
+            if (hit2.transform.gameObject != null)
             {
                 store.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     Drop(currentObject);
+
+                    coll[0].isTrigger = true;
+
                     rb.isKinematic = true;
                     currentObject.transform.position = hit2.transform.position; // 1. sets the location to the same location as the shelf slot
-                        
+
                     store.SetActive(false);
                     currentObject.transform.rotation = Quaternion.identity; // 2. sets all rotation axis to 0
 
-                    float distance = ((hit2.collider.gameObject.GetComponent<BoxCollider>().size.y * hit2.collider.gameObject.transform.localScale.y)/2) - ((boxColl.size.y * currentObject.transform.localScale.y)/2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
-                        
+                    float distance = ((hit2.collider.gameObject.GetComponent<BoxCollider>().size.y * hit2.collider.gameObject.transform.localScale.y) / 2) - ((boxColl.size.y * currentObject.transform.localScale.y) / 2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
+
                     currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
                 }
             }
