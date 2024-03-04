@@ -151,6 +151,7 @@ public class ObjectPickUp : MonoBehaviour
         item.transform.SetParent(objectContainer);
         item.transform.localPosition = Vector3.zero;
         FatigueController.fatigue += 3;
+        
         print(FatigueController.fatigue);
         rb.isKinematic = true;
         coll[0].isTrigger = true;

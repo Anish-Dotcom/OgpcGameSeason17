@@ -18,5 +18,6 @@ public class CaledarScript : MonoBehaviour
     void Update()
     {
         daysTickMark.text = text;
+       
     }
 }

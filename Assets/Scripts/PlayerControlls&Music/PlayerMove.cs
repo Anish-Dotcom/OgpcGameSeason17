@@ -149,6 +149,11 @@ public class PlayerMove : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        if(Input.GetKey("Shift"))
+        {
+
+        }
+
     }
     private void MovePlayer()
     {
