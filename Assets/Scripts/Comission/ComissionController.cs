@@ -22,7 +22,6 @@ public class ComissionController : MonoBehaviour
     {
         numberOfComissions = 0;
         SetNewComission();
-        SetNewComission();
     }
 
     public void SetNewComission()
@@ -57,12 +56,21 @@ public class ComissionController : MonoBehaviour
         {
             //requestText = ;
         }
-        currectCommission.text = names[inputNums[Current(0)]] + " requested a " + colors[inputNums[Current(2)]] + ", " + toyTypes[inputNums[Current(1)]] + ".";
+
+        if (numberOfComissions == 1)//this is the only commission
+        {
+            currectCommission.text = names[inputNums[Current(0)]] + " requested a " + colors[inputNums[Current(2)]] + ", " + toyTypes[inputNums[Current(1)]] + ".";
+        }
+        //else it gets chosen on the comission board
     }
 
-    public void RemoveOldComission()
+    public void RemoveOldComission(int commissionIndex)
     {
         numberOfComissions--;
+        for (int i = commissionIndex; i < commissionIndex + 4; i++)
+        {
+            inputNums.RemoveAt(i);//removes the inputs assosiated with finished comission
+        }
     }
 
     public int Current(int input)

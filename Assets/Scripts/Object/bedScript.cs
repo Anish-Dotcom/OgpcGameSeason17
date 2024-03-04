@@ -55,6 +55,11 @@ public class bedScript : MonoBehaviour
                 sleepQuestionMark.SetActive(false);
             }
         }
+        else
+        {
+            lookingAt = false;
+            sleepQuestionMark.SetActive(false);
+        }
     }
     IEnumerator transparentUp ()
     {
