@@ -21,8 +21,6 @@ public class ObjectPickUp : MonoBehaviour
 
     private Vector3 originalScale;
 
-    public GameObject[] LocationsOnShelf;
-    public GameObject[] pickupableObject;
     private GameObject currentObject;
 
     public LayerMask mask;
@@ -30,7 +28,6 @@ public class ObjectPickUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //CollectObjectsWithTagOnStart();
         mask = LayerMask.GetMask("Pickupable");
     }
 
@@ -67,24 +64,21 @@ public class ObjectPickUp : MonoBehaviour
 
         if (Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange) && equipped) // storing object on shelf/boxes
         {
-            foreach (GameObject locationOnShelf in LocationsOnShelf)
+            if (hit2.transform.parent.name == "ShelfSystem" || hit2.transform.parent.name == "BoxSlots")
             {
-                if (hit2.collider.gameObject == locationOnShelf)
+                store.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    store.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        Drop(currentObject);
-                        rb.isKinematic = true;
-                        currentObject.transform.position = locationOnShelf.transform.position; // 1. sets the location to the same location as the shelf slot
+                    Drop(currentObject);
+                    rb.isKinematic = true;
+                    currentObject.transform.position = hit2.transform.position; // 1. sets the location to the same location as the shelf slot
                         
-                        store.SetActive(false);
-                        currentObject.transform.rotation = Quaternion.identity; // 2. sets all rotation axis to 0
+                    store.SetActive(false);
+                    currentObject.transform.rotation = Quaternion.identity; // 2. sets all rotation axis to 0
 
-                        float distance = ((locationOnShelf.GetComponent<BoxCollider>().size.y * locationOnShelf.transform.localScale.y)/2) - ((boxColl.size.y * currentObject.transform.localScale.y)/2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
+                    float distance = ((hit2.collider.gameObject.GetComponent<BoxCollider>().size.y * hit2.collider.gameObject.transform.localScale.y)/2) - ((boxColl.size.y * currentObject.transform.localScale.y)/2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
                         
-                        currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
-                    }
+                    currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
                 }
             }
         }
@@ -93,41 +87,6 @@ public class ObjectPickUp : MonoBehaviour
             store.SetActive(false);
         }
     }
-
-    /*public void CollectObjectsWithTagOnStart() // putting the boxes store slots into the shelf slots array (i used 2 functions)
-    {
-        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Box");
-
-        int currentLength = LocationsOnShelf != null ? LocationsOnShelf.Length : 0;
-        int additionalLocations = 0;
-
-        if (objectsWithTag.Length > 0)
-        {
-            foreach (GameObject obj in objectsWithTag)
-            {
-                additionalLocations += Mathf.Min(3, obj.transform.childCount);
-            }
-
-            int newSize = currentLength + additionalLocations;
-
-            System.Array.Resize(ref LocationsOnShelf, newSize);
-
-            int index = currentLength;
-
-            foreach (GameObject obj in objectsWithTag)
-            {
-                for (int i = 0; i < Mathf.Min(3, obj.transform.childCount); i++)
-                {
-                    LocationsOnShelf[index] = obj.transform.GetChild(i).gameObject;
-                    index++;
-                }
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No objects found with tag: Box");
-        }
-    }*/
 
     private void PickUp(GameObject item) // pick up function
     {
