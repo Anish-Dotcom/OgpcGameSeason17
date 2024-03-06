@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     public FatigueController FatigueController;
 
     public float pullpower = 5;
+    public bool crouching = false;
 
     public static float moveSpeed;
     public float objectPickupDistance = 6;
@@ -127,17 +128,34 @@ public class PlayerMove : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        /*if(Input.GetKey("Shift"))
+        if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-
+            
+            Crouching();
         }
-        */
+        
     }
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         
+    }
+    
+    private void Crouching()
+    {
+        if(crouching == false)
+        {
+            transform.localScale = new Vector3 (2,1.2f,2);
+            transform.position = new Vector3(transform.position.x, 1.4f, transform.position.z);
+            crouching = true;
+        }   
+        else if (crouching)
+        {
+            transform.localScale = new Vector3(2, 1.8f, 2);
+            transform.position = new Vector3(transform.position.x, 2.15f, transform.position.z);
+            crouching = false;
+        }
     }
     private void SpeedControl()
     {
