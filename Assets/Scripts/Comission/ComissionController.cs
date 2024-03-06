@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ComissionController : MonoBehaviour
 {
@@ -15,12 +14,13 @@ public class ComissionController : MonoBehaviour
 
     public string requestText;
     public int numberOfComissions;
-    public Text currectCommission;
+    public TMP_Text toDoPoster;
 
 
     void Start()
     {
         numberOfComissions = 0;
+        SetNewComission();
         SetNewComission();
     }
 
@@ -56,12 +56,20 @@ public class ComissionController : MonoBehaviour
         {
             //requestText = ;
         }
-
+        string simplifiedText = names[inputNums[Current(0)]] + " requested a " + colors[inputNums[Current(2)]] + ", " + toyTypes[inputNums[Current(1)]] + ".";
         if (numberOfComissions == 1)//this is the only commission
         {
-            currectCommission.text = names[inputNums[Current(0)]] + " requested a " + colors[inputNums[Current(2)]] + ", " + toyTypes[inputNums[Current(1)]] + ".";
+            toDoPoster.text = "- " + simplifiedText;
         }
-        //else it gets chosen on the comission board
+        else
+        {
+            toDoPoster.text = toDoPoster.text + "\n\n" + "- " + simplifiedText;
+        }
+    }
+
+    public void SetChildComission()//set a comm
+    {
+
     }
 
     public void RemoveOldComission(int commissionIndex)
