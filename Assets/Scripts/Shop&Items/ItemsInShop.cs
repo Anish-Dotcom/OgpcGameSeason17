@@ -41,6 +41,9 @@ public class ItemsInShop : MonoBehaviour
     private float current;
     private float decreaseamount;
 
+    public GameObject Box;
+    public Transform BoxPosition;
+
     void Start()
     {
         CreateShopButtons();
@@ -124,6 +127,7 @@ public class ItemsInShop : MonoBehaviour
         current = playerMoney - totalCost;
         decreaseamount = totalCost / 300;
         StartCoroutine(textRollDown());
+        GameObject box = Instantiate(Box, BoxPosition);
     }
 
     public void UpdatePlayerMoney() // updated the players money

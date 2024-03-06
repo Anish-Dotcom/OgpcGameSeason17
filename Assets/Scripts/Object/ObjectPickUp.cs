@@ -8,7 +8,7 @@ public class ObjectPickUp : MonoBehaviour
     private Rigidbody rb;
     public Collider[] coll;
     public BoxCollider boxColl;
-    public Transform player, objectContainer, fpsCam;
+    public Transform player, objectContainer, fpsCam, droppedObjectsContainer;
 
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
@@ -44,7 +44,6 @@ public class ObjectPickUp : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    originalScale = hit.transform.localScale;
                     currentObject = hit.collider.gameObject;
                     PickUp(currentObject);
                     interact.SetActive(false);
@@ -83,6 +82,7 @@ public class ObjectPickUp : MonoBehaviour
                     float distance = ((hit2.collider.gameObject.GetComponent<BoxCollider>().size.y * hit2.collider.gameObject.transform.localScale.y) / 2) - ((boxColl.size.y * currentObject.transform.localScale.y) / 2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
 
                     currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
+                    currentObject.transform.SetParent(hit2.transform);
                 }
             }
         }
@@ -112,6 +112,8 @@ public class ObjectPickUp : MonoBehaviour
         slotFull = true;
 
         item.transform.SetParent(objectContainer);
+        item.transform.localScale = new Vector3(item.transform.localScale.x / objectContainer.transform.localScale.x, item.transform.localScale.y / objectContainer.transform.localScale.y, item.transform.localScale.z / objectContainer.transform.localScale.z);
+
         item.transform.localPosition = Vector3.zero;
         FatigueController.fatigue += 3;
         
@@ -127,7 +129,8 @@ public class ObjectPickUp : MonoBehaviour
         equipped = false;
         slotFull = false;
 
-        item.transform.SetParent(null);
+        item.transform.SetParent(droppedObjectsContainer);
+        item.transform.localScale = new Vector3(item.transform.localScale.x / droppedObjectsContainer.transform.localScale.x, item.transform.localScale.y / droppedObjectsContainer.transform.localScale.y, item.transform.localScale.z / droppedObjectsContainer.transform.localScale.z);
 
         rb.isKinematic = false;
         coll[0].isTrigger = false;
@@ -136,7 +139,5 @@ public class ObjectPickUp : MonoBehaviour
 
         rb.AddForce(fpsCam.forward * dropForwardForce, ForceMode.Impulse); // throws the object forward when dropped
         rb.AddForce(fpsCam.up * dropUpwardForce, ForceMode.Impulse);
-
-        item.transform.localScale = originalScale;
     }
 }
