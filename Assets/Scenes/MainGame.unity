@@ -1164,6 +1164,7 @@ MonoBehaviour:
   day: 0
   daysTickMark: {fileID: 85846892}
   text: 
+  itemsInShop: {fileID: 0}
 --- !u!114 &85846892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20959,6 +20960,10 @@ MonoBehaviour:
     currentItemQuantity: 0
   Box: {fileID: 4854533006148857830, guid: 4919228821c648a4384876eb7cbc72d8, type: 3}
   BoxPosition: {fileID: 1420552826}
+  fpsCam: {fileID: 1559247139}
+  player: {fileID: 1146929040}
+  boxInteract: {fileID: 774952165}
+  menuController: {fileID: 312775338}
 --- !u!1 &1950235128
 GameObject:
   m_ObjectHideFlags: 0
@@ -29181,6 +29186,7 @@ MonoBehaviour:
   fatigueController: {fileID: 1146929042}
   lookingAt: 0
   sleepQuestionMark: {fileID: 32538564}
+  Day: 0
 --- !u!33 &5000893832718711743
 MeshFilter:
   m_ObjectHideFlags: 0

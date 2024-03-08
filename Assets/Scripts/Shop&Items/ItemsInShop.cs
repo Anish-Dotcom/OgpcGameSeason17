@@ -49,10 +49,14 @@ public class ItemsInShop : MonoBehaviour
 
     public GameObject Box;
     public Transform BoxPosition;
+    public Transform fpsCam;
+    public Transform player;
+    public GameObject boxInteract;
+    public MenuController menuController;
 
     void Start()
     {
-        CreateShopButtonsTabs();
+        CreateShopButtonsAllTab();
         UpdatePlayerMoney();
     }
 
@@ -67,34 +71,42 @@ public class ItemsInShop : MonoBehaviour
                     CreateShopButtons(i);
                 }
             }
-            if (combos)
+            else if (combos)
             {
                 if (properties[i].combos)
                 {
                     CreateShopButtons(i);
                 }
             }
-            if (innerParts)
+            else if (innerParts)
             {
                 if (properties[i].innerParts)
                 {
                     CreateShopButtons(i);
                 }
             }
-            if (outerParts)
+            else if (outerParts)
             {
                 if (properties[i].outterParts)
                 {
                     CreateShopButtons(i);
                 }
             }
-            if (decoratives)
+            else if (decoratives)
             {
                 if (properties[i].decoratives)
                 {
                     CreateShopButtons(i);
                 }
             }
+        }
+    }
+
+    void CreateShopButtonsAllTab()
+    {
+        for (int i = 0; i < properties.Count; i++) // assigns the name and price to be viewed
+        {
+            CreateShopButtons(i);
         }
     }
 
@@ -148,11 +160,12 @@ public class ItemsInShop : MonoBehaviour
     {
         properties[index].currentItemQuantity--;
         UpdateBuyingUI(index);
-        if (properties[index].currentItemQuantity == 0)
+        if (properties[index].currentItemQuantity <= 0)
         {
             Destroy(instantiatedBuyingButtons[properties[index].itemName]);
             instantiatedBuyingButtons.Remove(properties[index].itemName);
             instantiatedBuyingPrices.Remove(properties[index].itemName);
+            properties[index].currentItemQuantity = 0;
         }
     }
 
@@ -170,6 +183,10 @@ public class ItemsInShop : MonoBehaviour
         }
 
         GameObject box = Instantiate(Box, BoxPosition);
+        box.GetComponent<BoxScript>().fpsCam = fpsCam;
+        box.GetComponent<BoxScript>().player = player;
+        box.GetComponent<BoxScript>().interact = boxInteract;
+        box.GetComponent<BoxScript>().menuController = menuController;
 
         foreach (ItemProperties item in properties)
         {
@@ -177,7 +194,9 @@ public class ItemsInShop : MonoBehaviour
             {
                 for(int i = 0; i < item.currentItemQuantity; i++)
                 {
-                    GameObject newItemObject = Instantiate(item.itemObject, box.transform);
+                    GameObject newItemObject = Instantiate(item.itemObject, Vector3.zero, Quaternion.identity, box.transform);
+                    newItemObject.GetComponent<Rigidbody>().isKinematic = true;
+                    ChangeColliderTrigger(newItemObject, true);
                 }
                 item.currentItemQuantity = 0;
             }
@@ -186,6 +205,27 @@ public class ItemsInShop : MonoBehaviour
         current = playerMoney - totalCost;
         decreaseamount = totalCost / 300;
         StartCoroutine(textRollDown());
+    }
+
+    public void ChangeColliderTrigger(GameObject collObj, bool setToType)
+    {
+        Collider[] coll = collObj.GetComponents<Collider>();
+
+        if (coll.Length == 1)//only a box collider
+        {
+            coll[0].isTrigger = setToType;
+        }
+        else//also another type
+        {
+            if (coll[0].GetType() == typeof(BoxCollider))//if is a box collider, make other not a trigger
+            {
+                coll[1].isTrigger = setToType;
+            }
+            else//2nd collider is a box collider, 1st is other type, !!!- means that there cannot be two box colliders
+            {
+                coll[0].isTrigger = setToType;
+            }
+        }
     }
 
     public void changePlayerMoney(float takeaway)
@@ -207,7 +247,7 @@ public class ItemsInShop : MonoBehaviour
         outerParts = true;
         decoratives = true;
         resetShopButtons();
-        CreateShopButtonsTabs();
+        CreateShopButtonsAllTab();
     }
     public void salesTab()
     {
