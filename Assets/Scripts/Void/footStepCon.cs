@@ -30,16 +30,29 @@ public class footStepCon : MonoBehaviour
         float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position);
         if (totalDist < 0)
         {
-            totalDist *= -1;
+            totalDist *= -1;//make positive
         }
-        stepCount = Mathf.RoundToInt(totalDist);
+        stepCount = Mathf.RoundToInt(totalDist/distance);
 
         Vector3 direction = Vector3.Normalize(startingPointObj.transform.position - endingPointObj.transform.position);
+        float angle = GetYRotFromVec(startingPointObj.transform.position, endingPointObj.transform.position);
+        Debug.Log(angle);
+
         for (int i = 1; i <= stepCount; i++)
         {
+            if (i % 2 == 0)//even i
+            {
+                //Vector3 angleFlip = new Vector3(, , );
 
+            }
+            else //odd i
+            {
+
+            }
             Vector3 offset = startingPointObj.transform.position + direction * distance * i;
-            Instantiate(printFab, startingPointObj.transform.position + offset, printFab.transform.rotation, parentObj.transform);
+
+            Vector3 position = new Vector3(startingPointObj.transform.position.x + offset.x, printFab.transform.position.y, startingPointObj.transform.position.z + offset.z);
+            Instantiate(printFab, position, rotation, parentObj.transform);
         }
     }
 }
