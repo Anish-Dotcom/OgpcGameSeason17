@@ -8,6 +8,7 @@ public class CaledarScript : MonoBehaviour
     public int day;
     public TMP_Text daysTickMark;
     public string text;
+    public ItemsInShop itemsInShop;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,11 @@ public class CaledarScript : MonoBehaviour
     void Update()
     {
         daysTickMark.text = text;
-       
+    }
+
+    public void bills()
+    {
+
+        itemsInShop.changePlayerMoney(250);
     }
 }
