@@ -24,6 +24,12 @@ public class ItemProperties
 
 public class ItemsInShop : MonoBehaviour
 {
+    private bool sales = true;
+    private bool combos = true;
+    private bool innerParts = true;
+    private bool outerParts = true;
+    private bool decoratives = true;
+
     public float playerMoney;
     public GameObject prefabButtonInShop; // viewable button you see when you enter shop
     private List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
@@ -46,30 +52,69 @@ public class ItemsInShop : MonoBehaviour
 
     void Start()
     {
-        CreateShopButtons();
+        CreateShopButtonsTabs();
         UpdatePlayerMoney();
     }
 
-    void CreateShopButtons()
+    void CreateShopButtonsTabs()
     {
         for (int i = 0; i < properties.Count; i++) // assigns the name and price to be viewed
         {
-            GameObject button = Instantiate(prefabButtonInShop, itemsToGoObject);
-            prefabButtons.Add(button);
-
-            Transform buttonTransform = button.transform;
-            Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
-            Text itemNameText = buttonTransform.GetChild(1).GetComponent<Text>();
-            Text itemPriceText = buttonTransform.GetChild(2).GetComponent<Text>();
-            Button buyButton = buttonTransform.GetChild(3).GetComponent<Button>();
-
-            //itemImage.sprite = properties[i].itemImage;
-            itemNameText.text = properties[i].itemName;
-            itemPriceText.text = "$" + properties[i].itemPrice.ToString("F2");
-
-            int index = i; // Capturing the correct index for whats below
-            buyButton.onClick.AddListener(() => BuyItem(index));
+            if (sales)
+            {
+                if (properties[i].sales)
+                {
+                    CreateShopButtons(i);
+                }
+            }
+            if (combos)
+            {
+                if (properties[i].combos)
+                {
+                    CreateShopButtons(i);
+                }
+            }
+            if (innerParts)
+            {
+                if (properties[i].innerParts)
+                {
+                    CreateShopButtons(i);
+                }
+            }
+            if (outerParts)
+            {
+                if (properties[i].outterParts)
+                {
+                    CreateShopButtons(i);
+                }
+            }
+            if (decoratives)
+            {
+                if (properties[i].decoratives)
+                {
+                    CreateShopButtons(i);
+                }
+            }
         }
+    }
+
+    void CreateShopButtons(int i)
+    {
+        GameObject button = Instantiate(prefabButtonInShop, itemsToGoObject);
+        prefabButtons.Add(button);
+
+        Transform buttonTransform = button.transform;
+        Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
+        Text itemNameText = buttonTransform.GetChild(1).GetComponent<Text>();
+        Text itemPriceText = buttonTransform.GetChild(2).GetComponent<Text>();
+        Button buyButton = buttonTransform.GetChild(3).GetComponent<Button>();
+
+        //itemImage.sprite = properties[i].itemImage;
+        itemNameText.text = properties[i].itemName;
+        itemPriceText.text = "$" + properties[i].itemPrice.ToString("F2");
+
+        int index = i; // Capturing the correct index for whats below
+        buyButton.onClick.AddListener(() => BuyItem(index));
     }
 
     void BuyItem(int index) // add to the quantity of the item when bought and run the function to add it to the buying side on the right
@@ -124,10 +169,23 @@ public class ItemsInShop : MonoBehaviour
             }
         }
 
+        GameObject box = Instantiate(Box, BoxPosition);
+
+        foreach (ItemProperties item in properties)
+        {
+            if(item.currentItemQuantity > 0)
+            {
+                for(int i = 0; i < item.currentItemQuantity; i++)
+                {
+                    GameObject newItemObject = Instantiate(item.itemObject, box.transform);
+                }
+                item.currentItemQuantity = 0;
+            }
+        }
+
         current = playerMoney - totalCost;
         decreaseamount = totalCost / 300;
         StartCoroutine(textRollDown());
-        GameObject box = Instantiate(Box, BoxPosition);
     }
 
     public void UpdatePlayerMoney() // updated the players money
@@ -135,14 +193,74 @@ public class ItemsInShop : MonoBehaviour
         playerMoneyText.text = "$" + playerMoney.ToString("F2");
     }
 
-    public void ResetShop() // reset everything within the shop
+    public void allTab() // tabs
     {
-        foreach (GameObject button in prefabButtons)
+        sales = true;
+        combos = true;
+        innerParts = true;
+        outerParts = true;
+        decoratives = true;
+        resetShopButtons();
+        CreateShopButtonsTabs();
+    }
+    public void salesTab()
+    {
+        sales = true;
+        combos = false;
+        innerParts = false;
+        outerParts = false;
+        decoratives = false;
+        resetShopButtons();
+        CreateShopButtonsTabs();
+    }
+    public void combosTab()
+    {
+        sales = false;
+        combos = true;
+        innerParts = false;
+        outerParts = false;
+        decoratives = false;
+        resetShopButtons();
+        CreateShopButtonsTabs();
+    }
+    public void innerPartsTab()
+    {
+        sales = false;
+        combos = false;
+        innerParts = true;
+        outerParts = false;
+        decoratives = false;
+        resetShopButtons();
+        CreateShopButtonsTabs();
+    }
+    public void outerPartsTab()
+    {
+        sales = false;
+        combos = false;
+        innerParts = false;
+        outerParts = true;
+        decoratives = false;
+        resetShopButtons();
+        CreateShopButtonsTabs();
+    }
+    public void decorativesTab()
+    {
+        sales = false;
+        combos = false;
+        innerParts = false;
+        outerParts = false;
+        decoratives = true;
+        resetShopButtons();
+        CreateShopButtonsTabs();
+    }
+
+    public void resetShopButtons() // resets the buttons in the shop (useful for the tabs)
+    {
+        foreach(GameObject button in prefabButtons)
         {
             Destroy(button);
         }
         prefabButtons.Clear();
-        CreateShopButtons();
     }
 
     IEnumerator textRollDown()
