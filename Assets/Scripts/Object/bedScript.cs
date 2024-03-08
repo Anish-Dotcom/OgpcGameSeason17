@@ -20,7 +20,7 @@ public class bedScript : MonoBehaviour
     public FatigueController fatigueController;
     public bool lookingAt;
     public GameObject sleepQuestionMark;
-    public static int Day = 0;
+    public int Day = 0;
     public void Start()
 
     {
@@ -101,10 +101,12 @@ public class bedScript : MonoBehaviour
         if (z == 0)
         {
             caledarScript.text = caledarScript.text + " /";
+
             Day++;
             if (Day == 8)
             {
                 Day = 0;
+                caledarScript.bills();
             }
         }
 

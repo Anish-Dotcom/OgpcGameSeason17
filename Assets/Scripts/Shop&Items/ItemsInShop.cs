@@ -188,6 +188,12 @@ public class ItemsInShop : MonoBehaviour
         StartCoroutine(textRollDown());
     }
 
+    public void changePlayerMoney(float takeaway)
+    {
+        playerMoney -= takeaway;
+        UpdatePlayerMoney();
+    }
+
     public void UpdatePlayerMoney() // updated the players money
     {
         playerMoneyText.text = "$" + playerMoney.ToString("F2");
