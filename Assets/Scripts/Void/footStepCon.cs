@@ -34,26 +34,27 @@ public class footStepCon : MonoBehaviour
         }
         stepCount = Mathf.RoundToInt(totalDist/distance);
 
-        Vector3 direction = Vector3.Normalize(startingPointObj.transform.position - endingPointObj.transform.position);
-        //float angle = - - - 
-        //Debug.Log(angle);
+        Vector3 direction = Vector3.Normalize(endingPointObj.transform.position - startingPointObj.transform.position);//--
+        Debug.Log(direction);
+
+        float angle = Mathf.Atan(direction.x/direction.z) * (180/Mathf.PI);//calculates the angle the foot needs to face to aim towards ending point obj
+        Quaternion rotation = Quaternion.Euler(90, angle, 0);
 
         for (int i = 1; i <= stepCount; i++)
         {
-            if (i % 2 == 0)//even i
+            if (i % 2 == 0)//even i, if its even flip foot 180 deg, 
             {
-                //Vector3 angleFlip = new Vector3(, , );
+                rotation = Quaternion.Euler(-90, angle, 180);
 
             }
             else //odd i
             {
-
+                rotation = Quaternion.Euler(90, angle, 0);
             }
-            Vector3 offset = startingPointObj.transform.position + direction * distance * i;
+            Vector3 offset = direction * distance * i;//--
 
             Vector3 position = new Vector3(startingPointObj.transform.position.x + offset.x, printFab.transform.position.y, startingPointObj.transform.position.z + offset.z);
-            
-            //Instantiate(printFab, position, rotation, parentObj.transform);
+            Instantiate(printFab, position, rotation, parentObj.transform);
         }
     }
 }
