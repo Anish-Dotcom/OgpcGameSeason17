@@ -36,7 +36,7 @@ public class footStepCon : MonoBehaviour
 
         Vector3 direction = Vector3.Normalize(startingPointObj.transform.position - endingPointObj.transform.position);
         //float angle = - - - 
-        Debug.Log(angle);
+        //Debug.Log(angle);
 
         for (int i = 1; i <= stepCount; i++)
         {
