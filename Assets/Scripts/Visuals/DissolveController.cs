@@ -8,10 +8,6 @@ public class DissolveController : MonoBehaviour
     public GameObject centralObj;//able to change positon to cleanly make something appear
     public Material[] areaMats;
 
-    void Update()
-    {
-        
-    }
     void Start()
     {
         for (int i = 0; i < areaMats.Length; i++)

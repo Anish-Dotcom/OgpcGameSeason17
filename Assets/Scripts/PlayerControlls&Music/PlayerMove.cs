@@ -38,7 +38,6 @@ public class PlayerMove : MonoBehaviour
     Vector3 currentVelocity;
     public float smoothTime = 0.5f;
     public float maxFollowSpeed = 20;
-    public float[] maxDistances = new float[4];
     private float objectStartYDirection = 0;
     private float camStartYDirection = 0;
 
@@ -56,7 +55,6 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WrapAround();
         
         SpeedControl();
         if (isControllable)
@@ -165,33 +163,5 @@ public class PlayerMove : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
-    }
-    private void WrapAround()
-    {
-        float changePosX = 0;
-        float changePosZ = 0;
-        if (transform.position.x >= maxDistances[0])
-        {
-            changePosX = -2 * transform.position.x + 0.5f;
-            Debug.Log("Wrap around x" + transform.position.x);
-        }
-        else if (transform.position.x <= maxDistances[1])
-        {
-            changePosX = -2 * transform.position.x - 0.5f;
-            Debug.Log("Wrap around -x" + transform.position.x);
-        }
-        else if (transform.position.z <= maxDistances[2])
-        {
-            changePosZ = -2 * transform.position.z - 0.5f;
-            Debug.Log("Wrap around -z" + transform.position.z);
-        }
-        else if (transform.position.z >= maxDistances[3])
-        {
-            changePosZ = -2 * transform.position.z + 0.5f;
-            Debug.Log("Wrap around z" + transform.position.z);
-        }
-        Vector3 playPos = new Vector3(transform.position.x + changePosX, transform.position.y, transform.position.z + changePosZ);
-        transform.position = playPos;
-        //Debug.Log(transform.position.x + transform.position.z);
     }
 }
