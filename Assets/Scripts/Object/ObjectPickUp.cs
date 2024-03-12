@@ -71,7 +71,10 @@ public class ObjectPickUp : MonoBehaviour
                 {
                     Drop(currentObject);
 
-                    coll[0].isTrigger = true;
+                    for (int i = 0; i < coll.Length - 1; i++)
+                    {
+                        coll[i].isTrigger = true;
+                    }
 
                     rb.isKinematic = true;
                     currentObject.transform.position = hit2.transform.position; // 1. sets the location to the same location as the shelf slot
@@ -83,6 +86,10 @@ public class ObjectPickUp : MonoBehaviour
 
                     currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
                     currentObject.transform.SetParent(hit2.transform);
+                    if(currentObject.tag == "Box")
+                    {
+                        currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y + 0.20f, currentObject.transform.position.z);
+                    }
                 }
             }
         }
@@ -103,7 +110,7 @@ public class ObjectPickUp : MonoBehaviour
         }
         else
         {
-            boxColl = (BoxCollider)coll[1];
+            boxColl = (BoxCollider)coll[coll.Length-1];
         }
 
         item.gameObject.layer = 2;
@@ -119,7 +126,10 @@ public class ObjectPickUp : MonoBehaviour
         
         print(FatigueController.fatigue);
         rb.isKinematic = true;
-        coll[0].isTrigger = true;
+        for(int i = 0; i < coll.Length-1; i++)
+        {
+            coll[i].isTrigger = true;
+        }
     }
 
     private void Drop(GameObject item) // drop item function
@@ -133,7 +143,10 @@ public class ObjectPickUp : MonoBehaviour
         item.transform.localScale = new Vector3(item.transform.localScale.x / droppedObjectsContainer.transform.localScale.x, item.transform.localScale.y / droppedObjectsContainer.transform.localScale.y, item.transform.localScale.z / droppedObjectsContainer.transform.localScale.z);
 
         rb.isKinematic = false;
-        coll[0].isTrigger = false;
+        for (int i = 0; i < coll.Length - 1; i++)
+        {
+            coll[i].isTrigger = false;
+        }
 
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 

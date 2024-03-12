@@ -13,7 +13,7 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject callShopButton; // i have this button as a gameobject so i can set it active false whenever you open up the shop
     public GameObject shopUI; // this is the canvas ui menu that pops up when you open the shop
-    public AudioClip greeting;
+    public AudioSource greeting;
 
     private float moveSpeedSaved; // the following variables are here to store what the sens was and then set it to 0 so that they cant look around when inside the menu and then goes back when the ui is closed
     private float sensXSaved;
@@ -38,20 +38,6 @@ public class telephoneScript : MonoBehaviour
     public GameObject interact; // this is what set active true when you hover over the telephone
 
     public MenuController menuController; // for controlling menus
-
-    private void OnMouseOver()
-    {
-        distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
-
-        if (distFromObject <= 2.1 && !telephoneIsOpen)
-        {
-            interact.SetActive(true);
-        }
-        else
-        {
-            interact.SetActive(false);
-        }
-    }
 
     private void OnMouseUpAsButton()
     {
@@ -91,6 +77,7 @@ public class telephoneScript : MonoBehaviour
         awayButton.interactable = false;
         StartCoroutine(showText());
         //musicController.PlayDialog(greeting);
+        greeting.Play();
     }
 
     IEnumerator showText()

@@ -46,6 +46,8 @@ public class BoxScript : MonoBehaviour
 
                     boxTop1onopen.SetActive(true);
                     boxTop2onopen.SetActive(true);
+                    Collider[] colliders = GetComponents<Collider>();
+                    colliders[0].enabled = false;
                 }
             }
             else
