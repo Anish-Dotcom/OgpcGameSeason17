@@ -182,7 +182,7 @@ public class ItemsInShop : MonoBehaviour
             }
         }
 
-        GameObject box = Instantiate(Box, BoxPosition);
+        GameObject box = Instantiate(Box, Vector3.zero, Quaternion.identity, BoxPosition);
         box.GetComponent<BoxScript>().fpsCam = fpsCam;
         box.GetComponent<BoxScript>().player = player;
         box.GetComponent<BoxScript>().interact = boxInteract;

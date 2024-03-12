@@ -9746,7 +9746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -3.237, y: 2.672}
+  m_AnchoredPosition: {x: -3.237, y: 2.4610174}
   m_SizeDelta: {x: 1134, y: 638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &910786727
@@ -11282,7 +11282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -3.284, y: 2.9881}
+  m_AnchoredPosition: {x: -3.284, y: 2.7771175}
   m_SizeDelta: {x: 1633.4243, y: 796.496}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1045837880
@@ -18148,7 +18148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587939332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.55231977, y: 2.6129825, z: -3.4973338}
+  m_LocalPosition: {x: 0.55231977, y: 2.402, z: -3.4973338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20876,8 +20876,8 @@ MonoBehaviour:
     outterParts: 0
     decoratives: 0
     isForWindupToy: 1
-    itemName: Gearbox Body Bot
-    itemObject: {fileID: 528912712889817095, guid: d3046ea0dfd89f746884bdb073f02614,
+    itemName: Gearbox Body Bottom
+    itemObject: {fileID: 8926714841084910747, guid: d3046ea0dfd89f746884bdb073f02614,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20890,7 +20890,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Gearbox Body Top
-    itemObject: {fileID: 6744142048672373906, guid: 368ac59b94327844382465418c90ca6d,
+    itemObject: {fileID: 1261008051451726886, guid: 368ac59b94327844382465418c90ca6d,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20903,7 +20903,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Windup Grip
-    itemObject: {fileID: 7779838477287716595, guid: b202047fd7c0fa341b944c314c600e62,
+    itemObject: {fileID: 2079973279516448191, guid: b202047fd7c0fa341b944c314c600e62,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20916,7 +20916,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Rod
-    itemObject: {fileID: 6088244944877515314, guid: e5a1d4002a839a74f8e1a2f294817882,
+    itemObject: {fileID: 4147440884950861279, guid: e5a1d4002a839a74f8e1a2f294817882,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20929,7 +20929,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Big Gear
-    itemObject: {fileID: 2248097371123033939, guid: f1ad4eb684930594bb2a7cd9faded111,
+    itemObject: {fileID: 44449273255769233, guid: f1ad4eb684930594bb2a7cd9faded111,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20942,7 +20942,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Small Gear
-    itemObject: {fileID: 108765726906963, guid: 6e022de9b0f9e984eafd02fd74b995f3,
+    itemObject: {fileID: 7694247075213981221, guid: 6e022de9b0f9e984eafd02fd74b995f3,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20955,7 +20955,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Screw
-    itemObject: {fileID: 7345178397541060378, guid: 390358dcb696f3646ac7a1556de1eb0a,
+    itemObject: {fileID: 6289590967285865185, guid: 390358dcb696f3646ac7a1556de1eb0a,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20968,7 +20968,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Spring
-    itemObject: {fileID: 131257905386391992, guid: 52d82015bbffbca438566fe334a81d0f,
+    itemObject: {fileID: 3357261731479885475, guid: 52d82015bbffbca438566fe334a81d0f,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
@@ -20981,7 +20981,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Spring Gear
-    itemObject: {fileID: 6371159960784103336, guid: e0566a00ac1f0c147b8c012db3ec2118,
+    itemObject: {fileID: 4021151835310411546, guid: e0566a00ac1f0c147b8c012db3ec2118,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 0}
