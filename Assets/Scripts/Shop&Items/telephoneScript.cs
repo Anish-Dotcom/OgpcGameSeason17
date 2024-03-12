@@ -39,22 +39,6 @@ public class telephoneScript : MonoBehaviour
 
     public MenuController menuController; // for controlling menus
 
-    private void OnMouseUpAsButton()
-    {
-        distFromObject = Vector3.Distance(playerCam.transform.position, telephone.transform.position);
-
-        if(distFromObject <= 2.1 && !telephoneIsOpen && !menuController.menuOpen)
-        {
-            //commissionsUI.SetActive(false);
-            //shopUI.SetActive(false);
-            callShopButton.SetActive(true);
-            telephoneIsOpen = true;
-            telephone.SetActive(false);
-            telephoneOutline.SetActive(false);
-            menuController.openMenu(telephoneUI);
-
-        }
-    }
 
     public void PutTelephoneBackButton()
     {
@@ -110,6 +94,16 @@ public class telephoneScript : MonoBehaviour
             if (hit.collider.gameObject.CompareTag("telephone") && !telephoneIsOpen)
             {
                 interact.SetActive(true);
+                if (Input.GetMouseButton(0) && !telephoneIsOpen && !menuController.menuOpen)
+                {
+                    //commissionsUI.SetActive(false);
+                    //shopUI.SetActive(false);
+                    callShopButton.SetActive(true);
+                    telephoneIsOpen = true;
+                    telephone.SetActive(false);
+                    telephoneOutline.SetActive(false);
+                    menuController.openMenu(telephoneUI);
+                }
             }
             else
             {
@@ -123,6 +117,10 @@ public class telephoneScript : MonoBehaviour
             {
                 menuController.closeMenu(shopUI);
                 menuController.closeMenu(telephoneUI);
+                telephoneIsOpen = false;
+                telephone.SetActive(true);
+                telephoneOutline.SetActive(true);
+                Cursor.visible = false;
             }
         }
     }
