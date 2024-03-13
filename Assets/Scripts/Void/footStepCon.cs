@@ -11,15 +11,20 @@ public class footStepCon : MonoBehaviour
     public GameObject endingPointObj;//point where they end
 
     public float distance;//distance between footprints
+    public float sideSpacing;//distance to the first step - distance (side spacing + distance = distance to first step)
     public int stepCount;//number of steps
 
-    public float upperBoundSpacing;//distance between steps max
-    public float lowerBoundSpacing;//distance between steps min
+    public float upperBoundSpacing;//distance between steps max (width)
+    public float lowerBoundSpacing;//distance between steps min (width)
+
+    public Material footPrintMat;//original footprint mat
+
+    public List<Material> footPrintMatsInScene;//each different color of footprint requires a different material
 
     // Start is called before the first frame update
     void Start()
     {
-        setFootPrints();
+        setFootPrints(new Color(255,0,0));//red
     }
 
     // Update is called once per frame
@@ -28,8 +33,12 @@ public class footStepCon : MonoBehaviour
         
     }
 
-    public void setFootPrints()
+    public void setFootPrints(Color color)
     {
+        Material newPrintMat = new Material(footPrintMat);
+        newPrintMat.color = color;
+        footPrintMatsInScene.Add(newPrintMat);
+
         float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position);
         if (totalDist < 0)
         {

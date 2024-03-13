@@ -8,6 +8,8 @@ public class GlobalDissolveCon : MonoBehaviour
     public GameObject player;
     public GameObject heldObjContainer;//what obj is held
     public GameObject boxObjContainer;//what things are bought
+    public GameObject sellObjLocation;
+    public GameObject cribLocation;
 
     public DissolveController[] areas;
     public footStepCon footStepCon;
@@ -27,7 +29,12 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             placeSteps();//if outside of room give player a guide on where to go to
             WrapAround();
-        }*/
+        }
+        else 
+        {
+            removeSteps();
+        }
+        */
     }
     private void WrapAround()
     {
@@ -80,19 +87,26 @@ public class GlobalDissolveCon : MonoBehaviour
     }
     public void placeSteps()
     {
-        //if statements put further up are chosen first
-        //other option is there are multiple footstep paths
-        if (heldObjContainer.transform.GetChild(0).CompareTag("finished Toy"))
-        {
 
-        }
-        else if (heldObjContainer.transform.GetChild(0).CompareTag("childs Toy"))
+        footStepCon.startingPointObj.transform.position = player.transform.position;
+        if (heldObjContainer.transform.GetChild(0).CompareTag("finished Toy"))//sell location
         {
-
+            footStepCon.endingPointObj.transform.position = sellObjLocation.transform.position;
+            footStepCon.setFootPrints(new Color(255, 0, 0));//red
         }
-        else if (boxObjContainer.transform.childCount > 0)//there is a box for you to get
+        if (heldObjContainer.transform.GetChild(0).CompareTag("childs Toy"))//crib
         {
-
+            footStepCon.endingPointObj.transform.position = cribLocation.transform.position;
+            footStepCon.setFootPrints(new Color(0, 0, 255));//blue
         }
+        if (boxObjContainer.transform.childCount > 0)//there is a box for you to get
+        {
+            footStepCon.endingPointObj.transform.position = boxObjContainer.transform.position;
+            footStepCon.setFootPrints(new Color(255, 255, 255));//white
+        }
+    }
+    public void removeSteps()
+    {
+
     }
 }

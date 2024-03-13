@@ -6372,9 +6372,12 @@ MonoBehaviour:
   startingPointObj: {fileID: 116085084}
   endingPointObj: {fileID: 2141913441}
   distance: 2
+  sideSpacing: 0
   stepCount: 0
   upperBoundSpacing: 0
   lowerBoundSpacing: 0
+  footPrintMat: {fileID: 2100000, guid: 2c569bd1091e7d24aa0c3a0237b5faaf, type: 2}
+  footPrintMatsInScene: []
 --- !u!1 &619373739
 GameObject:
   m_ObjectHideFlags: 0
@@ -16204,11 +16207,15 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  player: {fileID: 0}
-  heldObjContainer: {fileID: 0}
-  boxObjContainer: {fileID: 0}
-  areas: []
-  footStepCon: {fileID: 0}
+  player: {fileID: 1146929038}
+  heldObjContainer: {fileID: 146505513}
+  boxObjContainer: {fileID: 1420552825}
+  sellObjLocation: {fileID: 0}
+  cribLocation: {fileID: 0}
+  areas:
+  - {fileID: 2012124011}
+  - {fileID: 1464734006}
+  footStepCon: {fileID: 606715827}
   mainRoomDistances:
   - 0
   - 0
@@ -16815,8 +16822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dissolveDistances: {x: 4, y: 4, z: 4}
   centralObj: {fileID: 1146929038}
-  areaMats:
-  - {fileID: 2100000, guid: 2c569bd1091e7d24aa0c3a0237b5faaf, type: 2}
+  areaMats: []
 --- !u!1 &1514803315
 GameObject:
   m_ObjectHideFlags: 0
