@@ -183,6 +183,7 @@ public class ItemsInShop : MonoBehaviour
         }
 
         GameObject box = Instantiate(Box, Vector3.zero, Quaternion.identity, BoxPosition);
+        box.transform.position = BoxPosition.transform.position;
         box.GetComponent<BoxScript>().fpsCam = fpsCam;
         box.GetComponent<BoxScript>().player = player;
         box.GetComponent<BoxScript>().interact = boxInteract;
@@ -195,6 +196,7 @@ public class ItemsInShop : MonoBehaviour
                 for(int i = 0; i < item.currentItemQuantity; i++)
                 {
                     GameObject newItemObject = Instantiate(item.itemObject, Vector3.zero, Quaternion.identity, box.transform);
+                    newItemObject.transform.position = box.transform.position;
                     newItemObject.GetComponent<Rigidbody>().isKinematic = true;
                     ChangeColliderTrigger(newItemObject, true);
                 }
