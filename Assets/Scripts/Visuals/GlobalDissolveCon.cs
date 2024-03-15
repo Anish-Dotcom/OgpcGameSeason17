@@ -15,6 +15,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public footStepCon footStepCon;
 
     public float[] mainRoomDistances = new float[4];
+    public bool firstFrameOutside = true;
 
     // Start is called before the first frame update
     void Start()
@@ -25,16 +26,19 @@ public class GlobalDissolveCon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (!inMainRoom())
+        if (!inMainRoom())
         {
-            placeSteps();//if outside of room give player a guide on where to go to
             WrapAround();
+            if (firstFrameOutside)
+            {
+                placeSteps();//if outside of room give player a guide on where to go to
+                firstFrameOutside = false;
+            }
         }
         else 
         {
             removeSteps();
         }
-        */
     }
     private void WrapAround()
     {
@@ -60,8 +64,8 @@ public class GlobalDissolveCon : MonoBehaviour
             changePosZ = -2 * transform.position.z + 0.5f;
             Debug.Log("Wrap around z" + transform.position.z);
         }
-        Vector3 playPos = new Vector3(transform.position.x + changePosX, transform.position.y, transform.position.z + changePosZ);
-        transform.position = playPos;
+        Vector3 playPos = new Vector3(player.transform.position.x + changePosX, player.transform.position.y, player.transform.position.z + changePosZ);
+        player.transform.position = playPos;
         //Debug.Log(transform.position.x + transform.position.z);
     }
     private bool inMainRoom()
@@ -89,15 +93,18 @@ public class GlobalDissolveCon : MonoBehaviour
     {
 
         footStepCon.startingPointObj.transform.position = player.transform.position;
-        if (heldObjContainer.transform.GetChild(0).CompareTag("finished Toy"))//sell location
+        if (heldObjContainer.transform.childCount > 0)
         {
-            footStepCon.endingPointObj.transform.position = sellObjLocation.transform.position;
-            footStepCon.setFootPrints(new Color(255, 0, 0));//red
-        }
-        if (heldObjContainer.transform.GetChild(0).CompareTag("childs Toy"))//crib
-        {
-            footStepCon.endingPointObj.transform.position = cribLocation.transform.position;
-            footStepCon.setFootPrints(new Color(0, 0, 255));//blue
+            if (heldObjContainer.transform.GetChild(0).CompareTag("finished Toy"))//holding a finished toy -- place steps to sell location
+            {
+                footStepCon.endingPointObj.transform.position = sellObjLocation.transform.position;
+                footStepCon.setFootPrints(new Color(255, 0, 0));//red
+            }
+            if (heldObjContainer.transform.GetChild(0).CompareTag("childs Toy"))//golding your childs toy -- place steps to crib
+            {
+                footStepCon.endingPointObj.transform.position = cribLocation.transform.position;
+                footStepCon.setFootPrints(new Color(0, 0, 255));//blue
+            }
         }
         if (boxObjContainer.transform.childCount > 0)//there is a box for you to get
         {

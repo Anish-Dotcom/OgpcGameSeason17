@@ -6461,7 +6461,7 @@ MonoBehaviour:
   startingPointObj: {fileID: 116085084}
   endingPointObj: {fileID: 2141913441}
   distance: 2
-  sideSpacing: 0
+  sideSpacing: 4
   stepCount: 0
   upperBoundSpacing: 0
   lowerBoundSpacing: 0
@@ -16382,10 +16382,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wrapAroundDistances:
-  - 0
-  - 0
-  - 0
-  - 0
+  - 20
+  - -20
+  - -20
+  - 20
   player: {fileID: 1146929038}
   heldObjContainer: {fileID: 146505513}
   boxObjContainer: {fileID: 1420552825}
@@ -16396,10 +16396,11 @@ MonoBehaviour:
   - {fileID: 1464734006}
   footStepCon: {fileID: 606715827}
   mainRoomDistances:
-  - 0
-  - 0
-  - 0
-  - 0
+  - -3.33
+  - 2.41
+  - 6.83
+  - -4.34
+  firstFrameOutside: 1
 --- !u!1 &1432622921
 GameObject:
   m_ObjectHideFlags: 0

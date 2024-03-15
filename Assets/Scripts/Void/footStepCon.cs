@@ -24,7 +24,7 @@ public class footStepCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        setFootPrints(new Color(255,0,0));//red
+        //setFootPrints(new Color(255,0,0));//red
     }
 
     // Update is called once per frame
@@ -36,15 +36,16 @@ public class footStepCon : MonoBehaviour
     public void setFootPrints(Color color)
     {
         Material newPrintMat = new Material(footPrintMat);
-        newPrintMat.color = color;
+        newPrintMat.SetColor("_Color", color);
         footPrintMatsInScene.Add(newPrintMat);
 
-        float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position);
+        float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position) - 2 * sideSpacing;
         if (totalDist < 0)
         {
             totalDist *= -1;//make positive
         }
         stepCount = Mathf.RoundToInt(totalDist/distance);//calculates the number of footsteps based on distance between locations divided by distance between steps
+
 
         Vector3 direction = Vector3.Normalize(endingPointObj.transform.position - startingPointObj.transform.position);//calculates the direction from starting point to ending point with a magnitude of 1.
         //Debug.DrawRay(startingPointObj.transform.position, direction, Color.green, 100f);
@@ -56,7 +57,7 @@ public class footStepCon : MonoBehaviour
         Quaternion rotation;
         Vector3 perpOffset;
 
-        for (int i = 1; i <= stepCount; i++)
+        for (int i = 0; i <= stepCount; i++)
         {
             if (i % 2 == 0)//even i, if its even flip foot 180 deg, 
             {
@@ -70,10 +71,11 @@ public class footStepCon : MonoBehaviour
             }
 
 
-            Vector3 offset = perpOffset + (direction * distance * i);
+            Vector3 offset = perpOffset + (direction * (distance) * i) + (direction * (sideSpacing));
             Vector3 position = new Vector3(startingPointObj.transform.position.x + offset.x, printFab.transform.position.y, startingPointObj.transform.position.z + offset.z);
 
-            Instantiate(printFab, position, rotation, parentObj.transform);
+            GameObject recentPrint = Instantiate(printFab, position, rotation, parentObj.transform);
+            recentPrint.GetComponent<Renderer>().material = newPrintMat;
         }
     }
 }
