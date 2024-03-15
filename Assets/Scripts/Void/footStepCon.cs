@@ -18,26 +18,22 @@ public class footStepCon : MonoBehaviour
     public float lowerBoundSpacing;//distance between steps min (width)
 
     public Material footPrintMat;//original footprint mat
-
     public List<Material> footPrintMatsInScene;//each different color of footprint requires a different material
+
+    public GlobalDissolveCon globalDissolve;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //setFootPrints(new Color(255,0,0));//red
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        setFootPrints(new Color(255,0,0));//red
     }
 
     public void setFootPrints(Color color)
     {
         Material newPrintMat = new Material(footPrintMat);
         newPrintMat.SetColor("_Color", color);
-        footPrintMatsInScene.Add(newPrintMat);
 
         float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position) - 2 * sideSpacing;
         if (totalDist < 0)
@@ -77,5 +73,6 @@ public class footStepCon : MonoBehaviour
             GameObject recentPrint = Instantiate(printFab, position, rotation, parentObj.transform);
             recentPrint.GetComponent<Renderer>().material = newPrintMat;
         }
+        footPrintMatsInScene.Add(newPrintMat);
     }
 }

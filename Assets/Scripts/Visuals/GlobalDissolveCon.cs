@@ -11,7 +11,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public GameObject sellObjLocation;
     public GameObject cribLocation;
 
-    public DissolveController[] areas;
+    public DissolveController[] areas;// mainroom = 0, void = 1
     public footStepCon footStepCon;
 
     public float[] mainRoomDistances = new float[4];
@@ -32,12 +32,15 @@ public class GlobalDissolveCon : MonoBehaviour
             if (firstFrameOutside)
             {
                 placeSteps();//if outside of room give player a guide on where to go to
+                areas[1].updatingMats = footStepCon.footPrintMatsInScene;
                 firstFrameOutside = false;
             }
         }
         else 
         {
             removeSteps();
+            areas[1].updatingMats.Clear();
+            firstFrameOutside = true;
         }
     }
     private void WrapAround()
