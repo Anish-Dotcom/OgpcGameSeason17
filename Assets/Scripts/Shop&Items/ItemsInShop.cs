@@ -116,12 +116,22 @@ public class ItemsInShop : MonoBehaviour
         prefabButtons.Add(button);
 
         Transform buttonTransform = button.transform;
-        Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
-        Text itemNameText = buttonTransform.GetChild(1).GetComponent<Text>();
-        Text itemPriceText = buttonTransform.GetChild(2).GetComponent<Text>();
-        Button buyButton = buttonTransform.GetChild(3).GetComponent<Button>();
+        Image itemImage = buttonTransform.GetChild(1).GetComponent<Image>();
+        Text itemNameText = buttonTransform.GetChild(2).GetComponent<Text>();
+        Text itemPriceText = buttonTransform.GetChild(3).GetComponent<Text>();
+        Button buyButton = buttonTransform.GetChild(4).GetComponent<Button>();
+        Image iswindup = buttonTransform.GetChild(5).GetComponent<Image>();
 
-        //itemImage.sprite = properties[i].itemImage;
+        if (properties[i].isForWindupToy)
+        {
+            iswindup.gameObject.SetActive(true);
+        }
+        else
+        {
+            iswindup.gameObject.SetActive(false);
+        }
+
+        itemImage.sprite = properties[i].itemImage;
         itemNameText.text = properties[i].itemName;
         itemPriceText.text = "$" + properties[i].itemPrice.ToString("F2");
 
@@ -202,6 +212,11 @@ public class ItemsInShop : MonoBehaviour
                 }
                 item.currentItemQuantity = 0;
             }
+        }
+
+        for(int i = 0; i < properties.Count; i++)
+        {
+            RemoveItem(i);
         }
 
         current = playerMoney - totalCost;
