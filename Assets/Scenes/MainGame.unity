@@ -6467,6 +6467,7 @@ MonoBehaviour:
   lowerBoundSpacing: 0
   footPrintMat: {fileID: 2100000, guid: 2c569bd1091e7d24aa0c3a0237b5faaf, type: 2}
   footPrintMatsInScene: []
+  globalDissolve: {fileID: 0}
 --- !u!1 &619373739
 GameObject:
   m_ObjectHideFlags: 0
@@ -16382,10 +16383,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wrapAroundDistances:
-  - 20
-  - -20
-  - -20
-  - 20
+  - 200
+  - -200
+  - -200
+  - 200
   player: {fileID: 1146929038}
   heldObjContainer: {fileID: 146505513}
   boxObjContainer: {fileID: 1420552825}
@@ -16396,10 +16397,10 @@ MonoBehaviour:
   - {fileID: 1464734006}
   footStepCon: {fileID: 606715827}
   mainRoomDistances:
-  - -3.33
   - 2.41
-  - 6.83
+  - -3.33
   - -4.34
+  - 6.83
   firstFrameOutside: 1
 --- !u!1 &1432622921
 GameObject:
@@ -17003,6 +17004,7 @@ MonoBehaviour:
   dissolveDistances: {x: 4, y: 4, z: 4}
   centralObj: {fileID: 1146929038}
   areaMats: []
+  updatingMats: []
 --- !u!1 &1514803315
 GameObject:
   m_ObjectHideFlags: 0
@@ -21675,6 +21677,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: d10b8c165cd4c8545a5b5a0e697258be, type: 2}
   - {fileID: 2100000, guid: eb0b37a4616266c449b189115ac8bd8a, type: 2}
   - {fileID: 2100000, guid: 05fee0981606bdf43ba5b109b91e9918, type: 2}
+  updatingMats: []
 --- !u!1 &2058827112
 GameObject:
   m_ObjectHideFlags: 0
