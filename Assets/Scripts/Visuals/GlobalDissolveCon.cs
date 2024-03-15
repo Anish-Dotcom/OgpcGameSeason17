@@ -32,15 +32,21 @@ public class GlobalDissolveCon : MonoBehaviour
             if (firstFrameOutside)
             {
                 placeSteps();//if outside of room give player a guide on where to go to
-                areas[1].updatingMats = footStepCon.footPrintMatsInScene;
+                for (int i = 0; i < footStepCon.footPrintMatsInScene.Count; i++)
+                {
+                    areas[1].updatingMats.Add(footStepCon.footPrintMatsInScene[i]);
+                }
                 firstFrameOutside = false;
             }
         }
         else 
         {
-            removeSteps();
-            areas[1].updatingMats.Clear();
-            firstFrameOutside = true;
+            if (!firstFrameOutside)
+            {
+                removeSteps();
+                areas[1].updatingMats.Clear();
+                firstFrameOutside = true;
+            }
         }
     }
     private void WrapAround()
@@ -90,6 +96,7 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             inRoom = false;
         }
+        //Debug.Log("In room " + inRoom);
         return inRoom;
     }
     public void placeSteps()
@@ -117,6 +124,9 @@ public class GlobalDissolveCon : MonoBehaviour
     }
     public void removeSteps()
     {
-
+        for (int i = 0; i < footStepCon.parentObj.transform.childCount; i++)
+        {
+            Destroy(footStepCon.parentObj.transform.GetChild(i).gameObject);
+        }
     }
 }

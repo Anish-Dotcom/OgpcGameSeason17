@@ -20,14 +20,12 @@ public class footStepCon : MonoBehaviour
     public Material footPrintMat;//original footprint mat
     public List<Material> footPrintMatsInScene;//each different color of footprint requires a different material
 
-    public GlobalDissolveCon globalDissolve;
-
 
 
     // Start is called before the first frame update
     void Start()
     {
-        setFootPrints(new Color(255,0,0));//red
+        //setFootPrints(new Color(0,0,255));//red
     }
 
     public void setFootPrints(Color color)
@@ -36,10 +34,6 @@ public class footStepCon : MonoBehaviour
         newPrintMat.SetColor("_Color", color);
 
         float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position) - 2 * sideSpacing;
-        if (totalDist < 0)
-        {
-            totalDist *= -1;//make positive
-        }
         stepCount = Mathf.RoundToInt(totalDist/distance);//calculates the number of footsteps based on distance between locations divided by distance between steps
 
 
@@ -48,8 +42,12 @@ public class footStepCon : MonoBehaviour
 
         Vector3 perpendicularDirection = Vector3.Normalize(new Vector3(startingPointObj.transform.position.z - endingPointObj.transform.position.z, 0, endingPointObj.transform.position.x - startingPointObj.transform.position.x));//creates the perpendicular vector to direction
         //Debug.DrawRay(startingPointObj.transform.position, perpendicularDirection, Color.red, 100f);
-
+        
         float angle = Mathf.Atan(direction.x/direction.z) * (180/Mathf.PI);//calculates the angle the foot needs to face to aim towards ending point obj
+        if (direction.z < 0)
+        {
+            angle = 180 + angle;
+        }
         Quaternion rotation;
         Vector3 perpOffset;
 
@@ -65,7 +63,6 @@ public class footStepCon : MonoBehaviour
                 rotation = Quaternion.Euler(90, angle, 0 + Random.Range(-5f, 5f));
                 perpOffset = perpendicularDirection * Random.Range(0.2f, 1f);
             }
-
 
             Vector3 offset = perpOffset + (direction * (distance) * i) + (direction * (sideSpacing));
             Vector3 position = new Vector3(startingPointObj.transform.position.x + offset.x, printFab.transform.position.y, startingPointObj.transform.position.z + offset.z);

@@ -32,7 +32,7 @@ public class DissolveController : MonoBehaviour
         for (int i = 0; i < updating.Count; i++)
         {
             updating[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
-            //Debug.Log(areaMats[i].GetVector("_Object_Position_For_Ref_Dis"));
+            //Debug.Log(updating[i].GetVector("_Object_Position_For_Ref_Dis"));
         }
     }
     public void SetCutoffDist(Vector3 distanceChanges)
