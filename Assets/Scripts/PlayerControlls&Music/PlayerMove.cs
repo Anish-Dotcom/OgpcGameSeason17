@@ -145,13 +145,15 @@ public class PlayerMove : MonoBehaviour
         if(crouching == false)
         {
             transform.localScale = new Vector3 (2,1.2f,2);
-            transform.position = new Vector3(transform.position.x, 1.4f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 1.2f, transform.position.z);
+            moveSpeed = moveSpeed / 2;
             crouching = true;
         }   
         else if (crouching)
         {
             transform.localScale = new Vector3(2, 1.8f, 2);
-            transform.position = new Vector3(transform.position.x, 2.15f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 1.8f, transform.position.z);
+            moveSpeed = moveSpeed * 2;
             crouching = false;
         }
     }
