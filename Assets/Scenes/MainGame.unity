@@ -21297,10 +21297,10 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Gearbox
-    itemObject: {fileID: 919132149155446097, guid: 27a45d5221b9ad9458740aea7981d71f,
+    itemObject: {fileID: 1350222533596578875, guid: 36b9a366f8466e74b9ee28e56c7e4268,
       type: 3}
     itemPrice: 1
-    itemImage: {fileID: 21300000, guid: 2da6a98377eae7c4b9910355b75def95, type: 3}
+    itemImage: {fileID: 21300000, guid: a3429d29539814c478250c4b2ef59a76, type: 3}
     daysSold: []
     currentItemQuantity: 0
   Box: {fileID: 6840675553552533320, guid: 4919228821c648a4384876eb7cbc72d8, type: 3}
