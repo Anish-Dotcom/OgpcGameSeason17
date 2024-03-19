@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class footStepCon : MonoBehaviour
 {
+    public GameObject emptyObj;//prefab used for formatting
     public GameObject printFab;//foot print prefab
     public GameObject parentObj;//obj footprints are parented to
 
@@ -25,10 +26,10 @@ public class footStepCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //setFootPrints(new Color(0,0,255));//red
+        //setFootPrints(new Color(0,0,255), 0);//red
     }
 
-    public void setFootPrints(Color color)
+    public void setFootPrints(Color color, int areaInt)
     {
         Material newPrintMat = new Material(footPrintMat);
         newPrintMat.SetColor("_Color", color);
@@ -51,6 +52,8 @@ public class footStepCon : MonoBehaviour
         Quaternion rotation;
         Vector3 perpOffset;
 
+        GameObject printParent = Instantiate(emptyObj, Vector3.zero, Quaternion.identity, parentObj.transform);
+        printParent.name = "print path to area " + areaInt;
         for (int i = 0; i <= stepCount; i++)
         {
             if (i % 2 == 0)//even i, if its even flip foot 180 deg, 
@@ -67,7 +70,7 @@ public class footStepCon : MonoBehaviour
             Vector3 offset = perpOffset + (direction * (distance) * i) + (direction * (sideSpacing));
             Vector3 position = new Vector3(startingPointObj.transform.position.x + offset.x, printFab.transform.position.y, startingPointObj.transform.position.z + offset.z);
 
-            GameObject recentPrint = Instantiate(printFab, position, rotation, parentObj.transform);
+            GameObject recentPrint = Instantiate(printFab, position, rotation, printParent.transform);
             recentPrint.GetComponent<Renderer>().material = newPrintMat;
         }
         footPrintMatsInScene.Add(newPrintMat);
