@@ -20,7 +20,7 @@ public class GlobalDissolveCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -39,7 +39,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 firstFrameOutside = false;
             }
         }
-        else 
+        else
         {
             if (!firstFrameOutside)
             {
@@ -128,5 +128,31 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             Destroy(footStepCon.parentObj.transform.GetChild(i).gameObject);
         }
+    }
+    public int AreaCheck()//tells which area you are in
+    {
+        for (int i = 0; i < areas.Length; i++)
+        {
+            //in room unless outside any boundary
+            if (player.transform.position.x >= areas[i].size[0] + areas[i].gameObject.transform.GetChild(0).position.x)
+            {
+                break;
+            }
+            else if (player.transform.position.x <= areas[i].size[1] + areas[i].gameObject.transform.GetChild(0).position.x)//each dissolve con has a boundary
+            {
+                break;
+            }
+            else if (player.transform.position.z <= areas[i].size[2] + areas[i].gameObject.transform.GetChild(0).position.z)//child 0 is the center of the area
+            {
+                break;
+            }
+            else if (player.transform.position.z >= areas[i].size[3] + areas[i].gameObject.transform.GetChild(0).position.z)
+            {
+                break;
+            }
+            //not outside any of the boudaries, therefor in that area, return area num
+            return i;
+        }
+        return -1;//not in any area (void)
     }
 }

@@ -9,6 +9,9 @@ public class DissolveController : MonoBehaviour
     public Material[] areaMats;
     public List<Material> updatingMats;
 
+    public float[] size = new float[4];//size of the area, pos x, negitive x, negitive z, positive z
+    public GameObject[] objsToEnable;
+
     void Start()
     {
         for (int i = 0; i < areaMats.Length; i++)
