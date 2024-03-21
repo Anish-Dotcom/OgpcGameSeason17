@@ -48,4 +48,5 @@ Material:
     - _WindSpeed: 0.4
     m_Colors:
     - _Obj_Pos_For_Ref: {r: 0, g: 0, b: 0, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: -0.73, g: 0.029, b: 1.55, a: 0}
   m_BuildTextureStacks: []
