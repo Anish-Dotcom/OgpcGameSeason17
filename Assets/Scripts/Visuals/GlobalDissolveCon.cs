@@ -28,10 +28,10 @@ public class GlobalDissolveCon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AreaCheck();
         if (!inMainRoom())
         {
             WrapAround();
-            AreaCheck();
             if (firstFrameOutside)
             {
                 placeSteps();//if outside of room give player a guide on where to go to
@@ -46,8 +46,18 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             if (!firstFrameOutside)//(first frame inside)
             {
-                removeSteps();
-                areas[1].updatingMats.Clear();
+                removeSteps();/*
+                for (int i = 1; i < areas.Length - 1; i++)
+                {
+                    areas[i].updatingMats.Clear();
+                }
+                areas[0].transform.GetChild(0).position = areas[0].centralPos;
+                List<Material> areaMatsList = new List<Material>();
+                for (int j = 1; j < areas[0].areaMats.Length; j++)
+                {
+                    areaMatsList.Add(areas[0].areaMats[j]);
+                }
+                areas[0].SetObjPos(areaMatsList);*/
                 firstFrameOutside = true;
             }
         }
@@ -136,43 +146,19 @@ public class GlobalDissolveCon : MonoBehaviour
     {
         for (int i = 0; i < areas.Length; i++)
         {
-            bool inArea = true;
-            //in room unless outside any boundary
-            int outsideX = 0;
-            int outsideZ = 0;
-            if (player.transform.position.x >= areas[i].size[0] + areas[i].gameObject.transform.GetChild(0).position.x)
+            int inArea = 0;
+            if (Vector3.Distance(areas[i].centralPos, player.transform.position) > areas[i].size[0])
             {
-                inArea = false;
-                outsideX = 1;
+                inArea = 2;
             }
-            else if (player.transform.position.x <= areas[i].size[1] + areas[i].gameObject.transform.GetChild(0).position.x)//each dissolve con has a boundary
+            else if (Vector3.Distance(areas[i].centralPos, player.transform.position) > areas[i].size[1])//should be an oval instead
             {
-                inArea = false;
-                outsideX = -1;
+                inArea = 1;
             }
-            else
+            Vector3 centerPos = player.transform.position;
+            //Debug.Log(centerPos + " for area " + i);
+            if (inArea == 2)//works
             {
-                outsideX = 0;
-            }
-            if (player.transform.position.z <= areas[i].size[2] + areas[i].gameObject.transform.GetChild(0).position.z)//child 0 is the center of the area
-            {
-                inArea = false;
-                outsideZ = -1;
-            }
-            else if (player.transform.position.z >= areas[i].size[3] + areas[i].gameObject.transform.GetChild(0).position.z)
-            {
-                inArea = false;
-                outsideZ = 1;
-            }
-            else
-            {
-                outsideZ = 0;
-            }
-
-            if (!inArea)
-            {
-                Vector3 centerPos = new Vector3(player.transform.position.x - ((areas[i].size[0] + areas[i].centralPos.x) * outsideX), 0, player.transform.position.x - ((areas[i].size[3] + areas[i].centralPos.z) * outsideX));
-                Debug.Log(centerPos);
                 areas[i].transform.GetChild(0).position = centerPos;
                 areas[i].centralObj = areas[i].transform.GetChild(0).gameObject;
                 if (!consAdded[i])
@@ -182,14 +168,36 @@ public class GlobalDissolveCon : MonoBehaviour
                     {
                         areas[i].updatingMats.Add(areas[i].areaMats[j]);
                     }
+                    for (int j = 0; j < areas[i].objsToEnable.Length; j++)
+                    {
+                        areas[i].objsToEnable[j].SetActive(false);
+                    }
                 }
             }
-            else
+            else if (inArea == 1)
             {
+                if (consAdded[i])
+                {
+                    consAdded[i] = false;
 
+                    for (int j = 0; j < areas[i].objsToEnable.Length; j++)
+                    {
+                        areas[i].objsToEnable[j].SetActive(true);
+                    }
+                    areas[i].transform.GetChild(0).position = areas[i].centralPos;
+
+                    List<Material> areaMatsList = new List<Material>();
+                    for (int j = 1; j < areas[i].areaMats.Length; j++)
+                    {
+                        areaMatsList.Add(areas[i].areaMats[j]);
+                    }
+                    areas[i].SetObjPos(areaMatsList);
+                }
             }
-            //not outside any of the boudaries, therefor in that area, return area num
+            else//in area
+            {
+                areas[i].updatingMats.Clear();
+            }
         }
-        //not in any area (void)
     }
 }

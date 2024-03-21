@@ -12564,11 +12564,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 4b78483f118d5a84f8033d387bec6865, type: 2}
   updatingMats: []
   size:
-  - 0
-  - 0
-  - 0
-  - 0
-  objsToEnable: []
+  - 3
+  - 6
+  objsToEnable:
+  - {fileID: 892175908}
   dissolveNoiseStrength: 0.8
 --- !u!1 &1122009834
 GameObject:
@@ -16534,6 +16533,7 @@ MonoBehaviour:
   areas:
   - {fileID: 2012124011}
   - {fileID: 1464734006}
+  - {fileID: 1109960163}
   updatingAreas: []
   footStepCon: {fileID: 606715827}
   mainRoomDistances:
@@ -17150,8 +17150,6 @@ MonoBehaviour:
   size:
   - 0
   - 0
-  - 0
-  - 0
   objsToEnable: []
   dissolveNoiseStrength: 0
 --- !u!1 &1475511825
@@ -17178,7 +17176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475511825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.45, y: 0, z: 0.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21860,11 +21858,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 05fee0981606bdf43ba5b109b91e9918, type: 2}
   updatingMats: []
   size:
-  - 10
-  - -10
-  - -14
-  - 14
-  objsToEnable: []
+  - 12
+  - 6
+  objsToEnable:
+  - {fileID: 842164486}
+  - {fileID: 532175175}
   dissolveNoiseStrength: 0
 --- !u!1 &2058827112
 GameObject:
@@ -71607,7 +71605,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d10b8c165cd4c8545a5b5a0e697258be, type: 2}
-  - {fileID: -8524579484423619496, guid: 89a771ad1b859524c91a2e4cdbd3c95f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

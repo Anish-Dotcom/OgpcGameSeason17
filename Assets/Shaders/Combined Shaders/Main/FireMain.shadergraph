@@ -2101,7 +2101,7 @@
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "Obj Pos For Ref",
     "m_DefaultReferenceName": "_Obj_Pos_For_Ref",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Object_Position_For_Ref_Dis",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",

@@ -10,7 +10,7 @@ public class DissolveController : MonoBehaviour
     public Material[] areaMats;
     public List<Material> updatingMats;
 
-    public float[] size = new float[4];//size of the area, pos x, negitive x, negitive z, positive z
+    public float[] size;//0, is outer size, 1 is inner
     public GameObject[] objsToEnable;
 
     public float dissolveNoiseStrength;
