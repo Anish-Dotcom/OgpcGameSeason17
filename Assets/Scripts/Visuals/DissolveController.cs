@@ -6,14 +6,18 @@ public class DissolveController : MonoBehaviour
 {
     public Vector3 dissolveDistances;//The distance in radius around the centralPos that things will apear
     public GameObject centralObj;//able to change positon to cleanly make something appear
+    public Vector3 centralPos;//position central obj starts at
     public Material[] areaMats;
     public List<Material> updatingMats;
 
     public float[] size = new float[4];//size of the area, pos x, negitive x, negitive z, positive z
     public GameObject[] objsToEnable;
 
+    public float dissolveNoiseStrength;
+
     void Start()
     {
+        centralPos = centralObj.transform.position;
         for (int i = 0; i < areaMats.Length; i++)
         {
             areaMats[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
@@ -21,6 +25,7 @@ public class DissolveController : MonoBehaviour
             areaMats[i].SetFloat("_Cutoff_Distance_X", dissolveDistances.x);
             areaMats[i].SetFloat("_Cutoff_Distance_Y", dissolveDistances.y);
             areaMats[i].SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
+            areaMats[i].SetFloat("_Noise_Strength", dissolveNoiseStrength);
         }
     }
     void Update()

@@ -44,7 +44,7 @@ public class GlobalDissolveCon : MonoBehaviour
         }
         else
         {
-            if (!firstFrameOutside)
+            if (!firstFrameOutside)//(first frame inside)
             {
                 removeSteps();
                 areas[1].updatingMats.Clear();
@@ -171,10 +171,10 @@ public class GlobalDissolveCon : MonoBehaviour
 
             if (!inArea)
             {
-                Vector3 centerPos = new Vector3(player.transform.position.x - areas[i].size[0] * outsideX, 0, player.transform.position.z - areas[i].size[3] * outsideZ);
+                Vector3 centerPos = new Vector3(player.transform.position.x - ((areas[i].size[0] + areas[i].centralPos.x) * outsideX), 0, player.transform.position.x - ((areas[i].size[3] + areas[i].centralPos.z) * outsideX));
                 Debug.Log(centerPos);
-                areas[i].transform.GetChild(1).position = centerPos;
-                areas[i].centralObj = areas[i].transform.GetChild(1).gameObject;
+                areas[i].transform.GetChild(0).position = centerPos;
+                areas[i].centralObj = areas[i].transform.GetChild(0).gameObject;
                 if (!consAdded[i])
                 {
                     consAdded[i] = true;
