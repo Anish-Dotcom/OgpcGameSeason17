@@ -5,6 +5,7 @@ using UnityEngine;
 public class DissolveController : MonoBehaviour
 {
     public Vector3 dissolveDistances;//The distance in radius around the centralPos that things will apear
+    public Vector3 startingDissolveDistances;//whatever dissolve distances are first at runtime
     public GameObject centralObj;//able to change positon to cleanly make something appear
     public Vector3 centralPos;//position central obj starts at
     public Material[] areaMats;
@@ -17,6 +18,7 @@ public class DissolveController : MonoBehaviour
 
     void Start()
     {
+        dissolveDistances = startingDissolveDistances;
         centralPos = centralObj.transform.position;
         for (int i = 0; i < areaMats.Length; i++)
         {

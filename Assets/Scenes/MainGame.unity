@@ -12558,6 +12558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dissolveDistances: {x: 2, y: 4, z: 2}
+  startingDissolveDistances: {x: 2, y: 4, z: 2}
   centralObj: {fileID: 2133565664}
   centralPos: {x: 0, y: 0, z: 0}
   areaMats:
@@ -16542,6 +16543,7 @@ MonoBehaviour:
   - -4.34
   - 6.83
   firstFrameOutside: 1
+  inverseSpeedOfDissappear: 3
 --- !u!1 &1432622921
 GameObject:
   m_ObjectHideFlags: 0
@@ -17143,6 +17145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dissolveDistances: {x: 4, y: 4, z: 4}
+  startingDissolveDistances: {x: 0, y: 0, z: 0}
   centralObj: {fileID: 1146929038}
   centralPos: {x: 0, y: 0, z: 0}
   areaMats: []
@@ -21849,7 +21852,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d8b398351299747a0baee0ca9e94d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveDistances: {x: 5, y: 6, z: 10}
+  dissolveDistances: {x: 6, y: 6, z: 8}
+  startingDissolveDistances: {x: 6, y: 6, z: 8}
   centralObj: {fileID: 947589164}
   centralPos: {x: 0, y: 0, z: 0}
   areaMats:

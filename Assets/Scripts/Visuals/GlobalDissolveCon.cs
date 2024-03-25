@@ -19,10 +19,28 @@ public class GlobalDissolveCon : MonoBehaviour
     public float[] mainRoomDistances = new float[4];
     public bool firstFrameOutside = true;
 
+    public float inverseSpeedOfDissappear;
+
     // Start is called before the first frame update
     void Start()
     {
         consAdded = new bool[areas.Length];
+        /*
+        for (int i = 0; i < areas.Length; i++) // this makes it so that if an area is not the main room, it is invis by default
+        {
+            if (i != 1)
+            {
+                areas[i].setCutoffNoChange(new Vector3(0, 0, 0));
+
+                for (int j = 0; j < areas[i].objsToEnable.Length; j++)
+                {
+                    areas[i].objsToEnable[j].SetActive(false);
+                }
+                SingleUpdateMat(i);
+
+                areas[i].updatingMats.Clear();
+            }
+        }*/ // will want this active, just nice to be able to see each area for testing
     }
 
     // Update is called once per frame
@@ -46,18 +64,7 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             if (!firstFrameOutside)//(first frame inside)
             {
-                removeSteps();/*
-                for (int i = 1; i < areas.Length - 1; i++)
-                {
-                    areas[i].updatingMats.Clear();
-                }
-                areas[0].transform.GetChild(0).position = areas[0].centralPos;
-                List<Material> areaMatsList = new List<Material>();
-                for (int j = 1; j < areas[0].areaMats.Length; j++)
-                {
-                    areaMatsList.Add(areas[0].areaMats[j]);
-                }
-                areas[0].SetObjPos(areaMatsList);*/
+                removeSteps();
                 firstFrameOutside = true;
             }
         }
@@ -147,57 +154,76 @@ public class GlobalDissolveCon : MonoBehaviour
         for (int i = 0; i < areas.Length; i++)
         {
             int inArea = 0;
-            if (Vector3.Distance(areas[i].centralPos, player.transform.position) > areas[i].size[0])
-            {
-                inArea = 2;
-            }
-            else if (Vector3.Distance(areas[i].centralPos, player.transform.position) > areas[i].size[1])//should be an oval instead
+            float distance = (Vector3.Distance(areas[i].centralPos, player.transform.position));
+            if (distance < areas[i].size[1])//smaller area
             {
                 inArea = 1;
+                //Debug.Log(inArea + " area " + i);
             }
-            Vector3 centerPos = player.transform.position;
-            //Debug.Log(centerPos + " for area " + i);
-            if (inArea == 2)//works
+            else if (distance < areas[i].size[0])//bigger area
             {
-                areas[i].transform.GetChild(0).position = centerPos;
-                areas[i].centralObj = areas[i].transform.GetChild(0).gameObject;
-                if (!consAdded[i])
+                inArea = 2;
+                //Debug.Log(inArea + " area " + i);
+            }
+
+            //Debug.Log(centerPos + " for area " + i);
+            if (inArea == 1)//smaller area
+            {
+                if (consAdded[i])//cons added is asking if it is updating
                 {
-                    consAdded[i] = true;
-                    for (int j = 0; j < areas[i].areaMats.Length; j++)
-                    {
-                        areas[i].updatingMats.Add(areas[i].areaMats[j]);
-                    }
-                    for (int j = 0; j < areas[i].objsToEnable.Length; j++)
-                    {
-                        areas[i].objsToEnable[j].SetActive(false);
-                    }
+                    consAdded[i] = false;//its no longer updating
+                    areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
+
+                    areas[i].transform.GetChild(0).position = areas[i].centralPos;//only needs to do once, sets what was following player to the center of its area
+
+                    SingleUpdateMat(i);
                 }
             }
-            else if (inArea == 1)
+            else if (inArea == 2)//bigger area
             {
-                if (consAdded[i])
+                areas[i].transform.GetChild(0).position = player.transform.position;//sets the center to follow the player
+                Vector3 cutoff = new Vector3(areas[i].startingDissolveDistances.x / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear), areas[i].startingDissolveDistances.y, areas[i].startingDissolveDistances.z / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear));
+                areas[i].setCutoffNoChange(cutoff);
+
+                if (!consAdded[i])//cons added is asking if it is updating, if its not updating, make it update
                 {
-                    consAdded[i] = false;
+                    consAdded[i] = true;
 
                     for (int j = 0; j < areas[i].objsToEnable.Length; j++)
                     {
                         areas[i].objsToEnable[j].SetActive(true);
                     }
-                    areas[i].transform.GetChild(0).position = areas[i].centralPos;
-
-                    List<Material> areaMatsList = new List<Material>();
-                    for (int j = 1; j < areas[i].areaMats.Length; j++)
+                    for (int j = 0; j < areas[i].areaMats.Length; j++)
                     {
-                        areaMatsList.Add(areas[i].areaMats[j]);
+                        areas[i].updatingMats.Add(areas[i].areaMats[j]);
                     }
-                    areas[i].SetObjPos(areaMatsList);
                 }
             }
-            else//in area
+            else//in void
             {
-                areas[i].updatingMats.Clear();
+                if (consAdded[i])
+                {
+                    consAdded[i] = false;
+                    areas[i].setCutoffNoChange(new Vector3(0, 0, 0));
+
+                    for (int j = 0; j < areas[i].objsToEnable.Length; j++)
+                    {
+                        areas[i].objsToEnable[j].SetActive(false);
+                    }
+                    SingleUpdateMat(i);
+
+                    areas[i].updatingMats.Clear();//stop updating, area should no longer be in view
+                }
             }
         }
+    }
+    public void SingleUpdateMat(int areaI)//turns into a list and then updates, terminates
+    {
+        List<Material> areaMatsList = new List<Material>();
+        for (int j = 1; j < areas[areaI].areaMats.Length; j++)
+        {
+            areaMatsList.Add(areas[areaI].areaMats[j]);
+        }
+        areas[areaI].SetObjPos(areaMatsList);
     }
 }
