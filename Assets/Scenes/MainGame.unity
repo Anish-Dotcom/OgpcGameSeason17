@@ -12563,10 +12563,14 @@ MonoBehaviour:
   centralPos: {x: 0, y: 0, z: 0}
   areaMats:
   - {fileID: 2100000, guid: 4b78483f118d5a84f8033d387bec6865, type: 2}
+  - {fileID: 2100000, guid: a35232c88dd93e94ab55823b637a6ad3, type: 2}
+  dualDissolveAreaMats:
+  - {fileID: 2100000, guid: a35232c88dd93e94ab55823b637a6ad3, type: 2}
+  nonMoveDissolveDistances: {x: 2, y: 4, z: 2}
   updatingMats: []
   size:
+  - 8
   - 3
-  - 6
   objsToEnable:
   - {fileID: 892175908}
   dissolveNoiseStrength: 0.8
@@ -17149,6 +17153,8 @@ MonoBehaviour:
   centralObj: {fileID: 1146929038}
   centralPos: {x: 0, y: 0, z: 0}
   areaMats: []
+  dualDissolveAreaMats: []
+  nonMoveDissolveDistances: {x: 0, y: 0, z: 0}
   updatingMats: []
   size:
   - 0
@@ -21860,6 +21866,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: d10b8c165cd4c8545a5b5a0e697258be, type: 2}
   - {fileID: 2100000, guid: eb0b37a4616266c449b189115ac8bd8a, type: 2}
   - {fileID: 2100000, guid: 05fee0981606bdf43ba5b109b91e9918, type: 2}
+  dualDissolveAreaMats: []
+  nonMoveDissolveDistances: {x: 0, y: 0, z: 0}
   updatingMats: []
   size:
   - 12
@@ -22250,7 +22258,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133565664}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.77, y: 0, z: -4.8}
+  m_LocalPosition: {x: 1.956, y: 0, z: -4.937}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -111689,7 +111697,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b78483f118d5a84f8033d387bec6865, type: 2}
+  - {fileID: 2100000, guid: a35232c88dd93e94ab55823b637a6ad3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -172,11 +172,13 @@ public class GlobalDissolveCon : MonoBehaviour
                 if (consAdded[i])//cons added is asking if it is updating
                 {
                     consAdded[i] = false;//its no longer updating
+                    Debug.Log("Entered area " + i + ", section " + inArea);
                     areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
 
                     areas[i].transform.GetChild(0).position = areas[i].centralPos;//only needs to do once, sets what was following player to the center of its area
-
                     SingleUpdateMat(i);
+
+                    areas[i].updatingMats.Clear();// actually no longer updating
                 }
             }
             else if (inArea == 2)//bigger area
@@ -188,6 +190,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 if (!consAdded[i])//cons added is asking if it is updating, if its not updating, make it update
                 {
                     consAdded[i] = true;
+                    Debug.Log("Entered area " + i + ", section " + inArea);
 
                     for (int j = 0; j < areas[i].objsToEnable.Length; j++)
                     {
@@ -204,6 +207,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 if (consAdded[i])
                 {
                     consAdded[i] = false;
+                    Debug.Log("Entered area " + i + ", section " + inArea);
                     areas[i].setCutoffNoChange(new Vector3(0, 0, 0));
 
                     for (int j = 0; j < areas[i].objsToEnable.Length; j++)
@@ -217,7 +221,7 @@ public class GlobalDissolveCon : MonoBehaviour
             }
         }
     }
-    public void SingleUpdateMat(int areaI)//turns into a list and then updates, terminates
+    public void SingleUpdateMat(int areaI)//turns into a list and then updates, terminates, (some issue)
     {
         List<Material> areaMatsList = new List<Material>();
         for (int j = 1; j < areas[areaI].areaMats.Length; j++)
