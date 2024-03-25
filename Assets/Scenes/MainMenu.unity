@@ -1494,6 +1494,9 @@ MonoBehaviour:
   playerMove: {fileID: 0}
   playerCameraScript: {fileID: 0}
   isMainGame: 0
+  settingsMenuOpen: 0
+  menuBlur: {fileID: 0}
+  allOtherMenus: {fileID: 0}
 --- !u!1001 &655178582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1691,7 +1694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614399324056c3b4aa43f581924208a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 2
+  sceneToLoad: 3
   isQuitButton: 0
   isSettingsButton: 0
   settingsMenuController: {fileID: 0}
