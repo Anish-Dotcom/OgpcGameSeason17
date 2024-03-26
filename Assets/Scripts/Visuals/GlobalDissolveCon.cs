@@ -224,7 +224,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public void SingleUpdateMat(int areaI)//turns into a list and then updates, terminates, (some issue)
     {
         List<Material> areaMatsList = new List<Material>();
-        for (int j = 1; j < areas[areaI].areaMats.Length; j++)
+        for (int j = 0; j < areas[areaI].areaMats.Length; j++)
         {
             areaMatsList.Add(areas[areaI].areaMats[j]);
         }
