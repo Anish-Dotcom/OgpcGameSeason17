@@ -25,10 +25,14 @@ public class ObjectPickUp : MonoBehaviour
 
     public LayerMask mask;
 
+     PlayerInputs playerInputs;
+
     // Start is called before the first frame update
     void Start()
     {
         mask = LayerMask.GetMask("Pickupable");
+        playerInputs = new PlayerInputs();
+        playerInputs.Enable();
     }
 
     // Update is called once per frame
@@ -42,7 +46,7 @@ public class ObjectPickUp : MonoBehaviour
             {
                 interact.SetActive(true);
 
-                if (Input.GetMouseButtonDown(0))
+                if (playerInputs.Player.PickUp.WasPerformedThisFrame())
                 {
                     currentObject = hit.collider.gameObject;
                     PickUp(currentObject);
@@ -50,7 +54,7 @@ public class ObjectPickUp : MonoBehaviour
                 }
             }
         }
-        else if(equipped && Input.GetMouseButtonDown(0)) // drop the object picked up
+        else if(equipped && playerInputs.Player.PickUp.WasPerformedThisFrame()) // drop the object picked up
         {
             Drop(currentObject);
         }
@@ -67,7 +71,7 @@ public class ObjectPickUp : MonoBehaviour
             if (hit2.transform.gameObject != null)
             {
                 store.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.E))
+                if (playerInputs.Player.Interact.WasPerformedThisFrame())
                 {
                     Drop(currentObject);
 

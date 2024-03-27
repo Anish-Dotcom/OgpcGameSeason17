@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
@@ -43,6 +44,8 @@ public class PlayerMove : MonoBehaviour
 
     public float fatigue;
 
+    PlayerInputs playerInputs;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +53,8 @@ public class PlayerMove : MonoBehaviour
         currentObjectHoldDistance = objectHoldDistance;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        playerInputs = new PlayerInputs();
+        playerInputs.Enable();
     }
 
     // Update is called once per frame
@@ -60,6 +65,7 @@ public class PlayerMove : MonoBehaviour
         if (isControllable)
         {
             PlayerInput();
+
             /*if (Input.GetMouseButtonDown(0) && heldObject == null)//pickup object
             {
                 int layermask = -1;
@@ -108,27 +114,14 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (heldObject != null)
-        {
-            Gizmos.color = Color.green;
-            //Gizmos.DrawCube(heldObject.transform.position, new Vector3(1, 1, 1));
-            Gizmos.color = Color.red;
-            //Gizmos.DrawCube(newPos, new Vector3(1, 1, 1));
-            Ray r = new Ray(heldObject.transform.position, Vector3.Normalize(newPos - heldObject.transform.position));
-            //Gizmos.DrawRay(r);
-        }
-    }
-
-
     private void PlayerInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+
+        horizontalInput = playerInputs.Player.Move.ReadValue<Vector2>()[0];
+        verticalInput = playerInputs.Player.Move.ReadValue<Vector2>()[1];
+
+        if(playerInputs.Player.Crouch.WasPressedThisFrame())
         {
-            
             Crouching();
         }
         
