@@ -14,74 +14,182 @@ public class RaycastCon : MonoBehaviour
     public GameObject heldObjContainer;
 
     public string lookingAt;
+
+    public int lastK;
+    public int lastI;
+    public int lastType;
+
+    public bool returned;
     void Start()
     {
+        returned = false;
+        lastI = -1;
+        lastK = -1;
+        lastType = -1;
         lookingAt = "false";
     }
 
     // Update is called once per frame
     void Update()
     {
+        returned = false;
+
         RaycastHit hit;
         if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//hitting something
         {
             if (heldObjContainer.transform.childCount > 0)//holding an object
             {
-                for (int i = 0; i < colliderObjs.Length; i++)
+                colliderObjsCheck(hit);
+                if (returned)
                 {
-                    if (hit.transform.gameObject == colliderObjs[i])
-                    {
-                        for (int k = 0; k < colliderObjs[i].GetComponent<PopupInfo>().heldObjTag.Length; k++)
-                        {
-                            if (heldObjContainer.transform.CompareTag(colliderObjs[i].GetComponent<PopupInfo>().heldObjTag[k]))
-                            {
-                                lookingAt = "looking at " + colliderObjs[i].name;
-                                int popupIndex = colliderObjs[i].GetComponent<PopupInfo>().popupIndex[k];
-                                menuController.openPopup(popups[popupIndex]);
-                                colliderObjs[i].GetComponent<PopupInfo>().lookingAt[k] = true;
+                    return;
+                }
+                colliderNonHeldObjsCheck(hit);//hitting something, just not one of the colliderObjs, so check other
 
-                                for (int j = 0; j < popups.Length; j++)
-                                {
-                                    if (j != popupIndex)
-                                    {
-                                        popups[j].SetActive(false);//set all popups to inactive
-                                    }
-                                }
-                                return;
-                            }
-                        }
-                    }
-                }//will only get here if nothing returned
-                for (int i = 0; i < popups.Length; i++)
+                if (returned)
                 {
-                    popups[i].SetActive(false);
+                    return;
+                }
+                 //colliderNonheldObjs check
+                ClosePopups(-1);
+                DisableLastLookingAt();
+                lastI = -1;
+                lastK = -1;
+                lastType = -1;
+            }
+            else
+            {
+                colliderNonHeldObjsCheck(hit);
+                if (returned)
+                {
+                    return;
+                }
+                //hitting something, just not one of the colliderNonheldObjs
+                ClosePopups(-1);
+                DisableLastLookingAt();
+                lastI = -1;
+                lastK = -1;
+                lastType = -1;
+            }
+        }
+        else
+        {
+            ClosePopups(-1);
+            DisableLastLookingAt();
+            lastI = -1;
+            lastK = -1;
+            lastType = -1;
+        }
+    }
+    public void DisableLastLookingAt()
+    {
+        if (lastType == 0)
+        {
+            if (lastI != -1 || lastK != -1)
+            {
+                colliderObjs[lastI].GetComponent<PopupInfo>().lookingAt[lastK] = false;
+            }
+        }
+        else if (lastType == 1)
+        {
+            if (lastI != -1 || lastK != -1)
+            {
+                colliderNonheldObjs[lastI].GetComponent<PopupInfo>().lookingAt[lastK] = false;
+            }
+        }
+    }
+    public void ClosePopups(int minus)
+    {
+        if (minus != -1)
+        {
+            for (int j = 0; j < popups.Length; j++)
+            {
+                if (j != minus)
+                {
+                    menuController.closePopup(popups[j]);//set all popups to inactive
                 }
             }
-            else//close all popups or open popups
+        }
+        else
+        {
+            for (int j = 0; j < popups.Length; j++)
             {
-                for (int i = 0; i < colliderNonheldObjs.Length; i++)
+                menuController.closePopup(popups[j]);
+            }
+        }
+    }
+    public void colliderObjsCheck(RaycastHit hit)
+    {
+        for (int i = 0; i < colliderObjs.Length; i++)
+        {
+            if (hit.transform.gameObject == colliderObjs[i])
+            {
+                for (int k = 0; k < colliderObjs[i].GetComponent<PopupInfo>().heldObjTag.Length; k++)
                 {
-                    if (hit.transform.gameObject == colliderObjs[i])
+                    if (heldObjContainer.transform.CompareTag(colliderObjs[i].GetComponent<PopupInfo>().heldObjTag[k]))
                     {
-                        lookingAt = "looking at " + colliderObjs[i].name;
-                        int popupIndex = colliderObjs[i].GetComponent<PopupInfo>().popupIndex[0];
-                        menuController.openPopup(popups[popupIndex]);
-                        colliderObjs[i].GetComponent<PopupInfo>().lookingAt[0] = true;
-
-                        for (int j = 0; j < popups.Length; j++)
+                        if (lastK != k || lastI != i)//the thing being looked at changed
                         {
-                            if (j != popupIndex)
-                            {
-                                popups[j].SetActive(false);
-                            }
+                            lookingAt = "looking at " + colliderObjs[i].name;
+                            int popupIndex = colliderObjs[i].GetComponent<PopupInfo>().popupIndex[k];
+                            menuController.openPopup(popups[popupIndex]);
+                            colliderObjs[i].GetComponent<PopupInfo>().lookingAt[k] = true;
+
+                            ClosePopups(popupIndex);
+
+                            DisableLastLookingAt();
+                            lastI = i;
+                            lastK = k;
                         }
+                        returned = true;
                         return;
                     }
-                }//will only get here if nothing returned
-                for (int i = 0; i < popups.Length; i++)
+                }//will get here if looking at something but not holding the right obj
+                ClosePopups(-1);
+                DisableLastLookingAt();
+                lastI = i;
+                lastK = -1;
+                lastType = -1;
+                returned = true;
+                return;
+            }
+        }
+    }
+    public void colliderNonHeldObjsCheck(RaycastHit hit)
+    {
+        for (int i = 0; i < colliderNonheldObjs.Length; i++)
+        {
+            if (hit.transform.gameObject == colliderNonheldObjs[i])
+            {
+                for (int k = 0; k < colliderNonheldObjs[i].GetComponent<PopupInfo>().heldObjTag.Length; k++)
                 {
-                    popups[i].SetActive(false);//set all popups to inactive
+                    if (colliderNonheldObjs[i].GetComponent<PopupInfo>().heldObjTag[k] == "")//doesnt require held obj
+                    {
+                        if (lastK != k || lastI != i)
+                        {
+                            lookingAt = "looking at " + colliderNonheldObjs[i].name;
+                            int popupIndex = colliderNonheldObjs[i].GetComponent<PopupInfo>().popupIndex[k];
+                            menuController.openPopup(popups[popupIndex]);
+                            colliderNonheldObjs[i].GetComponent<PopupInfo>().lookingAt[k] = true;
+
+                            ClosePopups(popupIndex);
+
+                            DisableLastLookingAt();
+                            lastI = i;
+                            lastK = k;
+                            lastType = 1;
+                        }
+                        returned = true;
+                        return;
+                    }
                 }
+                ClosePopups(-1);
+                DisableLastLookingAt();
+                lastI = i;
+                lastK = -1;
+                lastType = -1;
+                returned = true;
+                return;
             }
         }
     }

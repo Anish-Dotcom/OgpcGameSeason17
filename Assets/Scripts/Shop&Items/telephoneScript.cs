@@ -6,7 +6,9 @@ using TMPro;
 
 public class telephoneScript : MonoBehaviour
 {
-    public GameObject playerCam; // this is the actual camera used to view the scene
+    public PopupInfo lookingAtCheck;
+    public int myInfoIndex;
+
     public GameObject telephone; // this is the telephone object. in scene this is "telephone (1)" this is used to remove that object when picking up the telephone to make it look like you actually picked up the telephone
     public GameObject telephoneOutline; // since the outline of the telephone is a seperate object, i used this game object to set active false as well
     public GameObject telephoneUI; // this is the canvas ui menu that pops up when you open the telephone
@@ -88,26 +90,19 @@ public class telephoneScript : MonoBehaviour
 
     void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 2.1f))//add part?
+        if (lookingAtCheck.lookingAt[myInfoIndex])
         {
-            if (hit.collider.gameObject.CompareTag("telephone") && !telephoneIsOpen)
+            if (Input.GetMouseButton(0) && !telephoneIsOpen && !menuController.menuOpen)
             {
-                interact.SetActive(true);
-                if (Input.GetMouseButton(0) && !telephoneIsOpen && !menuController.menuOpen)
-                {
-                    //commissionsUI.SetActive(false);
-                    //shopUI.SetActive(false);
-                    callShopButton.SetActive(true);
-                    telephoneIsOpen = true;
-                    telephone.SetActive(false);
-                    telephoneOutline.SetActive(false);
-                    menuController.openMenu(telephoneUI);
-                }
-            }
-            else
-            {
-                interact.SetActive(false);
+                //commissionsUI.SetActive(false);
+                //shopUI.SetActive(false);
+
+                telephone.SetActive(false);
+                telephoneOutline.SetActive(false);
+
+                menuController.openMenu(telephoneUI);
+                callShopButton.SetActive(true);
+                telephoneIsOpen = true;
             }
         }
 

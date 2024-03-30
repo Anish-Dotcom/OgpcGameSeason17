@@ -1039,7 +1039,7 @@ MonoBehaviour:
   finalObj: {fileID: 4995364190673618756, guid: 22fce205c609c0747a82b410e18d744d,
     type: 3}
   recipeMat: {fileID: 2100000, guid: 05fee0981606bdf43ba5b109b91e9918, type: 2}
-  lookingAtCheck: {fileID: 0}
+  lookingAtCheck: {fileID: 62802928}
   myInfoIndex: 0
   distFromPlayer: 0
   playerCam: {fileID: 1559247135}
@@ -1084,8 +1084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fb8bd830f133542a2b18d878ce629a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookingAtCheck: {fileID: 0}
-  myInfoIndex: 0
+  lookingAtCheck: {fileID: 62802928}
+  myInfoIndex: 1
   heldObjContainer: {fileID: 146505513}
   stationCam: {fileID: 344106176}
   objectsInStation: []
@@ -1110,8 +1110,9 @@ MonoBehaviour:
   heldObjTag:
   - assemblyPart
   - Finished Assembly
-  popupIndex: 0400000005000000
-  lookingAt: 
+  - 
+  popupIndex: 040000000500000005000000
+  lookingAt: 000000
 --- !u!1 &77326570
 GameObject:
   m_ObjectHideFlags: 0
@@ -13635,8 +13636,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103895baddf232e48a0cc12136db74c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliderObjs: []
-  colliderNonheldObjs: []
+  colliderObjs:
+  - {fileID: 62802923}
+  colliderNonheldObjs:
+  - {fileID: 62802923}
+  - {fileID: 1432952057}
+  - {fileID: 1755803307}
   popups:
   - {fileID: 1976911767}
   - {fileID: 348502412}
@@ -13649,6 +13654,9 @@ MonoBehaviour:
   menuController: {fileID: 312775338}
   heldObjContainer: {fileID: 146505513}
   lookingAt: 
+  lastK: 0
+  lastI: 0
+  lastType: 0
 --- !u!1 &1151198135
 GameObject:
   m_ObjectHideFlags: 0
@@ -17080,6 +17088,7 @@ GameObject:
   - component: {fileID: 1432952058}
   - component: {fileID: 1432952060}
   - component: {fileID: 1432952059}
+  - component: {fileID: 1432952061}
   m_Layer: 0
   m_Name: Blueprint Box
   m_TagString: blueprintBox
@@ -17129,12 +17138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a147db332081e4893f0b698304523c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interact: {fileID: 348502412}
+  lookingAtCheck: {fileID: 1432952061}
+  myInfoIndex: 0
   blueprintMenu: {fileID: 113583803}
   blueprintIsOpen: 0
-  lookingAtBox: 0
-  distFromObject: 0
-  playerCam: {fileID: 1559247135}
   menuController: {fileID: 312775338}
 --- !u!65 &1432952060
 BoxCollider:
@@ -17149,6 +17156,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0313169, y: 1, z: 1.3610128}
   m_Center: {x: 0.01565838, y: 0, z: 0.2542006}
+--- !u!114 &1432952061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432952057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad92fe4612aaad4486041c0c0955693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldObjTag:
+  - 
+  popupIndex: 01000000
+  lookingAt: 00
 --- !u!1 &1450549124
 GameObject:
   m_ObjectHideFlags: 0
@@ -19956,6 +19979,7 @@ GameObject:
   - component: {fileID: 1755803312}
   - component: {fileID: 1755803310}
   - component: {fileID: 1755803313}
+  - component: {fileID: 1755803314}
   m_Layer: 0
   m_Name: telephone
   m_TagString: telephone
@@ -20003,7 +20027,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebac3b47ee6c04b4da2acdaddbcf6336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCam: {fileID: 1559247135}
+  lookingAtCheck: {fileID: 1755803314}
+  myInfoIndex: 0
   telephone: {fileID: 910786727}
   telephoneOutline: {fileID: 5345244999173203373}
   telephoneUI: {fileID: 480902032}
@@ -20167,6 +20192,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1755803314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755803307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad92fe4612aaad4486041c0c0955693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldObjTag:
+  - 
+  popupIndex: 00000000
+  lookingAt: 00
 --- !u!1001 &1758019091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22010,7 +22051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1976911768
 RectTransform:
   m_ObjectHideFlags: 0
