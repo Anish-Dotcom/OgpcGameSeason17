@@ -12,13 +12,12 @@ public class AssemblyController : MonoBehaviour
 
     public Material recipeMat;
 
-    public bool lookingAt = false;
+    public PopupInfo lookingAtCheck;
+    public int myInfoIndex;
+
     public float distFromPlayer;
     public GameObject playerCam;
     public GameObject heldObjContainer;
-    public GameObject addPart;
-
-    public MenuController menuController;
 
     public GameObject[] assemblyPartsInScene;
 
@@ -82,30 +81,7 @@ public class AssemblyController : MonoBehaviour
             }
         }
 
-        RaycastHit hit;
-        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//add part?
-        {
-            if (heldObjContainer.transform.childCount > 0 && RecipeForAssemblyObj.transform.childCount > 0 && hit.collider.gameObject.CompareTag("assemblyStation"))
-            {
-                if (heldObjContainer.transform.GetChild(0).CompareTag("assemblyPart"))
-                {
-                    lookingAt = true;
-                    menuController.openPopup(addPart);
-                }
-                else
-                {
-                    lookingAt = false;
-                    menuController.closePopup(addPart);
-                }
-            }
-            else
-            {
-                lookingAt = false;
-                menuController.closePopup(addPart);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && lookingAt)//add the object command
+        if (Input.GetKeyDown(KeyCode.E) && lookingAtCheck.lookingAt[myInfoIndex])//add the object command
         {
             AddToAssembly(heldObjContainer.GetComponent<Transform>().GetChild(0).gameObject);
             ObjectPickUp.equipped = false;
@@ -229,12 +205,6 @@ public class AssemblyController : MonoBehaviour
             Recent.name = toyNamesForFinal[i] + " " + i.ToString();//setNameToSameAsToyNames + something to differentiate
         }
     }
-
-    public void OnMouseExit()
-    {
-        lookingAt = false;
-    }
-
     public void ChangeColliderTrigger(GameObject collObj, bool setToType)
     {
         Collider[] coll = collObj.GetComponents<Collider>();

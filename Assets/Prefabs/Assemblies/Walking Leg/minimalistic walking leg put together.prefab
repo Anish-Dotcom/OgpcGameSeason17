@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 2736754407436634800}
   m_Layer: 0
   m_Name: minimalistic walking leg put together
-  m_TagString: Untagged
+  m_TagString: Finished Assembly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

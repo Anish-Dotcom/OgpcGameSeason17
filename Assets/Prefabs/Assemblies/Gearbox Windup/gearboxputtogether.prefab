@@ -1395,7 +1395,7 @@ GameObject:
   - component: {fileID: 3804255413657312658}
   m_Layer: 6
   m_Name: gearboxputtogether
-  m_TagString: Untagged
+  m_TagString: Finished Assembly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
