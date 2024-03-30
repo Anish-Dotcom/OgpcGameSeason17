@@ -44,17 +44,29 @@ public class PlayerMove : MonoBehaviour
 
     public float fatigue;
 
-    PlayerInputs playerInputs;
+   PlayerInputs playerInputs;
 
+    private void Awake()
+    {
+        playerInputs = new PlayerInputs();
+        playerInputs.Enable();
+        // load rebindings
+        string rebinds = PlayerPrefs.GetString("rebinds", string.Empty);
+
+        if (string.IsNullOrEmpty(rebinds)) { return; }
+        Debug.Log(rebinds);
+        playerInputs.LoadBindingOverridesFromJson(rebinds);
+    }
     // Start is called before the first frame update
     void Start()
     {
+
+
         moveSpeed = 6;
         currentObjectHoldDistance = objectHoldDistance;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        playerInputs = new PlayerInputs();
-        playerInputs.Enable();
+        
     }
 
     // Update is called once per frame
