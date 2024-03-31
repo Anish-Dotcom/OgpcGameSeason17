@@ -12,12 +12,15 @@ public class RebindableKeybindScript : MonoBehaviour
     [SerializeField] private InputActionAsset playerControls;
     [SerializeField] private TMP_Text bindDisplayText;
     [SerializeField] private GameObject startRebindObject;
+    public PlayerMove playerMove;
 
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
 
     private void Start()
     {
         Load();
+        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+
     }
 
     public void Save()
@@ -44,20 +47,22 @@ public class RebindableKeybindScript : MonoBehaviour
     {
         startRebindObject.SetActive(false);
         rebindingOperation = action.action.PerformInteractiveRebinding()
-            .WithControlsExcluding("Mouse")
             .OnMatchWaitForAnother(0.1f)
             .OnComplete(opperation => rebindComplete())
             .Start();
+        
     }
 
     private void rebindComplete()
     {
-
+        
+        
         int bindingIndex = action.action.GetBindingIndexForControl(action.action.controls[0]);
         bindDisplayText.text = InputControlPath.ToHumanReadableString(action.action.bindings[bindingIndex].effectivePath,InputControlPath.HumanReadableStringOptions.OmitDevice);
         rebindingOperation.Dispose();
         startRebindObject.SetActive(true);
         Save();
+        if (playerMove) { playerMove.LoadRebinds(); }
 
     }
 }

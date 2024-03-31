@@ -45,8 +45,7 @@ public class PlayerMove : MonoBehaviour
     public float fatigue;
 
    PlayerInputs playerInputs;
-
-    private void Awake()
+    public void LoadRebinds()
     {
         playerInputs = new PlayerInputs();
         playerInputs.Enable();
@@ -56,6 +55,10 @@ public class PlayerMove : MonoBehaviour
         if (string.IsNullOrEmpty(rebinds)) { return; }
         Debug.Log(rebinds);
         playerInputs.LoadBindingOverridesFromJson(rebinds);
+    }
+    private void Awake()
+    {
+        LoadRebinds();
     }
     // Start is called before the first frame update
     void Start()
@@ -128,11 +131,11 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerInput()
     {
+   
+        horizontalInput = playerInputs.Player.Right.ReadValue<float>() - playerInputs.Player.Left.ReadValue<float>();
+        verticalInput = playerInputs.Player.Forward.ReadValue<float>() - playerInputs.Player.Back.ReadValue<float>();
 
-        horizontalInput = playerInputs.Player.Move.ReadValue<Vector2>()[0];
-        verticalInput = playerInputs.Player.Move.ReadValue<Vector2>()[1];
-
-        if(playerInputs.Player.Crouch.WasPressedThisFrame())
+        if (playerInputs.Player.Crouch.WasPressedThisFrame())
         {
             Crouching();
         }
