@@ -100,7 +100,7 @@ public class RaycastCon : MonoBehaviour
     }
     public void ClosePopups(int minus)
     {
-        if (minus != -1)
+        if (minus > -1)
         {
             for (int j = 0; j < popups.Length; j++)
             {
