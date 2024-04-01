@@ -924,6 +924,8 @@ MonoBehaviour:
   inBuildMode: 0
   tinkering: 0
   speed: 1
+  clampSmallDist: 1
+  clampBigDist: 3
   rotationSpeed: 80
   rotSpeed: 50
 --- !u!114 &62802928

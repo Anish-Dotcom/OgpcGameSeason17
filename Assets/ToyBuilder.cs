@@ -22,7 +22,7 @@ public class ToyBuilder : MonoBehaviour
     Vector3 velocity;
     Quaternion deriv;
 
-    public GameObject[] objectsInStation;
+    public List<GameObject> objectsInStation;
     public GameObject stationObjsContainer;
     public GameObject objectsBeingUsedParent;
     public GameObject trueParent;
@@ -31,6 +31,8 @@ public class ToyBuilder : MonoBehaviour
     public bool tinkering;//moving an object
 
     public float speed;
+    public float clampSmallDist;
+    public float clampBigDist;
     public float rotationSpeed;
     public float rotSpeed = 50;
 
@@ -50,12 +52,30 @@ public class ToyBuilder : MonoBehaviour
             {
                 ExitBuildMode();
             }
-            if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            float distance = Vector3.Distance(stationCam.transform.position, stationCamRig.transform.position);
+            if (Input.GetAxis("Mouse ScrollWheel") != 0)//zooming camera
             {
-                stationCam.transform.position += Input.GetAxis("Mouse ScrollWheel") * stationCam.transform.forward * speed;
+                if (distance > clampBigDist)
+                {
+                    if (Input.GetAxis("Mouse ScrollWheel") > 0)
+                    {
+                        stationCam.transform.position += Input.GetAxis("Mouse ScrollWheel") * stationCam.transform.forward * speed;
+                    }
+                }
+                else if (distance < clampSmallDist)
+                {
+                    if (Input.GetAxis("Mouse ScrollWheel") < 0)
+                    {
+                        stationCam.transform.position += Input.GetAxis("Mouse ScrollWheel") * stationCam.transform.forward * speed;
+                    }
+                }
+                else
+                {
+                    stationCam.transform.position += Input.GetAxis("Mouse ScrollWheel") * stationCam.transform.forward * speed;
+                }
             }
 
-            if (Input.GetKey(KeyCode.Mouse0) && trueParent.transform.childCount > 0)
+            if (Input.GetKey(KeyCode.Mouse0) && trueParent.transform.childCount > 0)//rotating the toy
             {
                 if (Mathf.Abs(Input.GetAxis("Mouse X")) > Mathf.Abs(Input.GetAxis("Mouse Y")))
                 {
@@ -72,12 +92,16 @@ public class ToyBuilder : MonoBehaviour
                     objectsBeingUsedParent.transform.GetChild(0).Rotate(0, 0, Input.GetAxis("Mouse Y") * Time.deltaTime * rotSpeed);
                 }
             }
-            else if (Input.GetKey(KeyCode.Mouse2))
+            else if (Input.GetKey(KeyCode.Mouse2))//rotating the camera
             {
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
-                   float horiInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-                   stationCamRig.transform.Rotate(Vector3.up, horiInput, Space.World);
+                    float horiInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+                    Debug.Log(stationCamRig.transform.rotation.y * 100 + horiInput);
+                    if ((stationCamRig.transform.rotation.y * 100 + horiInput) > -90 && (stationCamRig.transform.rotation.y * 100 + horiInput) < 90)
+                    {
+                        stationCamRig.transform.Rotate(Vector3.up, horiInput, Space.World);
+                    }
                 }
             }
         }
@@ -117,6 +141,7 @@ public class ToyBuilder : MonoBehaviour
                     stationCam.transform.position = stationCamStartPos;
                     stationCam.transform.rotation = stationCam.transform.rotation;
                     movingCam = false;
+                    timeMovingCam = 0;
                     inBuildMode = true;
                 }
             }
@@ -140,6 +165,7 @@ public class ToyBuilder : MonoBehaviour
                     stationCam.transform.position = stationCamStartPos;
                     stationCam.transform.rotation = stationCam.transform.rotation;
                     movingCam = false;
+                    timeMovingCam = 0;
                     inBuildMode = false;
                 }
             }
@@ -147,6 +173,17 @@ public class ToyBuilder : MonoBehaviour
     }
     public void AddToBuilder(GameObject objToAdd)
     {
+        if (trueParent.transform.childCount > 0)
+        {
+            objectsInStation.Add(objToAdd);
+
+        }
+        else
+        {
+            objToAdd.transform.SetParent(trueParent.transform);
+            objToAdd.transform.position = trueParent.transform.position;
+
+        }
 
     }
     public void EnterBuildMode()
