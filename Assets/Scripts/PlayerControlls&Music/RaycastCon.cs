@@ -44,13 +44,14 @@ public class RaycastCon : MonoBehaviour
                 {
                     return;
                 }
-                colliderNonHeldObjsCheck(hit);//hitting something, just not one of the colliderObjs, so check other
 
+                colliderNonHeldObjsCheck(hit);//hitting something, just not one of the colliderObjs, so check other
                 if (returned)
                 {
                     return;
                 }
-                 //colliderNonheldObjs check
+
+                //colliderNonheldObjs check
                 ClosePopups(-1);
                 DisableLastLookingAt();
                 lastI = -1;
@@ -60,6 +61,12 @@ public class RaycastCon : MonoBehaviour
             else
             {
                 colliderNonHeldObjsCheck(hit);
+                if (returned)
+                {
+                    return;
+                }
+
+                PickupObjectCheck(hit);
                 if (returned)
                 {
                     return;
@@ -191,6 +198,43 @@ public class RaycastCon : MonoBehaviour
                 returned = true;
                 return;
             }
+        }
+    }
+    public void PickupObjectCheck(RaycastHit hit)
+    {
+        if (hit.transform.gameObject.layer.ToString() == "Pickupable" || hit.transform.gameObject.layer.ToString() == "Storage")
+        {
+            for (int k = 0; k < GetComponent<PopupInfo>().heldObjTag.Length; k++)
+            {
+                if (GetComponent<PopupInfo>().heldObjTag[k] == hit.transform.gameObject.layer.ToString())//doesnt require held obj
+                {
+                    if (lastK != k)
+                    {
+                        lookingAt = "looking at " + hit.transform.name;
+                        int popupIndex = GetComponent<PopupInfo>().popupIndex[k];
+                        menuController.openPopup(popups[popupIndex]);
+
+                        GetComponent<PopupInfo>().lookingAt[k] = true;
+                        GetComponent<PopupInfo>().hitObj[k] = hit.transform.gameObject;
+
+                        ClosePopups(popupIndex);
+
+                        DisableLastLookingAt();
+                        lastI = -1;
+                        lastK = k;
+                        lastType = -1;
+                    }
+                    returned = true;
+                    return;
+                }
+            }
+            ClosePopups(-1);
+            DisableLastLookingAt();
+            lastI = -1;
+            lastK = -1;
+            lastType = -1;
+            returned = true;
+            return;
         }
     }
 }

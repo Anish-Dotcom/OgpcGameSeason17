@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObjectPickUp : MonoBehaviour
 {
+    public PopupInfo lookingAtCheck;
+    public int myInfoIndex;
+
     public FatigueController FatigueController;
     private Rigidbody rb;
     public Collider[] coll;
@@ -40,17 +43,15 @@ public class ObjectPickUp : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(fpsCam.position, fpsCam.forward*pickUpRange);
-        if(!equipped && Physics.Raycast(fpsCam.position, fpsCam.forward, out hit, pickUpRange, mask)) // checks whether its an object to be picked up
+        if(!equipped && lookingAtCheck.lookingAt[myInfoIndex]) // checks whether its an object to be picked up
         {
             if (!slotFull)
             {
-                interact.SetActive(true);
 
                 if (playerInputs.Player.PickUp.WasPerformedThisFrame())
                 {
-                    currentObject = hit.collider.gameObject;
+                    currentObject = lookingAtCheck.hitObj[myInfoIndex];
                     PickUp(currentObject);
-                    interact.SetActive(false);
                 }
             }
         }
@@ -58,17 +59,13 @@ public class ObjectPickUp : MonoBehaviour
         {
             Drop(currentObject);
         }
-        else
-        {
-            interact.SetActive(false);
-        }
 
         RaycastHit hit2;
 
-        if (Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange, LayerMask.GetMask("Storage")) && equipped) // storing object on shelf/boxes
+        if (lookingAtCheck.lookingAt[1] && equipped) // storing object on shelf/boxes
         {
-            Debug.Log("object hit: " + hit2.collider.gameObject);
-            if (hit2.transform.gameObject != null)
+            Debug.Log("object hit: " + lookingAtCheck.hitObj[1]);
+            if (lookingAtCheck.hitObj[1] != null)
             {
                 store.SetActive(true);
                 if (playerInputs.Player.Interact.WasPerformedThisFrame())
@@ -81,15 +78,15 @@ public class ObjectPickUp : MonoBehaviour
                     }
 
                     rb.isKinematic = true;
-                    currentObject.transform.position = hit2.transform.position; // 1. sets the location to the same location as the shelf slot
+                    currentObject.transform.position = lookingAtCheck.hitObj[1].transform.position; // 1. sets the location to the same location as the shelf slot
 
                     store.SetActive(false);
                     currentObject.transform.rotation = Quaternion.identity; // 2. sets all rotation axis to 0
 
-                    float distance = ((hit2.collider.gameObject.GetComponent<BoxCollider>().size.y * hit2.collider.gameObject.transform.localScale.y) / 2) - ((boxColl.size.y * currentObject.transform.localScale.y) / 2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
+                    float distance = ((lookingAtCheck.hitObj[1].GetComponent<BoxCollider>().size.y * lookingAtCheck.hitObj[1].transform.localScale.y) / 2) - ((boxColl.size.y * currentObject.transform.localScale.y) / 2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
 
                     currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y - distance, currentObject.transform.position.z);
-                    currentObject.transform.SetParent(hit2.transform);
+                    currentObject.transform.SetParent(lookingAtCheck.hitObj[1].transform);
                     if(currentObject.tag == "Box")
                     {
                         currentObject.transform.position = new Vector3(currentObject.transform.position.x, currentObject.transform.position.y + 0.20f, currentObject.transform.position.z);

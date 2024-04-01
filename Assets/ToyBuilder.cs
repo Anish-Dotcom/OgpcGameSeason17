@@ -105,7 +105,7 @@ public class ToyBuilder : MonoBehaviour
                 }
             }
         }
-        else if (lookingAtCheck.lookingAt[myInfoIndex])
+        else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
         {
             if (Input.GetKeyDown(KeyCode.E))//add the object command
             {
