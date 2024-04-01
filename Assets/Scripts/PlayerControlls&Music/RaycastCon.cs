@@ -37,7 +37,17 @@ public class RaycastCon : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 3.5f))//hitting something
         {
-            if (heldObjContainer.transform.childCount > 0)//holding an object
+            //Debug.Log(hit.transform.gameObject.layer.ToString());
+            if (hit.transform.gameObject.layer.ToString() == "6" || hit.transform.gameObject.layer.ToString() == "9")
+            {
+                Debug.Log("to string worked");
+                PickupObjectCheck(hit);
+                if (returned)
+                {
+                    return;
+                }
+            }
+            else if (heldObjContainer.transform.childCount > 0)//holding an object
             {
                 colliderObjsCheck(hit);
                 if (returned)
@@ -61,12 +71,6 @@ public class RaycastCon : MonoBehaviour
             else
             {
                 colliderNonHeldObjsCheck(hit);
-                if (returned)
-                {
-                    return;
-                }
-
-                PickupObjectCheck(hit);
                 if (returned)
                 {
                     return;
@@ -202,39 +206,36 @@ public class RaycastCon : MonoBehaviour
     }
     public void PickupObjectCheck(RaycastHit hit)
     {
-        if (hit.transform.gameObject.layer.ToString() == "Pickupable" || hit.transform.gameObject.layer.ToString() == "Storage")
+        for (int k = 0; k < GetComponent<PopupInfo>().heldObjTag.Length; k++)
         {
-            for (int k = 0; k < GetComponent<PopupInfo>().heldObjTag.Length; k++)
+            if (GetComponent<PopupInfo>().heldObjTag[k] == hit.transform.gameObject.layer.ToString())//doesnt require held obj
             {
-                if (GetComponent<PopupInfo>().heldObjTag[k] == hit.transform.gameObject.layer.ToString())//doesnt require held obj
+                if (lastK != k && lastI != 100)
                 {
-                    if (lastK != k)
-                    {
-                        lookingAt = "looking at " + hit.transform.name;
-                        int popupIndex = GetComponent<PopupInfo>().popupIndex[k];
-                        menuController.openPopup(popups[popupIndex]);
+                    lookingAt = "looking at " + hit.transform.name;
+                    int popupIndex = GetComponent<PopupInfo>().popupIndex[k];
+                    menuController.openPopup(popups[popupIndex]);
 
-                        GetComponent<PopupInfo>().lookingAt[k] = true;
-                        GetComponent<PopupInfo>().hitObj[k] = hit.transform.gameObject;
+                    GetComponent<PopupInfo>().lookingAt[k] = true;
+                    GetComponent<PopupInfo>().hitObj[k] = hit.transform.gameObject;
 
-                        ClosePopups(popupIndex);
+                    ClosePopups(popupIndex);
 
-                        DisableLastLookingAt();
-                        lastI = -1;
-                        lastK = k;
-                        lastType = -1;
-                    }
-                    returned = true;
-                    return;
+                    DisableLastLookingAt();
+                    lastI = 100;
+                    lastK = k;
+                    lastType = -1;
                 }
+                returned = true;
+                return;
             }
-            ClosePopups(-1);
-            DisableLastLookingAt();
-            lastI = -1;
-            lastK = -1;
-            lastType = -1;
-            returned = true;
-            return;
         }
+        ClosePopups(-1);
+        DisableLastLookingAt();
+        lastI = -1;
+        lastK = -1;
+        lastType = -1;
+        returned = true;
+        return;
     }
 }
