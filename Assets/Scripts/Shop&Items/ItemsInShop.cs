@@ -30,7 +30,6 @@ public class ItemsInShop : MonoBehaviour
     private bool outerParts = true;
     private bool decoratives = true;
 
-    public float playerMoney;
     public GameObject prefabButtonInShop; // viewable button you see when you enter shop
     private List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
     public Transform itemsToGoObject; // where the editted prefab gets instantiated
@@ -38,14 +37,10 @@ public class ItemsInShop : MonoBehaviour
     public GameObject prefabBuying;
     public Transform prefabToGoBuyingObject;
 
-    public Text playerMoneyText;
-
     public List<ItemProperties> properties = new List<ItemProperties>(); // list of all the item in shops properties
 
     private Dictionary<string, GameObject> instantiatedBuyingButtons = new Dictionary<string, GameObject>();
     private Dictionary<string, string> instantiatedBuyingPrices = new Dictionary<string, string>();
-    private float current;
-    private float decreaseamount;
 
     public GameObject Box;
     public Transform BoxPosition;
@@ -54,10 +49,11 @@ public class ItemsInShop : MonoBehaviour
     public GameObject boxInteract;
     public MenuController menuController;
 
+    public MoneyScrip MoneyScript;
+
     void Start()
     {
         CreateShopButtonsAllTab();
-        UpdatePlayerMoney();
     }
 
     void CreateShopButtonsTabs()
@@ -219,9 +215,7 @@ public class ItemsInShop : MonoBehaviour
             RemoveItem(i);
         }
 
-        current = playerMoney - totalCost;
-        decreaseamount = totalCost / 300;
-        StartCoroutine(textRollDown());
+        MoneyScript.DecreaseMoney(totalCost);
     }
 
     public void ChangeColliderTrigger(GameObject collObj, bool setToType)
@@ -243,17 +237,6 @@ public class ItemsInShop : MonoBehaviour
                 coll[0].isTrigger = setToType;
             }
         }
-    }
-
-    public void changePlayerMoney(float takeaway)
-    {
-        playerMoney -= takeaway;
-        UpdatePlayerMoney();
-    }
-
-    public void UpdatePlayerMoney() // updated the players money
-    {
-        playerMoneyText.text = "$" + playerMoney.ToString("F2");
     }
 
     public void allTab() // tabs
@@ -324,22 +307,6 @@ public class ItemsInShop : MonoBehaviour
             Destroy(button);
         }
         prefabButtons.Clear();
-    }
-
-    IEnumerator textRollDown()
-    {
-        yield return new WaitForSeconds(0.0001f);
-        if (playerMoney <= current)
-        {
-            playerMoney = current;
-            playerMoneyText.text = "$" + playerMoney.ToString("F2");
-        }
-        else
-        {
-            playerMoney = playerMoney - decreaseamount;
-            playerMoneyText.text = "$" + playerMoney.ToString("F2");
-            StartCoroutine(textRollDown());
-        }
     }
 }
 
