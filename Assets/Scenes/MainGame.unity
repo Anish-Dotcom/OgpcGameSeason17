@@ -14164,9 +14164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldObjTag:
-  - Pickupable
-  - Storage
-  popupIndex: 0000000000000000
+  - 6
+  - 9
+  popupIndex: 0000000003000000
   lookingAt: 0000
   hitObj:
   - {fileID: 0}

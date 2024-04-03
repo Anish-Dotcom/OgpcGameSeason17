@@ -60,14 +60,11 @@ public class ObjectPickUp : MonoBehaviour
             Drop(currentObject);
         }
 
-        RaycastHit hit2;
-
         if (lookingAtCheck.lookingAt[1] && equipped) // storing object on shelf/boxes
         {
             Debug.Log("object hit: " + lookingAtCheck.hitObj[1]);
             if (lookingAtCheck.hitObj[1] != null)
             {
-                store.SetActive(true);
                 if (playerInputs.Player.Interact.WasPerformedThisFrame())
                 {
                     Drop(currentObject);
@@ -80,7 +77,6 @@ public class ObjectPickUp : MonoBehaviour
                     rb.isKinematic = true;
                     currentObject.transform.position = lookingAtCheck.hitObj[1].transform.position; // 1. sets the location to the same location as the shelf slot
 
-                    store.SetActive(false);
                     currentObject.transform.rotation = Quaternion.identity; // 2. sets all rotation axis to 0
 
                     float distance = ((lookingAtCheck.hitObj[1].GetComponent<BoxCollider>().size.y * lookingAtCheck.hitObj[1].transform.localScale.y) / 2) - ((boxColl.size.y * currentObject.transform.localScale.y) / 2); // calculates the distance it must travel downward to have the bottom of the object collider align with the bottom of the shelf slot collider
@@ -93,10 +89,6 @@ public class ObjectPickUp : MonoBehaviour
                     }
                 }
             }
-        }
-        if (!Physics.Raycast(fpsCam.position, fpsCam.forward, out hit2, pickUpRange) || !equipped)
-        {
-            store.SetActive(false);
         }
     }
 
