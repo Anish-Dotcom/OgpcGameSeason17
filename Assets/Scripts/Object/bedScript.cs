@@ -103,6 +103,7 @@ public class bedScript : MonoBehaviour
             caledarScript.text = caledarScript.text + " /";
 
             Day++;
+            caledarScript.day = Day;
             if (Day == 8)
             {
                 Day = 0;
