@@ -53,10 +53,10 @@ public class ItemsInShop : MonoBehaviour
 
     void Start()
     {
-        CreateShopButtonsAllTab();
+        CreateShopButtonsAllTab(); // starts it with the all tab
     }
 
-    void CreateShopButtonsTabs()
+    void CreateShopButtonsTabs() // for the individual tabs
     {
         for (int i = 0; i < properties.Count; i++) // assigns the name and price to be viewed
         {
@@ -98,7 +98,7 @@ public class ItemsInShop : MonoBehaviour
         }
     }
 
-    void CreateShopButtonsAllTab()
+    void CreateShopButtonsAllTab() // specifically for the all tab. i needed this to be a seperate function to prevent the same items in 2 different tabs from appearing twice
     {
         for (int i = 0; i < properties.Count; i++) // assigns the name and price to be viewed
         {

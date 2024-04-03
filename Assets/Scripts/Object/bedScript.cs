@@ -104,7 +104,7 @@ public class bedScript : MonoBehaviour
 
             Day++;
             caledarScript.day = Day;
-            if (Day == 8)
+            if (Day == 7)
             {
                 Day = 0;
                 caledarScript.bills();
