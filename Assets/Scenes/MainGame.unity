@@ -20713,6 +20713,7 @@ MonoBehaviour:
   Telephone: {fileID: 1755803307}
   interact: {fileID: 0}
   menuController: {fileID: 312775338}
+  bedScript: {fileID: 4985786856929160619}
 --- !u!65 &1755803310
 BoxCollider:
   m_ObjectHideFlags: 0

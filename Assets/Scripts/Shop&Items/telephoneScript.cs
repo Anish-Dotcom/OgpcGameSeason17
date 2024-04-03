@@ -40,6 +40,7 @@ public class telephoneScript : MonoBehaviour
     public GameObject interact; // this is what set active true when you hover over the telephone
 
     public MenuController menuController; // for controlling menus
+    public bedScript bedScript;
 
 
     public void PutTelephoneBackButton()
@@ -61,9 +62,16 @@ public class telephoneScript : MonoBehaviour
     {
         callButton.interactable = false;
         awayButton.interactable = false;
-        StartCoroutine(showText());
-        //musicController.PlayDialog(greeting);
-        greeting.Play();
+        if(bedScript.Day == 5 || bedScript.Day == 6)
+        {
+            StartCoroutine(shopClosed());
+        }
+        else
+        {
+            StartCoroutine(showText());
+            //musicController.PlayDialog(greeting);
+            greeting.Play();
+        }
     }
 
     IEnumerator showText()
@@ -76,8 +84,19 @@ public class telephoneScript : MonoBehaviour
         yield return new WaitForSeconds(2.3f);
         subtitlesHighlight.SetActive(false);
         subtitles.text = "";
-        menuController.openMenu(shopUI);
         callShopButton.SetActive(false);
+        awayButton.interactable = true;
+        menuController.openMenu(shopUI);
+    }
+
+    IEnumerator shopClosed()
+    {
+        yield return new WaitForSeconds(0.3f);
+        subtitlesHighlight.SetActive(true);
+        subtitles.text = "Sorry, Playful Depot is closed today.";
+        yield return new WaitForSeconds(2.7f);
+        subtitlesHighlight.SetActive(false);
+        subtitles.text = "";
         awayButton.interactable = true;
     }
 
@@ -110,6 +129,7 @@ public class telephoneScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape))
             {
+                callButton.interactable = true;
                 menuController.closeMenu(shopUI);
                 menuController.closeMenu(telephoneUI);
                 telephoneIsOpen = false;
