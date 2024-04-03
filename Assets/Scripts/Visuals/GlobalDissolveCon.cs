@@ -25,6 +25,7 @@ public class GlobalDissolveCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        areas[1].updatingMats.Add(boxMat);
         consAdded = new bool[areas.Length];
         /*
         for (int i = 0; i < areas.Length; i++) // this makes it so that if an area is not the main room, it is invis by default
