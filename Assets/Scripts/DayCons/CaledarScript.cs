@@ -10,6 +10,7 @@ public class CaledarScript : MonoBehaviour
     public string text;
     public ItemsInShop itemsInShop;
     public MoneyScrip MoneyScript;
+    public TMP_Text OMarks;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,8 @@ public class CaledarScript : MonoBehaviour
     void Update()
     {
         daysTickMark.text = text;
+        OMarks.text = text.Replace('/', 'O') + "O";
+        OMarks.text = OMarks.text.Replace(" ", "");
     }
 
     public void bills()
@@ -27,4 +30,5 @@ public class CaledarScript : MonoBehaviour
 
         MoneyScript.DecreaseMoney(250);
     }
+
 }
