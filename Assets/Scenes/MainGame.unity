@@ -17433,6 +17433,7 @@ MonoBehaviour:
   - {fileID: 1109960163}
   updatingAreas: []
   footStepCon: {fileID: 606715827}
+  boxMat: {fileID: 2100000, guid: a2c532f2c2eacd5408d0ba9c623bd3a7, type: 2}
   mainRoomDistances:
   - 2.41
   - -3.33
@@ -18065,8 +18066,8 @@ MonoBehaviour:
   nonMoveDissolveDistances: {x: 0, y: 0, z: 0}
   updatingMats: []
   size:
-  - 0
-  - 0
+  - 1000
+  - 1000
   objsToEnable: []
   dissolveNoiseStrength: 0
 --- !u!1 &1475511825

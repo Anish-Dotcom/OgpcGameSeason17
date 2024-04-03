@@ -15,6 +15,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public DissolveController[] areas;// mainroom = 0, void = 1
     public List<DissolveController> updatingAreas;
     public footStepCon footStepCon;
+    public Material boxMat;
 
     public float[] mainRoomDistances = new float[4];
     public bool firstFrameOutside = true;
@@ -52,6 +53,14 @@ public class GlobalDissolveCon : MonoBehaviour
             WrapAround();
             if (firstFrameOutside)
             {
+                areas[1].updatingMats.Add(boxMat);
+                for (int i = 0; i < areas[0].updatingMats.Count; i++)
+                {
+                    if (areas[0].updatingMats[i] == boxMat)
+                    {
+                        areas[0].updatingMats.RemoveAt(i);
+                    }
+                }
                 placeSteps();//if outside of room give player a guide on where to go to
                 for (int i = 0; i < footStepCon.footPrintMatsInScene.Count; i++)
                 {
@@ -121,7 +130,6 @@ public class GlobalDissolveCon : MonoBehaviour
     }
     public void placeSteps()
     {
-
         footStepCon.startingPointObj.transform.position = player.transform.position;
         if (heldObjContainer.transform.childCount > 0)
         {
@@ -147,6 +155,14 @@ public class GlobalDissolveCon : MonoBehaviour
         for (int i = 0; i < footStepCon.parentObj.transform.childCount; i++)
         {
             Destroy(footStepCon.parentObj.transform.GetChild(i).gameObject);
+        }
+        areas[0].updatingMats.Add(boxMat);
+        for (int i = 0; i < areas[0].updatingMats.Count; i++)
+        {
+            if (areas[0].updatingMats[i] == boxMat)
+            {
+                areas[0].updatingMats.RemoveAt(i);
+            }
         }
     }
     public void AreaCheck()//tells which area you are in

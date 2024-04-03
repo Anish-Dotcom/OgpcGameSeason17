@@ -97,11 +97,8 @@ public class ToyBuilder : MonoBehaviour
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
                     float horiInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-                    Debug.Log(stationCamRig.transform.rotation.y * 100 + horiInput);
-                    if ((stationCamRig.transform.rotation.y * 100 + horiInput) > -90 && (stationCamRig.transform.rotation.y * 100 + horiInput) < 90)
-                    {
-                        stationCamRig.transform.Rotate(Vector3.up, horiInput, Space.World);
-                    }
+                    //Debug.Log(stationCamRig.transform.rotation.y * 100 + horiInput);
+                    stationCamRig.transform.Rotate(Vector3.up, horiInput, Space.World);
                 }
             }
         }
@@ -176,13 +173,11 @@ public class ToyBuilder : MonoBehaviour
         if (trueParent.transform.childCount > 0)
         {
             objectsInStation.Add(objToAdd);
-
         }
         else
         {
             objToAdd.transform.SetParent(trueParent.transform);
             objToAdd.transform.position = trueParent.transform.position;
-
         }
 
     }
