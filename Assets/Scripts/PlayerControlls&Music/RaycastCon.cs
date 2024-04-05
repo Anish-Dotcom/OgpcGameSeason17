@@ -140,7 +140,7 @@ public class RaycastCon : MonoBehaviour
             {
                 for (int k = 0; k < colliderObjs[i].GetComponent<PopupInfo>().heldObjTag.Length; k++)
                 {
-                    if (heldObjContainer.transform.CompareTag(colliderObjs[i].GetComponent<PopupInfo>().heldObjTag[k]))
+                    if (heldObjContainer.transform.GetChild(0).CompareTag(colliderObjs[i].GetComponent<PopupInfo>().heldObjTag[k]))
                     {
                         if (lastK != k || lastI != i)//the thing being looked at changed
                         {

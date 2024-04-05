@@ -10,6 +10,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public GameObject boxObjContainer;//what things are bought
     public GameObject sellObjLocation;
     public GameObject cribLocation;
+    public GameObject mainRoomLocation;
 
     public bool[] consAdded;
     public DissolveController[] areas;// mainroom = 0, void = 1
@@ -148,7 +149,7 @@ public class GlobalDissolveCon : MonoBehaviour
         if (boxObjContainer.transform.childCount > 0)//there is a box for you to get
         {
             footStepCon.endingPointObj.transform.position = boxObjContainer.transform.position;
-            footStepCon.setFootPrints(new Color(255, 255, 255), 1);//white
+            footStepCon.setFootPrints(new Color(0, 255, 0), 1);//green
         }
     }
     public void removeSteps()
@@ -191,6 +192,14 @@ public class GlobalDissolveCon : MonoBehaviour
                     consAdded[i] = false;//its no longer updating
                     Debug.Log("Entered area " + i + ", section " + inArea);
                     areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
+
+                    removeSteps();//remove footprints and then, if not entering main room, set footsteps back to main room
+                    if (i != 0)
+                    {
+                        footStepCon.startingPointObj.transform.position = player.transform.position;
+                        footStepCon.endingPointObj.transform.position = mainRoomLocation.transform.position;
+                        footStepCon.setFootPrints(new Color(255, 255, 255), 0);
+                    }
 
                     areas[i].transform.GetChild(0).position = areas[i].centralPos;//only needs to do once, sets what was following player to the center of its area
                     SingleUpdateMat(i);
