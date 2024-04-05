@@ -37,7 +37,10 @@ public class GlobalDissolveCon : MonoBehaviour
 
                 for (int j = 0; j < areas[i].objsToEnable.Length; j++)
                 {
-                    areas[i].objsToEnable[j].SetActive(false);
+                    if (i != 0)//if not main room
+                    {
+                        areas[i].objsToEnable[j].SetActive(false);
+                    }
                 }
                 SingleUpdateMat(i);
 
