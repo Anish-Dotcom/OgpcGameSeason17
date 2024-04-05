@@ -116,9 +116,9 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Cutoff_Distance: 10
-    - _Cutoff_Distance_X: 0
-    - _Cutoff_Distance_Y: 0
-    - _Cutoff_Distance_Z: 0
+    - _Cutoff_Distance_X: 2
+    - _Cutoff_Distance_Y: 4
+    - _Cutoff_Distance_Z: 2
     - _Cutoff_X_non_move: 2
     - _Cutoff_y_non_move: 4
     - _Cutoff_z_non_move: 2

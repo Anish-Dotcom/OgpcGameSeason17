@@ -82,7 +82,10 @@ public class ToyBuilder : MonoBehaviour
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(1));
                     objectsBeingUsedParent.transform.GetChild(0).transform.rotation = Quaternion.identity;
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(0));
-                    objectsBeingUsedParent.transform.GetChild(0).Rotate(0, Input.GetAxis("Mouse X"), 0 * Time.deltaTime * rotSpeed);
+                    float angle = Mathf.Atan((trueParent.transform.position.z-stationCam.transform.position.z)/ (trueParent.transform.position.x - stationCam.transform.position.x));
+                    float yInput = Mathf.Sin(angle - 1/4*Mathf.PI) + 0.5f;
+                    float xInput = Mathf.Cos(angle - 1/4 * Mathf.PI) + 0.5f;
+                    objectsBeingUsedParent.transform.GetChild(0).Rotate(Input.GetAxis("Mouse X") * xInput, Input.GetAxis("Mouse X") * yInput, 0 * Time.deltaTime * rotSpeed);
                 }
                 else
                 {
@@ -109,6 +112,7 @@ public class ToyBuilder : MonoBehaviour
                 AddToBuilder(heldObjContainer.transform.GetChild(0).gameObject);
                 ObjectPickUp.equipped = false;
                 ObjectPickUp.slotFull = false;
+                lookingAtCheck.lookingAt[myInfoIndex] = false;
             }
         }
         else if (lookingAtCheck.lookingAt[2])
