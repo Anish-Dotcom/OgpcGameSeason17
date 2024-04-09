@@ -36,9 +36,12 @@ public class ToyBuilder : MonoBehaviour
     public float rotationSpeed;
     public float rotSpeed = 50;
 
+    private Quaternion resetRot;
+
     // Start is called before the first frame update
     void Start()
     {
+        resetRot = Quaternion.identity;
         stationCamStartPos = stationCam.transform.position;
         stationCamStartRot = stationCam.transform.rotation;
     }
@@ -74,25 +77,22 @@ public class ToyBuilder : MonoBehaviour
                     stationCam.transform.position += Input.GetAxis("Mouse ScrollWheel") * stationCam.transform.forward * speed;
                 }
             }
-
+            GameObject mainParent = objectsBeingUsedParent.transform.GetChild(0).gameObject;
             if (Input.GetKey(KeyCode.Mouse0) && trueParent.transform.childCount > 0)//rotating the toy
             {
                 if (Mathf.Abs(Input.GetAxis("Mouse X")) > Mathf.Abs(Input.GetAxis("Mouse Y")))
                 {
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(1));
-                    objectsBeingUsedParent.transform.GetChild(0).transform.rotation = Quaternion.identity;
+                    mainParent.transform.rotation = resetRot;
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(0));
-                    float angle = Mathf.Atan((trueParent.transform.position.z-stationCam.transform.position.z)/ (trueParent.transform.position.x - stationCam.transform.position.x));
-                    float yInput = Mathf.Sin(angle - 1/4*Mathf.PI) + 0.5f;
-                    float xInput = Mathf.Cos(angle - 1/4 * Mathf.PI) + 0.5f;
-                    objectsBeingUsedParent.transform.GetChild(0).Rotate(Input.GetAxis("Mouse X") * xInput, Input.GetAxis("Mouse X") * yInput, 0 * Time.deltaTime * rotSpeed);
+                    mainParent.transform.Rotate(0, Input.GetAxis("Mouse X"), 0 * Time.deltaTime * rotSpeed);
                 }
                 else
                 {
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(1));
-                    objectsBeingUsedParent.transform.GetChild(0).transform.rotation = Quaternion.identity;
+                    mainParent.transform.rotation = resetRot;
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(0));
-                    objectsBeingUsedParent.transform.GetChild(0).Rotate(0, 0, Input.GetAxis("Mouse Y") * Time.deltaTime * rotSpeed);
+                    mainParent.transform.Rotate(0, 0, Input.GetAxis("Mouse Y") * Time.deltaTime * rotSpeed);
                 }
             }
             else if (Input.GetKey(KeyCode.Mouse2))//rotating the camera
@@ -100,8 +100,12 @@ public class ToyBuilder : MonoBehaviour
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
                     float horiInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-                    //Debug.Log(stationCamRig.transform.rotation.y * 100 + horiInput);
                     stationCamRig.transform.Rotate(Vector3.up, horiInput, Space.World);
+
+                    trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(1));
+                    mainParent.transform.rotation = stationCamRig.transform.rotation;
+                    resetRot = stationCamRig.transform.rotation;
+                    trueParent.transform.SetParent(mainParent.transform);
                 }
             }
         }
