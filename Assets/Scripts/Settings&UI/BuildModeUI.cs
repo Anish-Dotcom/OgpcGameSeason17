@@ -24,7 +24,7 @@ public class BuildModeUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < items.Count; i++) // this was only for testing, delete this when you actually finish the system
         {
             addButtons(i);
         }
@@ -68,28 +68,29 @@ public class BuildModeUI : MonoBehaviour
     public void ScrollLeftFunction()
     {
         Debug.Log("left pressed");
-        /*HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
+        HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
         layout.padding.left += 165;
         LayoutRebuilder.ForceRebuildLayoutImmediate(Slots.GetComponent<RectTransform>());
         if (layout.padding.left == 0)
         {
             ScrollLeft.interactable = false;
-        }*/
+        }
     }
 
     public void ScrollRightFunction()
     {
         Debug.Log("right pressed");
-        //HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
-        //layout.padding.left -= 165;
-        //LayoutRebuilder.ForceRebuildLayoutImmediate(Slots.GetComponent<RectTransform>());
-        /*if (prefabButtons.Count > 10)
+        ScrollLeft.interactable = true;
+        HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
+        layout.padding.left -= 165;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(Slots.GetComponent<RectTransform>());
+        if (prefabButtons.Count > 10)
         {
             ScrollRight.interactable = true;
         }
         else
         {
             ScrollRight.interactable = false;
-        }*/
+        }
     }
 }
