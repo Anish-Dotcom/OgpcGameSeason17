@@ -24,7 +24,10 @@ public class BuildModeUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < items.Count; i++)
+        {
+            addButtons(i);
+        }
     }
 
     // Update is called once per frame
@@ -47,13 +50,13 @@ public class BuildModeUI : MonoBehaviour
         prefabButtons.Add(button);
 
         Transform buttonTransform = button.transform;
-        Image itemImage = buttonTransform.GetChild(1).GetComponent<Image>();
-        Button mainButton = buttonTransform.GetChild(4).GetComponent<Button>();
+        //Image itemImage = buttonTransform.GetChild(1).GetComponent<Image>();
+        //Button mainButton = buttonTransform.GetChild(4).GetComponent<Button>();
 
-        itemImage.sprite = items[i].itemImage;
+        //itemImage.sprite = items[i].itemImage;
 
         int index = i; // Capturing the correct index for whats below
-        mainButton.onClick.AddListener(() => AddItemToBuild(index));
+        //mainButton.onClick.AddListener(() => AddItemToBuild(index));
     }
 
     void AddItemToBuild(int index) // whatever you want to happen when the item is pressed
@@ -64,25 +67,29 @@ public class BuildModeUI : MonoBehaviour
 
     public void ScrollLeftFunction()
     {
-        HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
+        Debug.Log("left pressed");
+        /*HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
         layout.padding.left += 165;
-        if(layout.padding.left == 0)
+        LayoutRebuilder.ForceRebuildLayoutImmediate(Slots.GetComponent<RectTransform>());
+        if (layout.padding.left == 0)
         {
             ScrollLeft.interactable = false;
-        }
+        }*/
     }
 
     public void ScrollRightFunction()
     {
-        HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
-        layout.padding.left -= 165;
-        if(prefabButtons.Count > 10)
+        Debug.Log("right pressed");
+        //HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
+        //layout.padding.left -= 165;
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(Slots.GetComponent<RectTransform>());
+        /*if (prefabButtons.Count > 10)
         {
-            ScrollLeft.interactable = true;
+            ScrollRight.interactable = true;
         }
         else
         {
-            ScrollLeft.interactable = false;
-        }
+            ScrollRight.interactable = false;
+        }*/
     }
 }
