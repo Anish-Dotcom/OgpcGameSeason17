@@ -23,6 +23,7 @@ public class ToyBuilder : MonoBehaviour
     Quaternion deriv;
 
     public List<GameObject> objectsInStation;
+    public GameObject heldStationObjHolder;
     public GameObject stationObjsContainer;
     public GameObject objectsBeingUsedParent;
     public GameObject trueParent;
@@ -85,7 +86,7 @@ public class ToyBuilder : MonoBehaviour
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(1));
                     mainParent.transform.rotation = resetRot;
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(0));
-                    mainParent.transform.Rotate(0, Input.GetAxis("Mouse X"), 0 * Time.deltaTime * rotSpeed);
+                    mainParent.transform.Rotate(0, Input.GetAxis("Mouse X") * -1, 0 * Time.deltaTime * rotSpeed);
                 }
                 else
                 {
@@ -106,6 +107,31 @@ public class ToyBuilder : MonoBehaviour
                     mainParent.transform.rotation = stationCamRig.transform.rotation;
                     resetRot = stationCamRig.transform.rotation;
                     trueParent.transform.SetParent(mainParent.transform);
+                }
+            }
+            else if (tinkering)//moving the item around the scene
+            {
+                if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(stationCam.transform.position, stationCam.transform.forward, out hit, 3.5f))
+                    {
+                        heldStationObjHolder.transform.GetChild(0).position = hit.point;
+                        Collider[] coll;
+                        BoxCollider boxColl;
+                        coll = hit.collider.gameObject.GetComponents<Collider>();
+
+                        if (coll.Length == 1) // sets the box collider of the object that we use for storing
+                        {
+                            boxColl = (BoxCollider)coll[0];
+                        }
+                        else
+                        {
+                            boxColl = (BoxCollider)coll[coll.Length - 1];
+                        }
+
+                        //heldStationObjHolder.transform.GetChild(1).
+                    }
                 }
             }
         }

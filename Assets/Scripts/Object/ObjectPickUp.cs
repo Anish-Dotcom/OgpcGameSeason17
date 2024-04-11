@@ -41,7 +41,6 @@ public class ObjectPickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
         Debug.DrawRay(fpsCam.position, fpsCam.forward*pickUpRange);
         if(!equipped && lookingAtCheck.lookingAt[myInfoIndex]) // checks whether its an object to be picked up
         {
