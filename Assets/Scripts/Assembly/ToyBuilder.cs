@@ -27,6 +27,9 @@ public class ToyBuilder : MonoBehaviour
     public GameObject stationObjsContainer;
     public GameObject objectsBeingUsedParent;
     public GameObject trueParent;
+    public RectTransform crosshairRectTransform;
+
+    private GameObject tinkeringObj;
 
     public bool inBuildMode;
     public bool tinkering;//moving an object
@@ -113,26 +116,28 @@ public class ToyBuilder : MonoBehaviour
             {
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
-                    RaycastHit hit;
-                    if (Physics.Raycast(stationCam.transform.position, stationCam.transform.forward, out hit, 3.5f))
-                    {
-                        heldStationObjHolder.transform.GetChild(0).position = hit.point;
-                        Collider[] coll;
-                        BoxCollider boxColl;
-                        coll = hit.collider.gameObject.GetComponents<Collider>();
+                    crosshairRectTransform.position = Input.mousePosition;
 
-                        if (coll.Length == 1) // sets the box collider of the object that we use for storing
-                        {
-                            boxColl = (BoxCollider)coll[0];
-                        }
-                        else
-                        {
-                            boxColl = (BoxCollider)coll[coll.Length - 1];
-                        }
+                    RaycastHit hit;
+                    if (Physics.Raycast(stationCam.transform.position, stationCam.transform.forward, out hit, 3.5f))//need to make so it only hits certain things
+                    {
+                        heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
+
+                        Quaternion Rotat = Quaternion.FromToRotation(tinkeringObj.GetComponent<attachInfo>().directionPointAims, -hit.normal);//rotation required to get from current to facing into the object from the connect point
+                        tinkeringObj.transform.rotation = Rotat;
+
+                        //then compare position and move
+                        tinkeringObj.transform.position = hit.point - (tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position - tinkeringObj.transform.position);//sets the postition to where the attach point will be at the hit point, facing into the mesh
+
+                        Debug.DrawRay(hit.point, hit.normal);
 
                         //heldStationObjHolder.transform.GetChild(1).
                     }
                 }
+            }
+            else if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)//moving the crosshair
+            {
+                crosshairRectTransform.position = Input.mousePosition;//move the crosshair around the screen
             }
         }
         else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
@@ -231,9 +236,15 @@ public class ToyBuilder : MonoBehaviour
     }
     public void ExitBuildMode()
     {
+        crosshairRectTransform.position = Vector2.zero;
         velocity = Vector3.zero;
         deriv = Quaternion.identity;
         movingTo = false;
         movingCam = true;
+    }
+    public void BeginTinkering(GameObject TinkeringObj)
+    {
+        tinkering = true;
+        tinkeringObj = TinkeringObj;
     }
 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class attachInfo : MonoBehaviour
 {
-    public Vector3 attachPoint;//the location where the object connects to toy
+    public GameObject attachPoint;//the location where the object connects to toy
     public Vector3 directionPointAims;
 
     private void Start()
     {
-        Debug.DrawRay(attachPoint, directionPointAims, Color.white, 5f);
+        Debug.DrawRay(attachPoint.transform.position, directionPointAims, Color.white, 5f);
     }
 }
