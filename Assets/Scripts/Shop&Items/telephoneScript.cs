@@ -12,6 +12,7 @@ public class telephoneScript : MonoBehaviour
     public GameObject telephone; // this is the telephone object. in scene this is "telephone (1)" this is used to remove that object when picking up the telephone to make it look like you actually picked up the telephone
     public GameObject telephoneOutline; // since the outline of the telephone is a seperate object, i used this game object to set active false as well
     public GameObject telephoneUI; // this is the canvas ui menu that pops up when you open the telephone
+    public GameObject telephoneImage;
 
     public GameObject callShopButton; // i have this button as a gameobject so i can set it active false whenever you open up the shop
     public GameObject shopUI; // this is the canvas ui menu that pops up when you open the shop
@@ -56,6 +57,7 @@ public class telephoneScript : MonoBehaviour
         telephone.SetActive(true);
         telephoneOutline.SetActive(true);
         menuController.closeMenu(telephoneUI);
+        telephoneImage.SetActive(false);
     }
 
     public void CallShopButton()
@@ -120,6 +122,7 @@ public class telephoneScript : MonoBehaviour
                 telephoneOutline.SetActive(false);
 
                 menuController.openMenu(telephoneUI);
+                telephoneImage.SetActive(true);
                 callShopButton.SetActive(true);
                 telephoneIsOpen = true;
             }
@@ -132,6 +135,7 @@ public class telephoneScript : MonoBehaviour
                 callButton.interactable = true;
                 menuController.closeMenu(shopUI);
                 menuController.closeMenu(telephoneUI);
+                telephoneImage.SetActive(false);
                 telephoneIsOpen = false;
                 telephone.SetActive(true);
                 telephoneOutline.SetActive(true);

@@ -201,10 +201,8 @@ public class ItemsInShop : MonoBehaviour
             {
                 for(int i = 0; i < item.currentItemQuantity; i++)
                 {
-                    GameObject newItemObject = Instantiate(item.itemObject, Vector3.zero, Quaternion.identity, box.transform);
-                    newItemObject.transform.position = box.transform.position;
-                    newItemObject.GetComponent<Rigidbody>().isKinematic = true;
-                    ChangeColliderTrigger(newItemObject, true);
+                    BoxScript boxScript = box.GetComponent<BoxScript>();
+                    boxScript.itemsContained.Add(item);
                 }
                 item.currentItemQuantity = 0;
             }

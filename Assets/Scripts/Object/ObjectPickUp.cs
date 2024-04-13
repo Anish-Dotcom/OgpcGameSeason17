@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ObjectPickUp : MonoBehaviour
 {
@@ -24,15 +26,30 @@ public class ObjectPickUp : MonoBehaviour
 
     private Vector3 originalScale;
 
-    private GameObject currentObject;
+    public GameObject currentObject;
 
     public LayerMask mask;
 
      PlayerInputs playerInputs;
 
+    // box stuff that i need here so i can access for all the instantiated boxes
+    public Transform prefabButtonParent;
+    public ObjectPickUp objectPickUpScript;
+    public TMP_Text Name;
+    public GameObject boxUI;
+    public static Transform prefabButtonParentStatic;
+    public static ObjectPickUp objectPickUpScriptStatic;
+    public static TMP_Text NameStatic;
+    public static GameObject boxUIStatic;
+
     // Start is called before the first frame update
     void Start()
     {
+        prefabButtonParentStatic = prefabButtonParent;
+        objectPickUpScriptStatic = objectPickUpScript;
+        NameStatic = Name;
+        boxUIStatic = boxUI;
+
         mask = LayerMask.GetMask("Pickupable");
         playerInputs = new PlayerInputs();
         playerInputs.Enable();
@@ -91,7 +108,7 @@ public class ObjectPickUp : MonoBehaviour
         }
     }
 
-    private void PickUp(GameObject item) // pick up function
+    public void PickUp(GameObject item) // pick up function
     {
         rb = item.GetComponent<Rigidbody>();
         coll = item.GetComponents<Collider>();
@@ -124,7 +141,7 @@ public class ObjectPickUp : MonoBehaviour
         }
     }
 
-    private void Drop(GameObject item) // drop item function
+    public void Drop(GameObject item) // drop item function
     {
         item.gameObject.layer = 6;
 

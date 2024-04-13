@@ -50,8 +50,8 @@ public class BuildModeUI : MonoBehaviour
         prefabButtons.Add(button);
 
         Transform buttonTransform = button.transform;
-        //Image itemImage = buttonTransform.GetChild(1).GetComponent<Image>();
-        //Button mainButton = buttonTransform.GetChild(4).GetComponent<Button>();
+        //Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
+        //Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
 
         //itemImage.sprite = items[i].itemImage;
 
@@ -67,7 +67,6 @@ public class BuildModeUI : MonoBehaviour
 
     public void ScrollLeftFunction()
     {
-        Debug.Log("left pressed");
         HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
         layout.padding.left += 165;
         LayoutRebuilder.ForceRebuildLayoutImmediate(Slots.GetComponent<RectTransform>());
@@ -79,7 +78,6 @@ public class BuildModeUI : MonoBehaviour
 
     public void ScrollRightFunction()
     {
-        Debug.Log("right pressed");
         ScrollLeft.interactable = true;
         HorizontalLayoutGroup layout = Slots.GetComponent<HorizontalLayoutGroup>();
         layout.padding.left -= 165;
