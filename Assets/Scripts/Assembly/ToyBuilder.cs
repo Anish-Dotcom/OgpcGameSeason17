@@ -24,6 +24,7 @@ public class ToyBuilder : MonoBehaviour
     Quaternion deriv;
 
     public List<GameObject> objectsInStation;
+    public GameObject disabledStationObjsHolder;
     public GameObject heldStationObjHolder;
     public GameObject stationObjsContainer;
     public GameObject objectsBeingUsedParent;
@@ -247,6 +248,7 @@ public class ToyBuilder : MonoBehaviour
         if (trueParent.transform.childCount > 0)
         {
             objectsInStation.Add(objToAdd);
+            objToAdd.transform.SetParent(disabledStationObjsHolder.transform);
         }
         else
         {
