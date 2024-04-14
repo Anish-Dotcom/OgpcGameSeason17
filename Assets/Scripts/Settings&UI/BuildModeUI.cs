@@ -8,7 +8,6 @@ public class BuildModeItem
 {
     public string itemName; // just so its easier to view in inspector
     public Sprite itemImage;
-    public GameObject itemObject;
 }
 
 public class BuildModeUI : MonoBehaviour
@@ -21,10 +20,12 @@ public class BuildModeUI : MonoBehaviour
     public Button ScrollLeft;
     public Button ScrollRight;
 
+    int index = -1;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        index = -1;
     }
 
     // Update is called once per frame
@@ -48,18 +49,20 @@ public class BuildModeUI : MonoBehaviour
 
                 itemImage.sprite = items[i].itemImage;
 
-                int index = i; // Capturing the correct index for whats below
-                mainButton.onClick.AddListener(() => AddItemToBuild(index));
+                index++; // Capturing the correct index for whats below
+                mainButton.onClick.AddListener(() => AddItemToBuild(index, item));
             }
         }
     }
 
-    void AddItemToBuild(int index) // whatever you want to happen when the item is pressed
+    void AddItemToBuild(int index, GameObject itemToAdd) // whatever you want to happen when the item is pressed
     {
+        Debug.Log("pressed");
+
         Destroy(prefabButtons[index]); // removes it from the hotbar
         prefabButtons.RemoveAt(index);
 
-        // this is where you should be instantiating the item onto the table
+        // this is where you should be instantiating the itemToAdd onto the table                         <------------   BRADY WORK HERE
     }
 
     public void ScrollLeftFunction()

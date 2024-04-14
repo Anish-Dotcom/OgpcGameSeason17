@@ -49,6 +49,8 @@ public class ToyBuilder : MonoBehaviour
 
     private Quaternion resetRot;
 
+    public BuildModeUI buildUiScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -249,6 +251,7 @@ public class ToyBuilder : MonoBehaviour
         {
             objectsInStation.Add(objToAdd);
             objToAdd.transform.SetParent(disabledStationObjsHolder.transform);
+            buildUiScript.addButtons(objToAdd);
         }
         else
         {
