@@ -251,6 +251,7 @@ public class ToyBuilder : MonoBehaviour
         {
             objectsInStation.Add(objToAdd);
             objToAdd.transform.SetParent(disabledStationObjsHolder.transform);
+            objToAdd.SetActive(false);
             buildUiScript.addButtons(objToAdd);
         }
         else
