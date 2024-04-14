@@ -46,7 +46,6 @@ public class MenuController : MonoBehaviour
             {
                 blur.SetActive(false);
             }
-            Cursor.lockState = CursorLockMode.None;
             if (showMouseT)
             {
                 Cursor.visible = true;
@@ -102,6 +101,7 @@ public class MenuController : MonoBehaviour
     // Open a menu. Closes all other menus.
     public void openMenu(GameObject menuObject)
     {
+        Cursor.lockState = CursorLockMode.None;
         blurActive = true;
         showMouseT = true;
         GameObject menuToOpen = menuObject;

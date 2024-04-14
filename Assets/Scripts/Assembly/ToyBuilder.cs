@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ToyBuilder : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class ToyBuilder : MonoBehaviour
 
     public RectTransform crosshairRectTransform;
     private Vector3 crosshairRectPrev;
+    private Vector3 crosshairRectPiv;
     public GameObject stationMenu;
     public MenuController menuCon;
 
@@ -88,6 +90,11 @@ public class ToyBuilder : MonoBehaviour
             GameObject mainParent = objectsBeingUsedParent.transform.GetChild(0).gameObject;
             if (Input.GetKey(KeyCode.Mouse0) && trueParent.transform.childCount > 0)//rotating the toy
             {
+                if (Cursor.lockState == CursorLockMode.None)
+                {
+                    crosshairRectPiv = crosshairRectTransform.position;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
                 if (Mathf.Abs(Input.GetAxis("Mouse X")) > Mathf.Abs(Input.GetAxis("Mouse Y")))
                 {
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(1));
@@ -105,6 +112,12 @@ public class ToyBuilder : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.Mouse2))//rotating the camera
             {
+                if (Cursor.lockState == CursorLockMode.None)
+                {
+                    crosshairRectPiv = crosshairRectTransform.position;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
                     float horiInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
@@ -120,7 +133,16 @@ public class ToyBuilder : MonoBehaviour
             {
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
-                    crosshairRectTransform.position = Input.mousePosition;
+                    if (Cursor.lockState != CursorLockMode.None)
+                    {
+                        crosshairRectTransform.position = crosshairRectPiv;
+                        Cursor.lockState = CursorLockMode.None;
+                        Mouse.current.WarpCursorPosition(new Vector2(crosshairRectTransform.position.x, crosshairRectTransform.position.y));
+                    }
+                    else
+                    {
+                        crosshairRectTransform.position = Input.mousePosition; //move the crosshair around the screen
+                    }
 
                     RaycastHit hit;
                     if (Physics.Raycast(stationCam.transform.position, stationCam.transform.forward, out hit, 3.5f))//need to make so it only hits certain things
@@ -141,7 +163,16 @@ public class ToyBuilder : MonoBehaviour
             }
             else if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)//moving the crosshair
             {
-                crosshairRectTransform.position = Input.mousePosition; //move the crosshair around the screen
+                if (Cursor.lockState != CursorLockMode.None)
+                {
+                    crosshairRectTransform.position = crosshairRectPiv;
+                    Cursor.lockState = CursorLockMode.None;
+                    Mouse.current.WarpCursorPosition(new Vector2(crosshairRectTransform.position.x, crosshairRectTransform.position.y));
+                }
+                else
+                {
+                    crosshairRectTransform.position = Input.mousePosition; //move the crosshair around the screen
+                }
             }
         }
         else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
