@@ -24,45 +24,42 @@ public class BuildModeUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < items.Count; i++) // this was only for testing, delete this when you actually finish the system
-        {
-            addButtons(i);
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if (GameObject addedItem) { // item is added to the build
-            for (int i = 0; i < items.Count; i++)
-            {
-                if(addedItem.name.Contains(items[i].itemName))
-                {
-                    addButtons(i);
-                }
-            }
-        }*/
+        
     }
 
-    public void addButtons(int i)
+    public void addButtons(GameObject item)
     {
-        GameObject button = Instantiate(prefabButton, prefabButtonParent);
-        prefabButtons.Add(button);
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (item.name.Contains(items[i].itemName))
+            {
+                GameObject button = Instantiate(prefabButton, prefabButtonParent);
+                prefabButtons.Add(button);
 
-        Transform buttonTransform = button.transform;
-        //Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
-        //Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
+                Transform buttonTransform = button.transform;
+                Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
+                Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
 
-        //itemImage.sprite = items[i].itemImage;
+                itemImage.sprite = items[i].itemImage;
 
-        int index = i; // Capturing the correct index for whats below
-        //mainButton.onClick.AddListener(() => AddItemToBuild(index));
+                int index = i; // Capturing the correct index for whats below
+                mainButton.onClick.AddListener(() => AddItemToBuild(index));
+            }
+        }
     }
 
     void AddItemToBuild(int index) // whatever you want to happen when the item is pressed
     {
         Destroy(prefabButtons[index]); // removes it from the hotbar
         prefabButtons.RemoveAt(index);
+
+        // this is where you should be instantiating the item onto the table
     }
 
     public void ScrollLeftFunction()
