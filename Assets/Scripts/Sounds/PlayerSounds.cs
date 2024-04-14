@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class PlayerSounds : MonoBehaviour
 {
-    public AudioSource footsteps;
+    public AudioClip[] footsteps; 
+
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void Update()
     {
-        if (transform.hasChanged) {
-            footsteps.enabled = true;
-        }
-        else
-        {
-            footsteps.enabled = false;
-        }
     }
+
+    public void PlayFootstep()
+    {
+        AudioClip footstepSound = footsteps[Random.Range(0, footsteps.Length)];
+        audioSource.PlayOneShot(footstepSound);
+    }
+
 }
