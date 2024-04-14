@@ -27,7 +27,11 @@ public class ToyBuilder : MonoBehaviour
     public GameObject stationObjsContainer;
     public GameObject objectsBeingUsedParent;
     public GameObject trueParent;
+
     public RectTransform crosshairRectTransform;
+    private Vector3 crosshairRectPrev;
+    public GameObject stationMenu;
+    public MenuController menuCon;
 
     private GameObject tinkeringObj;
 
@@ -55,7 +59,7 @@ public class ToyBuilder : MonoBehaviour
     {
         if (inBuildMode)
         {
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape))
             {
                 ExitBuildMode();
             }
@@ -137,7 +141,7 @@ public class ToyBuilder : MonoBehaviour
             }
             else if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)//moving the crosshair
             {
-                crosshairRectTransform.position = Input.mousePosition;//move the crosshair around the screen
+                crosshairRectTransform.position = Input.mousePosition; //move the crosshair around the screen
             }
         }
         else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
@@ -195,6 +199,7 @@ public class ToyBuilder : MonoBehaviour
                 }
                 if (timeMovingCam > 1)
                 {
+                    raycastCon.ReopenPopups();
                     playerMove.isControllable = true;
                     playerCam.SetActive(true);
                     stationCam.SetActive(false);
@@ -202,7 +207,6 @@ public class ToyBuilder : MonoBehaviour
                     stationCam.transform.rotation = stationCam.transform.rotation;
                     movingCam = false;
                     timeMovingCam = 0;
-                    inBuildMode = false;
                 }
             }
         }
@@ -222,12 +226,14 @@ public class ToyBuilder : MonoBehaviour
     }
     public void EnterBuildMode()
     {
+        crosshairRectPrev = crosshairRectTransform.position;
+        menuCon.openMenu(stationMenu, false, true, crosshairRectTransform.gameObject, false);
         velocity = Vector3.zero;
         deriv = Quaternion.identity;
         playerMove.isControllable = false;
         playerCam.SetActive(false);
         stationCam.SetActive(true);
-        raycastCon.ClosePopups(-1);
+        raycastCon.ClosePopups(-1, true);
 
         stationCam.transform.rotation = playerCam.transform.rotation;
         stationCam.transform.position = playerCam.transform.position;
@@ -236,7 +242,9 @@ public class ToyBuilder : MonoBehaviour
     }
     public void ExitBuildMode()
     {
-        crosshairRectTransform.position = Vector2.zero;
+        inBuildMode = false;
+        crosshairRectTransform.position = crosshairRectPrev;
+        menuCon.closeMenu(stationMenu);
         velocity = Vector3.zero;
         deriv = Quaternion.identity;
         movingTo = false;

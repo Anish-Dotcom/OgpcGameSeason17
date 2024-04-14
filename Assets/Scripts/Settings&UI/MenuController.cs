@@ -11,6 +11,8 @@ public class MenuController : MonoBehaviour
     public List<GameObject> openPopups;
     public bool menuOpen = false;
     public GameObject blur;
+    private bool blurActive;
+    private bool showMouseT;
 
     // special function variables:
     public GameObject EscapeMenu;
@@ -36,9 +38,24 @@ public class MenuController : MonoBehaviour
     {
         if (menuOpen)
         {
-            blur.SetActive(true);
+            if (blurActive)
+            {
+                blur.SetActive(true);
+            }
+            else
+            {
+                blur.SetActive(false);
+            }
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (showMouseT)
+            {
+                Cursor.visible = true;
+            }
+            else
+            {
+
+                Cursor.visible = false;
+            }
             playerMove.isControllable = false;
             foreach (GameObject popup in openPopups)
             {
@@ -85,6 +102,8 @@ public class MenuController : MonoBehaviour
     // Open a menu. Closes all other menus.
     public void openMenu(GameObject menuObject)
     {
+        blurActive = true;
+        showMouseT = true;
         GameObject menuToOpen = menuObject;
         // hided all menus
         foreach (GameObject menu in openMenus)
@@ -98,6 +117,33 @@ public class MenuController : MonoBehaviour
         // update menu stack
         openMenus.Insert(0, menuToOpen);
     }
+    // Overload method to open a menu without blur, show crosshair, and show mouse. Closes all other menus.
+    public void openMenu(GameObject menuObject, bool blur, bool showCrosshair, GameObject crosshair, bool showMouse)
+    {
+        if (showCrosshair == false)
+        {
+            crosshair.SetActive(false);
+        }
+        else
+        {
+            crosshair.SetActive(true);
+        }
+        showMouseT = showMouse;
+        blurActive = blur;
+        GameObject menuToOpen = menuObject;
+        // hided all menus
+        foreach (GameObject menu in openMenus)
+        {
+            menu.SetActive(false);
+
+        }
+        // show specific menu
+        menuToOpen.SetActive(true);
+        menuOpen = true;
+        // update menu stack
+        openMenus.Insert(0, menuToOpen);
+    }
+
     // Closes the top menu in the stack. This is the menu that the user is currently viewing
     public void closeTopMenu()
     {

@@ -7,6 +7,7 @@ public class RaycastCon : MonoBehaviour
     public GameObject[] colliderObjs;//colliders raycast can hit with
     public GameObject[] colliderNonheldObjs;//colliders raycast can hit that dont require a held obj check
     public GameObject[] popups;//all pop ups
+    public List<GameObject> popupsStored;//popups that are stored after closing all popups (open a menu) so you can re-open them when you close a menu
     public LayerMask pickupMask;
 
     public GameObject playerCam;
@@ -136,6 +137,44 @@ public class RaycastCon : MonoBehaviour
                 menuController.closePopup(popups[j]);
             }
         }
+    }
+    public void ClosePopups(int minus, bool storePopups)
+    {
+        if (minus > -1)
+        {
+            for (int j = 0; j < popups.Length; j++)
+            {
+                if (j != minus)
+                {
+                    menuController.closePopup(popups[j]);//set all popups to inactive
+                }
+            }
+        }
+        else
+        {
+            if (storePopups)
+            {
+                for (int j = 0; j < popups.Length; j++)
+                {
+                    if (popups[j] != null)
+                    {
+                        if (popups[j].activeInHierarchy)
+                        {
+                            popupsStored.Add(popups[j]);
+                        }
+                    }
+                    menuController.closePopup(popups[j]);
+                }
+            }
+        }
+    }
+    public void ReopenPopups()
+    {
+        for (int i = 0; popupsStored.Count > i; i++)
+        {
+            menuController.openPopup(popupsStored[i]);
+        }
+        popupsStored.Clear();
     }
     public void colliderObjsCheck(RaycastHit hit)
     {
