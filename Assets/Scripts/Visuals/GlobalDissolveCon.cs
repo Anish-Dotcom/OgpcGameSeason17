@@ -14,6 +14,7 @@ public class GlobalDissolveCon : MonoBehaviour
 
     public bool[] consAdded;
     public DissolveController[] areas;// mainroom = 0, void = 1
+    public int inArea;
     public List<DissolveController> updatingAreas;
     public footStepCon footStepCon;
     public Material boxMat;
@@ -174,7 +175,6 @@ public class GlobalDissolveCon : MonoBehaviour
     {
         for (int i = 0; i < areas.Length; i++)
         {
-            int inArea = 0;
             float distance = (Vector3.Distance(areas[i].centralPos, player.transform.position));
             if (distance < areas[i].size[1])//smaller area
             {
