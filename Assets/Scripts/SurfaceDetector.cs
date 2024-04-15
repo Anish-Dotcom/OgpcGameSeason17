@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class SurfaceDetector : MonoBehaviour
 {
-    public LayerMask groundLayer; // Layer mask to filter which objects should be considered as ground
-    public float minMoveSpeed = 0.1f; // Minimum movement speed to trigger footstep sounds
-    public float footstepCooldown = 0.5f; // Cooldown duration between footstep sounds
+    public float minMoveSpeed = 0.1f; 
+    public float footstepCooldown = 0.5f; 
 
     private PlayerSounds playerSounds;
     private Rigidbody rb;
     private bool canPlayFootstep = true;
+    public GlobalDissolveCon GlobalDissolveCon;
 
     private void Start()
     {
@@ -26,15 +26,12 @@ public class SurfaceDetector : MonoBehaviour
 
     private void DetectSurface()
     {
-        RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 10.0f, groundLayer))
+        if (GlobalDissolveCon.inArea == 1)
         {
 
-            Debug.Log("goat1");
             if (canPlayFootstep)
             {
-                Debug.Log("goat");
                 playerSounds.PlayFootstep();
                 canPlayFootstep = false;
                 Invoke("ResetFootstepCooldown", footstepCooldown);
