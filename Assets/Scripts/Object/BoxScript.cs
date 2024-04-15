@@ -15,12 +15,14 @@ public class BoxScript : MonoBehaviour
 
     public GameObject prefabButton; // the button for each item; same as build mode uis buttons cause they have everything i need
     public Transform prefabButtonParent;
-    private List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
+    public List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
 
     public ObjectPickUp objectPickUpScript;
     public TMP_Text Name;
 
     public GameObject boxUI;
+
+    public int index;
 
     // Start is called before the first frame update
     void Start()
@@ -115,5 +117,33 @@ public class BoxScript : MonoBehaviour
         Destroy(prefabButtons[index]); // removes it from the hotbar
         prefabButtons.RemoveAt(index);
         itemsContained.RemoveAt(index);
+
+        UpdateButtons();
+    }
+
+    public void UpdateButtons()
+    {
+        int count = prefabButtons.Count;
+        for (int i = 0; i < count; i++)
+        {
+            Destroy(prefabButtons[0]); // removes it from the hotbar
+            prefabButtons.RemoveAt(0);
+        }
+
+        for (int i = 0; i < itemsContained.Count; i++)
+        {
+            GameObject button = Instantiate(prefabButton, prefabButtonParent);
+            prefabButtons.Add(button);
+
+            Transform buttonTransform = button.transform;
+            Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
+            Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
+
+            itemImage.sprite = itemsContained[i].itemImage;
+
+            int index = i; // Capturing the correct index for whats below
+            Debug.Log(index);
+            mainButton.onClick.AddListener(() => ObtainItem(index));
+        }
     }
 }
