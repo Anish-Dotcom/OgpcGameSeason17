@@ -120,6 +120,10 @@ public class MenuController : MonoBehaviour
     // Overload method to open a menu without blur, show crosshair, and show mouse. Closes all other menus.
     public void openMenu(GameObject menuObject, bool blur, bool showCrosshair, GameObject crosshair, bool showMouse)
     {
+        if (showMouse)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
         if (showCrosshair == false)
         {
             crosshair.SetActive(false);
