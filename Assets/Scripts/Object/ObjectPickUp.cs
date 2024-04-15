@@ -18,6 +18,8 @@ public class ObjectPickUp : MonoBehaviour
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
 
+    public GameObject objController;
+    
     public static bool equipped;
     public static bool slotFull;
 
@@ -30,7 +32,11 @@ public class ObjectPickUp : MonoBehaviour
 
     public LayerMask mask;
 
-     PlayerInputs playerInputs;
+    public GameObject Burn;
+
+    public bool FireInRange = false;
+
+    PlayerInputs playerInputs;
 
     // box stuff that i need here so i can access for all the instantiated boxes
     public Transform prefabButtonParent;
@@ -41,6 +47,8 @@ public class ObjectPickUp : MonoBehaviour
     public static ObjectPickUp objectPickUpScriptStatic;
     public static TMP_Text NameStatic;
     public static GameObject boxUIStatic;
+
+    public GameObject box;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +66,16 @@ public class ObjectPickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.E) && FireInRange)
+        {
+            if (objController.transform.GetChild(0).gameObject != null)
+            {
+                box = objController.transform.GetChild(0).gameObject;
+                Drop(box);
+                Destroy(box);
+            }
+
+        }
         Debug.DrawRay(fpsCam.position, fpsCam.forward*pickUpRange);
         if(!equipped && lookingAtCheck.lookingAt[myInfoIndex]) // checks whether its an object to be picked up
         {
@@ -106,6 +124,7 @@ public class ObjectPickUp : MonoBehaviour
                 }
             }
         }
+
     }
 
     public void PickUp(GameObject item) // pick up function
@@ -161,5 +180,22 @@ public class ObjectPickUp : MonoBehaviour
 
         rb.AddForce(fpsCam.forward * dropForwardForce, ForceMode.Impulse); // throws the object forward when dropped
         rb.AddForce(fpsCam.up * dropUpwardForce, ForceMode.Impulse);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "FireInRange")
+        {
+            FireInRange = true;
+            Burn.SetActive(true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "FireInRange")
+        {
+            FireInRange = false;
+            Burn.SetActive(false);
+        }
     }
 }
