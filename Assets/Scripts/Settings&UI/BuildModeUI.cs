@@ -48,7 +48,8 @@ public class BuildModeUI : MonoBehaviour
                 Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
 
                 itemImage.sprite = items[i].itemImage;
-                index = prefabButtons.Count - 1;
+
+                index++; // Capturing the correct index for whats below
                 mainButton.onClick.AddListener(() => AddItemToBuild(index, item));
             }
         }
