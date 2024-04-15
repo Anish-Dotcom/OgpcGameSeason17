@@ -20,12 +20,12 @@ public class BuildModeUI : MonoBehaviour
     public Button ScrollLeft;
     public Button ScrollRight;
 
-    int index = -1;
+    public int index = -1;
 
     // Start is called before the first frame update
     void Start()
     {
-        index = -1;
+
     }
 
     // Update is called once per frame
