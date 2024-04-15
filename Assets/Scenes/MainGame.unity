@@ -923,7 +923,7 @@ MonoBehaviour:
   stationObjsContainer: {fileID: 979834264}
   objectsBeingUsedParent: {fileID: 134215122}
   trueParent: {fileID: 377019134}
-  crosshairOutisde: {fileID: 684875003}
+  crosshairRectTransform: {fileID: 684875004}
   stationMenu: {fileID: 383465568}
   menuCon: {fileID: 312775338}
   inBuildMode: 0
