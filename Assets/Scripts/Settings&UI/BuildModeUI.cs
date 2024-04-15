@@ -15,23 +15,25 @@ public class BuildModeUI : MonoBehaviour
     public List<BuildModeItem> items = new List<BuildModeItem>();
     public GameObject prefabButton; // the button for each item
     public Transform prefabButtonParent;
-    private List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
+    public List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
     public GameObject Slots;
     public Button ScrollLeft;
     public Button ScrollRight;
 
-    int index = -1;
+    public ToyBuilder toyBuilder;
+
+    public int index = -1;
 
     // Start is called before the first frame update
     void Start()
     {
-        index = -1;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void addButtons(GameObject item)
@@ -48,8 +50,7 @@ public class BuildModeUI : MonoBehaviour
                 Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
 
                 itemImage.sprite = items[i].itemImage;
-
-                index++; // Capturing the correct index for whats below
+                index = prefabButtons.Count - 1;
                 mainButton.onClick.AddListener(() => AddItemToBuild(index, item));
             }
         }
@@ -57,11 +58,9 @@ public class BuildModeUI : MonoBehaviour
 
     void AddItemToBuild(int index, GameObject itemToAdd) // whatever you want to happen when the item is pressed
     {
-        Debug.Log("pressed");
-
-        Destroy(prefabButtons[index]); // removes it from the hotbar
-        prefabButtons.RemoveAt(index);
-
+        //Debug.Log("pressed");
+        itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
+        toyBuilder.indexer = index;
         // this is where you should be instantiating the itemToAdd onto the table                         <------------   BRADY WORK HERE
     }
 

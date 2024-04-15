@@ -33,6 +33,8 @@ public class ToyBuilder : MonoBehaviour
     public GameObject crosshairOutisde;
     public GameObject stationMenu;
     public MenuController menuCon;
+    public BuildModeUI buildModeUi;
+    public int indexer;
 
     private GameObject tinkeringObj;
 
@@ -46,8 +48,6 @@ public class ToyBuilder : MonoBehaviour
     public float rotSpeed = 50;
 
     private Quaternion resetRot;
-
-    public BuildModeUI buildUiScript;
 
     // Start is called before the first frame update
     void Start()
@@ -216,7 +216,7 @@ public class ToyBuilder : MonoBehaviour
             objectsInStation.Add(objToAdd);
             objToAdd.transform.SetParent(disabledStationObjsHolder.transform);
             objToAdd.SetActive(false);
-            buildUiScript.addButtons(objToAdd);
+            buildModeUi.addButtons(objToAdd);
         }
         else
         {
@@ -242,6 +242,11 @@ public class ToyBuilder : MonoBehaviour
     }
     public void ExitBuildMode()
     {
+        if (tinkering)
+        {
+            tinkering = false;
+            heldStationObjHolder.transform.GetChild(0).SetParent(disabledStationObjsHolder.transform);
+        }
         crosshairOutisde.SetActive(true);
         inBuildMode = false;
         menuCon.closeMenu(stationMenu);
@@ -255,5 +260,13 @@ public class ToyBuilder : MonoBehaviour
         tinkering = true;
         tinkeringObj = TinkeringObj;
 
+    }
+    public void LockInPosition()
+    {
+        GameObject LockInObj = heldStationObjHolder.transform.GetChild(0).gameObject;
+        Destroy(buildModeUi.prefabButtons[indexer]); // removes it from the hotbar
+        buildModeUi.prefabButtons.RemoveAt(indexer);
+        LockInObj.transform.SetParent(trueParent.transform);
+        tinkering = false;
     }
 }

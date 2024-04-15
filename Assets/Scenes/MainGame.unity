@@ -923,9 +923,11 @@ MonoBehaviour:
   stationObjsContainer: {fileID: 979834264}
   objectsBeingUsedParent: {fileID: 134215122}
   trueParent: {fileID: 377019134}
-  crosshairOutisde: {fileID: 0}
+  crosshairOutisde: {fileID: 684875003}
   stationMenu: {fileID: 383465568}
   menuCon: {fileID: 312775338}
+  buildModeUi: {fileID: 383465570}
+  indexer: 0
   inBuildMode: 0
   tinkering: 0
   speed: 1
@@ -933,7 +935,6 @@ MonoBehaviour:
   clampBigDist: 3
   rotationSpeed: 80
   rotSpeed: 50
-  buildUiScript: {fileID: 383465570}
 --- !u!114 &62802928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3098,10 +3099,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256964325}
-  - component: {fileID: 256964327}
-  - component: {fileID: 256964326}
   m_Layer: 0
-  m_Name: FirePlace + Burn Col
+  m_Name: FirePlace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3130,36 +3129,6 @@ Transform:
   m_Father: {fileID: 1803306573}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &256964326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256964324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 491fabc3167fe8a4d94aa97c3f1896c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePrefabs:
-  - {fileID: 2838099217370329052, guid: 9d32754edc42e2b45ac5ddc44b97aedd, type: 3}
-  - {fileID: 2017793540360973455, guid: b5f30b9a7115c5b42b5d54575c6596a3, type: 3}
-  fireCanvas: {fileID: 6754673993306331859, guid: 75ed557e926c89144bbe0b3bbe0ad633,
-    type: 3}
---- !u!65 &256964327
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256964324}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.2, z: 0.7}
-  m_Center: {x: -0.43, y: 0.8, z: -4.6}
 --- !u!224 &266500561 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4899047714556814425, guid: 98775c76d883c0740b15eb27dcad13fc,
@@ -4479,9 +4448,12 @@ MonoBehaviour:
   prefabButton: {fileID: 3637020861681847150, guid: bc65c02aced226d4f99e5f025d038c9b,
     type: 3}
   prefabButtonParent: {fileID: 927510017}
+  prefabButtons: []
   Slots: {fileID: 927510016}
   ScrollLeft: {fileID: 593331407}
   ScrollRight: {fileID: 1683369648}
+  toyBuilder: {fileID: 62802927}
+  index: -1
 --- !u!1001 &387527946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14991,19 +14963,20 @@ MonoBehaviour:
   pickUpRange: 3
   dropForwardForce: 2
   dropUpwardForce: 1
-  objController: {fileID: 146505513}
+  objController: {fileID: 0}
   interact: {fileID: 1882544698}
   store: {fileID: 353880494}
   currentObject: {fileID: 0}
   mask:
     serializedVersion: 2
     m_Bits: 0
-  Burn: {fileID: 189712333}
+  Burn: {fileID: 0}
   FireInRange: 0
   prefabButtonParent: {fileID: 1771016288}
   objectPickUpScript: {fileID: 1146929043}
   Name: {fileID: 1034013827}
   boxUI: {fileID: 1683330622}
+  box: {fileID: 0}
 --- !u!114 &1146929044
 MonoBehaviour:
   m_ObjectHideFlags: 0
