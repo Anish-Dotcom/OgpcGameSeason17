@@ -186,6 +186,10 @@ public class GlobalDissolveCon : MonoBehaviour
                 inArea = 2;
                 //Debug.Log(inArea + " area " + i);
             }
+            else
+            {
+                inArea = -1;
+            }
 
             //Debug.Log(centerPos + " for area " + i);
             if (inArea == 1)//smaller area

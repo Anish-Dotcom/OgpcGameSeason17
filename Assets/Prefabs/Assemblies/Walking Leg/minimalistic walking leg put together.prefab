@@ -509,7 +509,8 @@ GameObject:
   - component: {fileID: 2736754407436634800}
   - component: {fileID: 9026182837247342899}
   - component: {fileID: 2461293057858582611}
-  m_Layer: 0
+  - component: {fileID: 4039354359332076935}
+  m_Layer: 6
   m_Name: minimalistic walking leg put together
   m_TagString: Finished Assembly
   m_Icon: {fileID: 0}
@@ -564,6 +565,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.39, z: 0.27}
   m_Center: {x: -0.002, y: -0.05, z: 0.067}
+--- !u!54 &4039354359332076935
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364530932811730954}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3653777565711459546
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +592,7 @@ GameObject:
   - component: {fileID: 4028286810531236873}
   - component: {fileID: 2500271099444974121}
   - component: {fileID: 6921311185516540457}
+  - component: {fileID: 165238582446260079}
   m_Layer: 0
   m_Name: foot top
   m_TagString: Untagged
@@ -649,6 +667,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &165238582446260079
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3653777565711459546}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8890039905954581776, guid: 390c3c23d43712b41a1914c4e34dd4ab, type: 3}
 --- !u!1 &4287819144724761095
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +860,7 @@ GameObject:
   - component: {fileID: 5971780642724689158}
   - component: {fileID: 2228717958290858831}
   - component: {fileID: 7567065378258076589}
+  - component: {fileID: 1430790630249583302}
   m_Layer: 0
   m_Name: foot
   m_TagString: Untagged
@@ -903,6 +936,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1430790630249583302
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5412857956508913595}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4261417502868088817, guid: 390c3c23d43712b41a1914c4e34dd4ab, type: 3}
 --- !u!1 &5882197186390501039
 GameObject:
   m_ObjectHideFlags: 0

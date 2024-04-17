@@ -18,6 +18,7 @@ TagManager:
   - finished Toy
   - childs Toy
   - FireInRange
+  - Central Assembly
   layers:
   - Default
   - TransparentFX
