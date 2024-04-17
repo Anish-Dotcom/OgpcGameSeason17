@@ -14974,6 +14974,7 @@ MonoBehaviour:
   Burn: {fileID: 189712333}
   FireInRange: 0
   prefabButtonParent: {fileID: 1771016288}
+  objectInstantiatedParent: {fileID: 14276944}
   objectPickUpScript: {fileID: 1146929043}
   Name: {fileID: 1034013827}
   boxUI: {fileID: 1683330622}
@@ -24786,7 +24787,7 @@ MonoBehaviour:
     decoratives: 0
     isForWindupToy: 1
     itemName: Gearbox
-    itemObject: {fileID: 1350222533596578875, guid: 36b9a366f8466e74b9ee28e56c7e4268,
+    itemObject: {fileID: 4995364190673618756, guid: 22fce205c609c0747a82b410e18d744d,
       type: 3}
     itemPrice: 1
     itemImage: {fileID: 21300000, guid: a3429d29539814c478250c4b2ef59a76, type: 3}

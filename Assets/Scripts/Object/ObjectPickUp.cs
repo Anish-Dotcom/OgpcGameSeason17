@@ -40,10 +40,12 @@ public class ObjectPickUp : MonoBehaviour
 
     // box stuff that i need here so i can access for all the instantiated boxes
     public Transform prefabButtonParent;
+    public Transform objectInstantiatedParent;
     public ObjectPickUp objectPickUpScript;
     public TMP_Text Name;
     public GameObject boxUI;
     public static Transform prefabButtonParentStatic;
+    public static Transform objectInstantiatedParentStatic;
     public static ObjectPickUp objectPickUpScriptStatic;
     public static TMP_Text NameStatic;
     public static GameObject boxUIStatic;
@@ -54,6 +56,7 @@ public class ObjectPickUp : MonoBehaviour
     void Start()
     {
         prefabButtonParentStatic = prefabButtonParent;
+        objectInstantiatedParentStatic = objectInstantiatedParent;
         objectPickUpScriptStatic = objectPickUpScript;
         NameStatic = Name;
         boxUIStatic = boxUI;
@@ -168,6 +171,7 @@ public class ObjectPickUp : MonoBehaviour
         slotFull = false;
 
         item.transform.SetParent(droppedObjectsContainer);
+        Debug.Log(item, item.transform.parent);
         item.transform.localScale = new Vector3(item.transform.localScale.x / droppedObjectsContainer.transform.localScale.x, item.transform.localScale.y / droppedObjectsContainer.transform.localScale.y, item.transform.localScale.z / droppedObjectsContainer.transform.localScale.z);
 
         rb.isKinematic = false;

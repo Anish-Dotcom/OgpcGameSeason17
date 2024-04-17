@@ -6,15 +6,19 @@ using TMPro;
 
 public class BoxScript : MonoBehaviour
 {
+    public GameObject[] allItemGameObjects; // all pickupable items
+    public Sprite[] allItemImages;
+
     public Transform fpsCam;
     public Transform player;
     public float Range;
     public GameObject interact;
     public MenuController menuController;
-    public List<ItemProperties> itemsContained = new List<ItemProperties>(); // items in the box
+    public List<GameObject> itemsReceived = new List<GameObject>(); // items in the box
 
     public GameObject prefabButton; // the button for each item; same as build mode uis buttons cause they have everything i need
     public Transform prefabButtonParent;
+    public Transform objectInstantiatedParent;
     public List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
 
     public ObjectPickUp objectPickUpScript;
@@ -30,6 +34,7 @@ public class BoxScript : MonoBehaviour
         if (prefabButtonParent == null)
         {
             prefabButtonParent = ObjectPickUp.prefabButtonParentStatic;
+            objectInstantiatedParent = ObjectPickUp.objectInstantiatedParentStatic;
             objectPickUpScript = ObjectPickUp.objectPickUpScriptStatic;
             Name = ObjectPickUp.NameStatic;
             boxUI = ObjectPickUp.boxUIStatic;
@@ -54,27 +59,9 @@ public class BoxScript : MonoBehaviour
                     menuController.closePopup(interact);
                     menuController.openMenu(boxUI);
 
-                    for(int i = 0; i < prefabButtons.Count; i++)
-                    {
-                        Destroy(prefabButtons[i]); // removes it from the hotbar
-                        prefabButtons.RemoveAt(i);
-                    }
+                    UpdateButtons();
 
-                    for (int i = 0; i < itemsContained.Count; i++) {
-                        GameObject button = Instantiate(prefabButton, prefabButtonParent);
-                        prefabButtons.Add(button);
-
-                        Transform buttonTransform = button.transform;
-                        Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
-                        Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
-
-                        itemImage.sprite = itemsContained[i].itemImage;
-
-                        int index = i; // Capturing the correct index for whats below
-                        mainButton.onClick.AddListener(() => ObtainItem(index));
-                    }
-
-                    if(itemsContained.Count == 0)
+                    if (prefabButtons.Count == 0)
                     {
                         Name.text = "Box (Empty)";
                     }
@@ -101,11 +88,13 @@ public class BoxScript : MonoBehaviour
         }
     }
 
-    void ObtainItem(int index) // whatever you want to happen when the item is pressed
+    void ObtainItem(int index, int itemObjectIndex) // whatever you want to happen when the item is pressed
     {
-        GameObject itemAdded = Instantiate(itemsContained[index].itemObject, prefabButtonParent);
-        if(ObjectPickUp.slotFull == false)
+        GameObject itemAdded = Instantiate(allItemGameObjects[itemObjectIndex], objectInstantiatedParent);
+        if(ObjectPickUp.equipped == false)
         {
+            ObjectPickUp.equipped = true;
+            objectPickUpScript.currentObject = itemAdded;
             objectPickUpScript.PickUp(itemAdded);
         }
         else
@@ -116,12 +105,12 @@ public class BoxScript : MonoBehaviour
 
         Destroy(prefabButtons[index]); // removes it from the hotbar
         prefabButtons.RemoveAt(index);
-        itemsContained.RemoveAt(index);
+        itemsReceived.RemoveAt(index);
 
         UpdateButtons();
     }
 
-    public void UpdateButtons()
+    public void UpdateButtons() // resets the menu to ensure that the indexes align with the corresponding index it was previously so that the item is the same item after an item before it was removed
     {
         int count = prefabButtons.Count;
         for (int i = 0; i < count; i++)
@@ -130,20 +119,26 @@ public class BoxScript : MonoBehaviour
             prefabButtons.RemoveAt(0);
         }
 
-        for (int i = 0; i < itemsContained.Count; i++)
+        for (int i = 0; i < itemsReceived.Count; i++)
         {
-            GameObject button = Instantiate(prefabButton, prefabButtonParent);
-            prefabButtons.Add(button);
+            for (int j = 0; j < allItemGameObjects.Length; j++)
+            {
+                if (itemsReceived[i] == allItemGameObjects[j])
+                {
+                    int index = i;
+                    int gameObjectIndex = j;
 
-            Transform buttonTransform = button.transform;
-            Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
-            Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
+                    GameObject button = Instantiate(prefabButton, prefabButtonParent);
+                    prefabButtons.Add(button);
 
-            itemImage.sprite = itemsContained[i].itemImage;
+                    Transform buttonTransform = button.transform;
+                    Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
+                    Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
+                    itemImage.sprite = allItemImages[j];
 
-            int index = i; // Capturing the correct index for whats below
-            Debug.Log(index);
-            mainButton.onClick.AddListener(() => ObtainItem(index));
+                    mainButton.onClick.AddListener(() => ObtainItem(index, gameObjectIndex));
+                }
+            }
         }
     }
 }

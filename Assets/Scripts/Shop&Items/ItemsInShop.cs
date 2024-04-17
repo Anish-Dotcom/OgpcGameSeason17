@@ -202,7 +202,7 @@ public class ItemsInShop : MonoBehaviour
                 for(int i = 0; i < item.currentItemQuantity; i++)
                 {
                     BoxScript boxScript = box.GetComponent<BoxScript>();
-                    boxScript.itemsContained.Add(item);
+                    boxScript.itemsReceived.Add(item.itemObject);
                 }
                 item.currentItemQuantity = 0;
             }

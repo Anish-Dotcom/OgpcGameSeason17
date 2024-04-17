@@ -420,19 +420,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb0c2262ee375948a4be5fa8e62c1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allItemGameObjects:
+  - {fileID: 44449273255769233, guid: f1ad4eb684930594bb2a7cd9faded111, type: 3}
+  - {fileID: 8926714841084910747, guid: d3046ea0dfd89f746884bdb073f02614, type: 3}
+  - {fileID: 1261008051451726886, guid: 368ac59b94327844382465418c90ca6d, type: 3}
+  - {fileID: 4147440884950861279, guid: e5a1d4002a839a74f8e1a2f294817882, type: 3}
+  - {fileID: 6289590967285865185, guid: 390358dcb696f3646ac7a1556de1eb0a, type: 3}
+  - {fileID: 7694247075213981221, guid: 6e022de9b0f9e984eafd02fd74b995f3, type: 3}
+  - {fileID: 3357261731479885475, guid: 52d82015bbffbca438566fe334a81d0f, type: 3}
+  - {fileID: 4021151835310411546, guid: e0566a00ac1f0c147b8c012db3ec2118, type: 3}
+  - {fileID: 2079973279516448191, guid: b202047fd7c0fa341b944c314c600e62, type: 3}
+  - {fileID: 4995364190673618756, guid: 22fce205c609c0747a82b410e18d744d, type: 3}
+  allItemImages:
+  - {fileID: 21300000, guid: f7e015402e2bb7d43acf99f88ff82a0a, type: 3}
+  - {fileID: 21300000, guid: 1fd5e196466881040a89e46f8d01c56c, type: 3}
+  - {fileID: 21300000, guid: 401c1d0ec2c8aa94ea5fbddcf6733374, type: 3}
+  - {fileID: 21300000, guid: c3c4524876b833045b623c23b674076e, type: 3}
+  - {fileID: 21300000, guid: 2773dd7d984a92747a766d14abe8634b, type: 3}
+  - {fileID: 21300000, guid: 22bd5fac1c4273e46942ae68ee7db355, type: 3}
+  - {fileID: 21300000, guid: e72ba7f5d4bfdb149a4185d72c611a9e, type: 3}
+  - {fileID: 21300000, guid: 4b10058541b234345ba9b2a2b1a510f7, type: 3}
+  - {fileID: 21300000, guid: 2da6a98377eae7c4b9910355b75def95, type: 3}
+  - {fileID: 21300000, guid: a3429d29539814c478250c4b2ef59a76, type: 3}
   fpsCam: {fileID: 0}
   player: {fileID: 0}
   Range: 3
   interact: {fileID: 0}
   menuController: {fileID: 0}
-  itemsContained: []
-  Slots: {fileID: 0}
+  itemsReceived: []
   prefabButton: {fileID: 3637020861681847150, guid: bc65c02aced226d4f99e5f025d038c9b,
     type: 3}
   prefabButtonParent: {fileID: 0}
+  objectInstantiatedParent: {fileID: 0}
+  prefabButtons: []
   objectPickUpScript: {fileID: 0}
   Name: {fileID: 0}
   boxUI: {fileID: 0}
+  index: 0
 --- !u!65 &6840675553552533315
 BoxCollider:
   m_ObjectHideFlags: 0
