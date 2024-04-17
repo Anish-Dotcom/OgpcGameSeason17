@@ -142,7 +142,7 @@ public class ToyBuilder : MonoBehaviour
                 }
             }
         }
-        else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
+        else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0 || lookingAtCheck.lookingAt[2] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
         {
             if (Input.GetKeyDown(KeyCode.E))//add the object command
             {
@@ -152,7 +152,7 @@ public class ToyBuilder : MonoBehaviour
                 lookingAtCheck.lookingAt[myInfoIndex] = false;
             }
         }
-        else if (lookingAtCheck.lookingAt[2])
+        else if (lookingAtCheck.lookingAt[3])
         {
             if (Input.GetKeyDown(KeyCode.F))//enter build mode
             {
@@ -211,7 +211,7 @@ public class ToyBuilder : MonoBehaviour
     }
     public void AddToBuilder(GameObject objToAdd)
     {
-        if (trueParent.transform.childCount > 0)
+        if (trueParent.transform.childCount > 0 && !objToAdd.transform.CompareTag("Central Assembly") || !objToAdd.transform.CompareTag("Central Assembly"))
         {
             objectsInStation.Add(objToAdd);
             objToAdd.transform.SetParent(disabledStationObjsHolder.transform);

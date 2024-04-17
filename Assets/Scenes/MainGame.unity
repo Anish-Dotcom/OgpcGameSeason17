@@ -950,9 +950,10 @@ MonoBehaviour:
   heldObjTag:
   - assemblyPart
   - Finished Assembly
+  - Central Assembly
   - 
-  popupIndex: 040000000500000006000000
-  lookingAt: 000000
+  popupIndex: 04000000050000000500000006000000
+  lookingAt: 00000000
   hitObj: []
 --- !u!1001 &71990515
 PrefabInstance:

@@ -114,6 +114,7 @@ public class RaycastCon : MonoBehaviour
         {
             if (lastK != -1)
             {
+                Debug.Log(lastK);
                 GetComponent<PopupInfo>().lookingAt[lastK] = false;
             }
         }
@@ -201,6 +202,7 @@ public class RaycastCon : MonoBehaviour
                                 DisableLastLookingAt();
                                 lastI = i;
                                 lastK = k;
+                                lastType = 0;
                             }
                             returned = true;
                             return;
