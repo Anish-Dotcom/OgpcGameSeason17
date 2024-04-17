@@ -14963,14 +14963,14 @@ MonoBehaviour:
   pickUpRange: 3
   dropForwardForce: 2
   dropUpwardForce: 1
-  objController: {fileID: 0}
+  objController: {fileID: 146505513}
   interact: {fileID: 1882544698}
   store: {fileID: 353880494}
-  currentObject: {fileID: 0}
+  currentObject: {fileID: 146505513}
   mask:
     serializedVersion: 2
-    m_Bits: 0
-  Burn: {fileID: 0}
+    m_Bits: 1024
+  Burn: {fileID: 189712333}
   FireInRange: 0
   prefabButtonParent: {fileID: 1771016288}
   objectPickUpScript: {fileID: 1146929043}
@@ -19661,14 +19661,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: minimalistic walking leg put together
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c559dc3d1a280f45859d82056c56fac, type: 3}
