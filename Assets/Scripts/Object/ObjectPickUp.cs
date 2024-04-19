@@ -22,6 +22,7 @@ public class ObjectPickUp : MonoBehaviour
     
     public static bool equipped;
     public static bool slotFull;
+    public static bool menuOpen;
 
     public GameObject interact;
     public GameObject store;
@@ -41,11 +42,13 @@ public class ObjectPickUp : MonoBehaviour
     // box stuff that i need here so i can access for all the instantiated boxes
     public Transform prefabButtonParent;
     public Transform objectInstantiatedParent;
+    public Transform droppedObjectsParent;
     public ObjectPickUp objectPickUpScript;
     public TMP_Text Name;
     public GameObject boxUI;
     public static Transform prefabButtonParentStatic;
     public static Transform objectInstantiatedParentStatic;
+    public static Transform droppedObjectsParentStatic;
     public static ObjectPickUp objectPickUpScriptStatic;
     public static TMP_Text NameStatic;
     public static GameObject boxUIStatic;
@@ -57,6 +60,7 @@ public class ObjectPickUp : MonoBehaviour
     {
         prefabButtonParentStatic = prefabButtonParent;
         objectInstantiatedParentStatic = objectInstantiatedParent;
+        droppedObjectsParentStatic = droppedObjectsParent;
         objectPickUpScriptStatic = objectPickUpScript;
         NameStatic = Name;
         boxUIStatic = boxUI;
@@ -80,7 +84,7 @@ public class ObjectPickUp : MonoBehaviour
 
         }
         Debug.DrawRay(fpsCam.position, fpsCam.forward*pickUpRange);
-        if(!equipped && lookingAtCheck.lookingAt[myInfoIndex]) // checks whether its an object to be picked up
+        if(!equipped && !menuOpen && lookingAtCheck.lookingAt[myInfoIndex]) // checks whether its an object to be picked up
         {
             if (!slotFull)
             {
@@ -92,7 +96,7 @@ public class ObjectPickUp : MonoBehaviour
                 }
             }
         }
-        else if(equipped && playerInputs.Player.PickUp.WasPerformedThisFrame()) // drop the object picked up
+        else if(equipped && !menuOpen && playerInputs.Player.PickUp.WasPerformedThisFrame()) // drop the object picked up
         {
             Drop(currentObject);
         }

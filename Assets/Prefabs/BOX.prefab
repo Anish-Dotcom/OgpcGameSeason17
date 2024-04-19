@@ -445,7 +445,8 @@ MonoBehaviour:
   fpsCam: {fileID: 0}
   player: {fileID: 0}
   Range: 3
-  interact: {fileID: 0}
+  open: {fileID: 0}
+  store: {fileID: 0}
   menuController: {fileID: 0}
   itemsReceived: []
   prefabButton: {fileID: 3637020861681847150, guid: bc65c02aced226d4f99e5f025d038c9b,

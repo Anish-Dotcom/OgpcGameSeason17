@@ -192,7 +192,7 @@ public class ItemsInShop : MonoBehaviour
         box.transform.position = BoxPosition.transform.position;
         box.GetComponent<BoxScript>().fpsCam = fpsCam;
         box.GetComponent<BoxScript>().player = player;
-        box.GetComponent<BoxScript>().interact = boxInteract;
+        box.GetComponent<BoxScript>().open = boxInteract;
         box.GetComponent<BoxScript>().menuController = menuController;
 
         foreach (ItemProperties item in properties)

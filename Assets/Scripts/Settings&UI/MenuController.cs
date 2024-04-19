@@ -38,6 +38,7 @@ public class MenuController : MonoBehaviour
     {
         if (menuOpen)
         {
+            ObjectPickUp.menuOpen = true;
             if (blurActive)
             {
                 blur.SetActive(true);
@@ -63,6 +64,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
+            ObjectPickUp.menuOpen = false;
             blur.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

@@ -12,7 +12,8 @@ public class BoxScript : MonoBehaviour
     public Transform fpsCam;
     public Transform player;
     public float Range;
-    public GameObject interact;
+    public GameObject open;
+    public GameObject store;
     public MenuController menuController;
     public List<GameObject> itemsReceived = new List<GameObject>(); // items in the box
 
@@ -48,16 +49,24 @@ public class BoxScript : MonoBehaviour
         Ray ray = new Ray(fpsCam.position, fpsCam.forward);
 
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
-        if (Physics.Raycast(ray, out hit, Range) && !ObjectPickUp.slotFull)
+        if (Physics.Raycast(ray, out hit, Range))
         {
+            Debug.Log(hit);
             if (hit.collider.gameObject == gameObject)
             {
-                menuController.openPopup(interact);
+                Debug.Log("worky 1");
+                menuController.openPopup(open);
 
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.X)) // opens and sets up the menu for the inventory of the box
                 {
-                    menuController.closePopup(interact);
+                    Debug.Log("worky 2");
+                    menuController.closePopup(open);
                     menuController.openMenu(boxUI);
+
+                    foreach(Transform child in prefabButtonParent)
+                    {
+                        Destroy(child.gameObject);
+                    }
 
                     UpdateButtons();
 
@@ -70,19 +79,34 @@ public class BoxScript : MonoBehaviour
                         Name.text = "Box";
                     }
                 }
+                if (ObjectPickUp.equipped) // storing items in box
+                {
+                    Debug.Log("worky");
+                    menuController.openPopup(store);
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        objectPickUpScript.Drop(objectPickUpScript.currentObject);
+                        itemsReceived.Add(objectPickUpScript.currentObject);
+                        Destroy(objectPickUpScript.currentObject);
+                    }
+                }
             }
             else
             {
-                menuController.closePopup(interact);
+                menuController.closePopup(open);
+                menuController.closePopup(store);
             }
         }
         else
         {
-            menuController.closePopup(interact);
+            menuController.closePopup(open);
+            menuController.closePopup(store);
         }
         if (boxUI.activeInHierarchy) {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                menuController.closePopup(open);
+                menuController.closePopup(store);
                 menuController.closeMenu(boxUI);
             }
         }
@@ -100,6 +124,7 @@ public class BoxScript : MonoBehaviour
         else
         {
             objectPickUpScript.Drop(objectPickUpScript.currentObject);
+            objectPickUpScript.currentObject = itemAdded;
             objectPickUpScript.PickUp(itemAdded);
         }
 
@@ -108,6 +133,8 @@ public class BoxScript : MonoBehaviour
         itemsReceived.RemoveAt(index);
 
         UpdateButtons();
+
+        menuController.closeMenu(boxUI);
     }
 
     public void UpdateButtons() // resets the menu to ensure that the indexes align with the corresponding index it was previously so that the item is the same item after an item before it was removed
