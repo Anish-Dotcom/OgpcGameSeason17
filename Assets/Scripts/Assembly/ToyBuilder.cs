@@ -36,7 +36,7 @@ public class ToyBuilder : MonoBehaviour
     public BuildModeUI buildModeUi;
     public int indexer;
 
-    private GameObject tinkeringObj;
+    public GameObject tinkeringObj;
 
     public bool inBuildMode;
     public bool tinkering;//moving an object
@@ -125,10 +125,13 @@ public class ToyBuilder : MonoBehaviour
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
                     RaycastHit hit;
-                    if (Physics.Raycast(stationCam.transform.position, stationCam.transform.forward, out hit, 3.5f))//need to make so it only hits certain things
+                    Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit, 3.5f))//need to make so it only hits certain things
                     {
+                        tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
                         heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
 
+                        
                         Quaternion Rotat = Quaternion.FromToRotation(tinkeringObj.GetComponent<attachInfo>().directionPointAims, -hit.normal);//rotation required to get from current to facing into the object from the connect point
                         tinkeringObj.transform.rotation = Rotat;
 
@@ -254,12 +257,6 @@ public class ToyBuilder : MonoBehaviour
         deriv = Quaternion.identity;
         movingTo = false;
         movingCam = true;
-    }
-    public void BeginTinkering(GameObject TinkeringObj)
-    {
-        tinkering = true;
-        tinkeringObj = TinkeringObj;
-
     }
     public void LockInPosition()
     {

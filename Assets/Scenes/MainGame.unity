@@ -928,6 +928,7 @@ MonoBehaviour:
   menuCon: {fileID: 312775338}
   buildModeUi: {fileID: 383465570}
   indexer: 0
+  tinkeringObj: {fileID: 0}
   inBuildMode: 0
   tinkering: 0
   speed: 1
@@ -4445,6 +4446,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - itemName: gearboxputtogether
+    itemImage: {fileID: 21300000, guid: a3429d29539814c478250c4b2ef59a76, type: 3}
+  - itemName: minimalistic walking leg put together
     itemImage: {fileID: 21300000, guid: a3429d29539814c478250c4b2ef59a76, type: 3}
   prefabButton: {fileID: 3637020861681847150, guid: bc65c02aced226d4f99e5f025d038c9b,
     type: 3}

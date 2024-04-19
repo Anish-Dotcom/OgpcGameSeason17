@@ -60,7 +60,9 @@ public class BuildModeUI : MonoBehaviour
     {
         //Debug.Log("pressed");
         itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
+        itemToAdd.SetActive(true);
         toyBuilder.indexer = index;
+        toyBuilder.tinkering = true;
         // this is where you should be instantiating the itemToAdd onto the table                         <------------   BRADY WORK HERE
     }
 
