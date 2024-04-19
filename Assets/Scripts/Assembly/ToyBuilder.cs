@@ -126,20 +126,22 @@ public class ToyBuilder : MonoBehaviour
                 {
                     RaycastHit hit;
                     Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray, out hit, 3.5f))//need to make so it only hits certain things
+                    LayerMask layer = LayerMask.GetMask("ToonLayer");
+                    if (Physics.Raycast(ray, out hit, 3.5f, layer))
                     {
                         tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
-                        heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
+                        if (hit.transform.gameObject != tinkeringObj)
+                        {
+                            heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
 
-                        
-                        Quaternion Rotat = Quaternion.FromToRotation(tinkeringObj.GetComponent<attachInfo>().directionPointAims, -hit.normal);//rotation required to get from current to facing into the object from the connect point
-                        tinkeringObj.transform.rotation = Rotat;
+                            Debug.DrawRay(hit.point, hit.normal);
+                            Quaternion Rotat = Quaternion.FromToRotation(tinkeringObj.transform.rotation * tinkeringObj.GetComponent<attachInfo>().directionPointAims, -hit.normal);//rotation required to get from current to facing into the object from the connect point
+                            tinkeringObj.transform.rotation *= Rotat;
 
-                        //then compare position and move
-                        tinkeringObj.transform.position = hit.point - (tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position - tinkeringObj.transform.position);//sets the postition to where the attach point will be at the hit point, facing into the mesh
+                            //then compare position and move
+                            tinkeringObj.transform.position = hit.point - (tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position - tinkeringObj.transform.position);//sets the postition to where the attach point will be at the hit point, facing into the mesh
 
-                        Debug.DrawRay(hit.point, hit.normal);
-
+                        }
                         //heldStationObjHolder.transform.GetChild(1).
                     }
                 }
@@ -214,19 +216,23 @@ public class ToyBuilder : MonoBehaviour
     }
     public void AddToBuilder(GameObject objToAdd)
     {
-        if (trueParent.transform.childCount > 0 && !objToAdd.transform.CompareTag("Central Assembly") || !objToAdd.transform.CompareTag("Central Assembly"))
+        if (trueParent.transform.childCount > 0 && !objToAdd.transform.CompareTag("Central Assembly") || !objToAdd.transform.CompareTag("Central Assembly"))//any other parts
         {
             objectsInStation.Add(objToAdd);
             objToAdd.transform.SetParent(disabledStationObjsHolder.transform);
             objToAdd.SetActive(false);
             buildModeUi.addButtons(objToAdd);
         }
-        else
+        else//central obj
         {
             objToAdd.transform.SetParent(trueParent.transform);
             objToAdd.transform.position = trueParent.transform.position;
+            objToAdd.layer = 3;
+            foreach (Transform child in objToAdd.transform)
+            {
+                child.gameObject.layer = 3;
+            }
         }
-
     }
     public void EnterBuildMode()
     {
