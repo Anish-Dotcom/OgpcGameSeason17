@@ -13,6 +13,7 @@ public class FatigueController : MonoBehaviour
     public GameObject transparent;
     float x;
     float z;
+    public Vector3 DissolveSpeed;
     public float dayTime;
     // Start is called before the first frame update
     void Start()
@@ -32,11 +33,12 @@ public class FatigueController : MonoBehaviour
         }
         
         if(fatigue> dayTime) {//If fatigue exeeds day time start croutine that moves in darkness
-            StartCoroutine(Cutoff());
+        
             fatigue = 0;//Resets fatigue
         }
 
-        
+        Vector3 cutDistanceChanges = new Vector3(DissolveSpeed.x / fatugueUnchanged, DissolveSpeed.y / fatugueUnchanged, DissolveSpeed.z / fatugueUnchanged);
+        DissolveController.SetCutoffDist(cutDistanceChanges);
     }
     void OutputTime() {
         fatigue++;
@@ -53,14 +55,19 @@ public class FatigueController : MonoBehaviour
     //    }
     //}
 
-    IEnumerator Cutoff ()
+    IEnumerator CutoffOff ()
     {//Begins a cutoff
         print("cutoff");
         Vector3 cutDistanceChanges = new Vector3(fatugueUnchanged/800000, fatugueUnchanged / 700000, fatugueUnchanged / 400000);
         DissolveController.SetCutoffDist(cutDistanceChanges);
         yield return new WaitForSeconds(0.01f);
-        StartCoroutine(Cutoff());
+        StartCoroutine(CutoffOff());
         
+    }
+    public void Cutoff()
+    {
+        Vector3 cutDistanceChanges = new Vector3(80000 / fatigue, 70000 / fatigue, fatigue / 40000);
+        DissolveController.SetCutoffDist(cutDistanceChanges);
     }
     public void resetTransparency ()
     {//Resets transpareny referenced in bedscript
