@@ -936,6 +936,7 @@ MonoBehaviour:
   clampBigDist: 3
   rotationSpeed: 80
   rotSpeed: 50
+  anglerSpeed: 50
 --- !u!114 &62802928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25414,7 +25415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dissolveDistances: {x: 6, y: 6, z: 8}
-  startingDissolveDistances: {x: 6, y: 6, z: 8}
+  startingDissolveDistances: {x: 6, y: 6, z: 9}
   centralObj: {fileID: 947589164}
   centralPos: {x: 0, y: 0, z: 0}
   areaMats:

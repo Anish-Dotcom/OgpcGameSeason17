@@ -24,18 +24,6 @@ public class BuildModeUI : MonoBehaviour
 
     public int index = -1;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void addButtons(GameObject item)
     {
         for (int i = 0; i < items.Count; i++)
@@ -60,10 +48,9 @@ public class BuildModeUI : MonoBehaviour
     {
         //Debug.Log("pressed");
         itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
-        itemToAdd.SetActive(true);
+        toyBuilder.tinkeringObj = itemToAdd;
         toyBuilder.indexer = index;
         toyBuilder.tinkering = true;
-        // this is where you should be instantiating the itemToAdd onto the table                         <------------   BRADY WORK HERE
     }
 
     public void ScrollLeftFunction()
