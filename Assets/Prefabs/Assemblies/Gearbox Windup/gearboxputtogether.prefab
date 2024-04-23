@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9154023628165276839}
   - component: {fileID: 3017043877662214994}
   - component: {fileID: 4651262114388531346}
+  - component: {fileID: 8611928422409067191}
   m_Layer: 0
   m_Name: gearboxbottom
   m_TagString: Untagged
@@ -84,6 +85,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8611928422409067191
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889518675393061638}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8784320139027527621, guid: 27a45d5221b9ad9458740aea7981d71f, type: 3}
 --- !u!1 &957957873759566539
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,6 +628,7 @@ GameObject:
   - component: {fileID: 1491982851463834426}
   - component: {fileID: 5757770383958495908}
   - component: {fileID: 3883750634270886721}
+  - component: {fileID: 9074819735499037843}
   m_Layer: 0
   m_Name: winduppart
   m_TagString: Untagged
@@ -688,6 +704,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &9074819735499037843
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2520215049236696736}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5524645148554912421, guid: 27a45d5221b9ad9458740aea7981d71f, type: 3}
 --- !u!1 &2773757793656904946
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,7 +1480,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4995364190673618756}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.09, z: 0.2}
@@ -1994,6 +2024,7 @@ GameObject:
   - component: {fileID: 4772817610935020052}
   - component: {fileID: 2989514856613710749}
   - component: {fileID: 4971077484709472132}
+  - component: {fileID: 237758631001692230}
   m_Layer: 0
   m_Name: gearboxtop
   m_TagString: Untagged
@@ -2067,6 +2098,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &237758631001692230
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219401816412719385}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5571533165094049492, guid: 27a45d5221b9ad9458740aea7981d71f, type: 3}
 --- !u!1 &7252010923719274803
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,8 +23,14 @@ public class BuildModeUI : MonoBehaviour
     public ToyBuilder toyBuilder;
 
     public int index = -1;
-    private int prevIndex;
+    private int prevIndex = -2;
+    private GameObject prevObj;
+    private float waitTimeAfterObjChange;
 
+    public void Update()
+    {
+        waitTimeAfterObjChange += Time.deltaTime;
+    }
     public void addButtons(GameObject item)
     {
         for (int i = 0; i < items.Count; i++)
@@ -48,18 +54,32 @@ public class BuildModeUI : MonoBehaviour
     void AddItemToBuild(int index, GameObject itemToAdd) // whatever you want to happen when the item is pressed
     {
         //Debug.Log("pressed");
-        if (prevIndex != index)
+        if (waitTimeAfterObjChange > 0.25f)
         {
-            itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
-            toyBuilder.tinkeringObj = itemToAdd;
-            toyBuilder.indexer = index;
-            toyBuilder.tinkering = true;
-            prevIndex = index;
-        }
-        else
-        {
-            itemToAdd.transform.SetParent(toyBuilder.disabledStationObjsHolder.transform);
-            toyBuilder.tinkering = false;
+            waitTimeAfterObjChange = 0;
+            if (prevIndex != index)
+            {
+                if (prevObj != null)
+                {
+                    if (prevObj != itemToAdd)
+                    {
+                        prevObj.transform.SetParent(toyBuilder.disabledStationObjsHolder.transform);
+                        prevObj.SetActive(false);
+                    }
+                }
+                prevObj = itemToAdd;
+                itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
+                toyBuilder.tinkeringObj = itemToAdd;
+                toyBuilder.indexer = index;
+                toyBuilder.tinkering = true;
+                prevIndex = index;
+            }
+            else
+            {
+                itemToAdd.transform.SetParent(toyBuilder.disabledStationObjsHolder.transform);
+                toyBuilder.tinkering = false;
+                prevIndex = -1;
+            }
         }
     }
 
