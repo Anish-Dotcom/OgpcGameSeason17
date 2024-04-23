@@ -71,6 +71,10 @@ public class ToyBuilder : MonoBehaviour
         waitTimeAfterLockChange += Time.deltaTime;
         if (inBuildMode)
         {
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                CompleteToy();
+            }
             if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape))
             {
                 ExitBuildMode();
@@ -101,7 +105,7 @@ public class ToyBuilder : MonoBehaviour
             GameObject mainParent = objectsBeingUsedParent.transform.GetChild(0).gameObject;
             if (tinkering)//moving the item around the scene
             {
-                if (Input.GetKey(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f)
+                if (Input.GetKeyDown(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f)
                 {
                     LockInPosition();
                 }
@@ -120,7 +124,7 @@ public class ToyBuilder : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetKey(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f)//right click - unlock toy
+            else if (Input.GetKeyDown(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f)//right click - unlock toy
             {
                 RaycastHit hit;
                 Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
@@ -312,15 +316,25 @@ public class ToyBuilder : MonoBehaviour
     public void CompleteToy()
     {
         ExitBuildMode();
-        GameObject completedToy = Instantiate(gameObject.GetComponent<AssemblyController>().emptyObj, trueParent.transform);
-        //completedToy.name = ToyBuilder.type; ex: windup
+        GameObject completedToy = Instantiate(gameObject.GetComponent<AssemblyController>().emptyObj, playerMove.gameObject.GetComponent<ObjectPickUp>().droppedObjectsContainer);
+        completedToy.layer = 6;
+        completedToy.AddComponent(typeof(Rigidbody));
+        completedToy.AddComponent(typeof(BoxCollider));//shouldnt need this
+        BoxCollider boxCol = completedToy.GetComponent<BoxCollider>();
+        boxCol.isTrigger = true;
+        completedToy.transform.position = trueParent.transform.position;
+        //completedToy.name = ToyBuilder.type;
         //give completed toy colliders
-        for (int i = 0; i < trueParent.transform.childCount; i++)
+        for (int i = 0; i <= trueParent.transform.childCount; i++)
         {
-            GameObject child = trueParent.transform.GetChild(trueParent.transform.childCount - i).gameObject;
+            GameObject child = trueParent.transform.GetChild(0).gameObject;
+            ScrapCollider(child);//gets rid of collider used to pickup obj
+            foreach (Transform chilled in child.transform)
+            {
+                chilled.gameObject.layer = 6;
+            }
             child.transform.SetParent(completedToy.transform);
             child.layer = 6;//pickupable
-
         }
     }
     public void MoveTinkeringObj()
@@ -360,6 +374,29 @@ public class ToyBuilder : MonoBehaviour
         else
         {
             tinkeringObj.SetActive(false);
+        }
+    }
+    public void ScrapCollider(GameObject collObj)//remove box collider used for pickup, and rigidbody
+    {
+        Collider[] coll = collObj.GetComponents<Collider>();
+        Destroy(collObj.GetComponent<Rigidbody>());
+
+        if (coll.Length == 1)//only a box collider
+        {
+            Destroy(coll[0]);
+        }
+        else//also another type
+        {
+            if (coll[0].GetType() == typeof(BoxCollider))//if is a box collider, make other not a trigger
+            {
+                Destroy(coll[0]);
+                coll[1].isTrigger = false;
+            }
+            else//2nd collider is a box collider, 1st is other type, !!!- means that there cannot be two box colliders
+            {
+                Destroy(coll[1]);
+                coll[0].isTrigger = false;
+            }
         }
     }
 }
