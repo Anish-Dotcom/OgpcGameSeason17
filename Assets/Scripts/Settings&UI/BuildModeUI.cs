@@ -23,6 +23,7 @@ public class BuildModeUI : MonoBehaviour
     public ToyBuilder toyBuilder;
 
     public int index = -1;
+    private int prevIndex;
 
     public void addButtons(GameObject item)
     {
@@ -47,10 +48,19 @@ public class BuildModeUI : MonoBehaviour
     void AddItemToBuild(int index, GameObject itemToAdd) // whatever you want to happen when the item is pressed
     {
         //Debug.Log("pressed");
-        itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
-        toyBuilder.tinkeringObj = itemToAdd;
-        toyBuilder.indexer = index;
-        toyBuilder.tinkering = true;
+        if (prevIndex != index)
+        {
+            itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
+            toyBuilder.tinkeringObj = itemToAdd;
+            toyBuilder.indexer = index;
+            toyBuilder.tinkering = true;
+            prevIndex = index;
+        }
+        else
+        {
+            itemToAdd.transform.SetParent(toyBuilder.disabledStationObjsHolder.transform);
+            toyBuilder.tinkering = false;
+        }
     }
 
     public void ScrollLeftFunction()

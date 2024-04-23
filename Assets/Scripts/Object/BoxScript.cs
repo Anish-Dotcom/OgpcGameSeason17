@@ -29,9 +29,12 @@ public class BoxScript : MonoBehaviour
 
     public int index;
 
+    private PopupInfo popupInfo;
+
     // Start is called before the first frame update
     void Start()
     {
+        popupInfo = player.GetComponent<PopupInfo>();
         if (prefabButtonParent == null)
         {
             prefabButtonParent = ObjectPickUp.prefabButtonParentStatic;
@@ -45,21 +48,16 @@ public class BoxScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-        Ray ray = new Ray(fpsCam.position, fpsCam.forward);
-
-        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
-        if (Physics.Raycast(ray, out hit, Range))
+        if (popupInfo.lookingAt[0])
         {
-            Debug.Log(hit);
-            if (hit.collider.gameObject == gameObject)
+            if (popupInfo.hitObj[0] == gameObject)
             {
-                Debug.Log("worky 1");
+                //Debug.Log("worky 1");
                 menuController.openPopup(open);
 
                 if (Input.GetKeyDown(KeyCode.X)) // opens and sets up the menu for the inventory of the box
                 {
-                    Debug.Log("worky 2");
+                    //Debug.Log("worky 2");
                     menuController.closePopup(open);
                     menuController.openMenu(boxUI);
 

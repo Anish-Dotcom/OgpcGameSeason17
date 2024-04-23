@@ -55,6 +55,8 @@ public class ToyBuilder : MonoBehaviour
     private Vector3 referPos;
     private Vector3 negitiveNorm;
 
+    private float waitTimeAfterLockChange;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +68,7 @@ public class ToyBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        waitTimeAfterLockChange += Time.deltaTime;
         if (inBuildMode)
         {
             if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape))
@@ -98,29 +101,33 @@ public class ToyBuilder : MonoBehaviour
             GameObject mainParent = objectsBeingUsedParent.transform.GetChild(0).gameObject;
             if (tinkering)//moving the item around the scene
             {
-                if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+                if (Input.GetKey(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f)
                 {
-                    if (Input.GetKey(KeyCode.Mouse1))
+                    LockInPosition();
+                }
+                else if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+                {
+                    if (Input.GetKey(KeyCode.Mouse0))//rotate the item upon the perpendicular axis
                     {
-                        LockInPosition();
-                    }
-                    else if (Input.GetKey(KeyCode.Mouse0))//rotate the item upon the perpendicular axis
-                    {
-                        if (Input.GetKey(KeyCode.Mouse1))
-                        {
-                            LockInPosition();
-                            return;
-                        }
                         tinkeringObj.SetActive(true);
                         tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
                         float angle2 = Input.GetAxis("Mouse X") * anglerSpeed;
-                        //Debug.Log(angle2 + " axis2: " + axis);
                         tinkeringObj.transform.RotateAround(attachPointPos, -negitiveNorm, angle2);
                     }
                     else
                     {
                         MoveTinkeringObj();
                     }
+                }
+            }
+            else if (Input.GetKey(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f)//right click - unlock toy
+            {
+                RaycastHit hit;
+                Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+                LayerMask layer = LayerMask.GetMask("ToonLayer");//make work with raycast system
+                if (Physics.Raycast(ray, out hit, 3.5f, layer))
+                {
+                    UnlockPosition(hit.transform.gameObject);
                 }
             }
             else if (Input.GetKey(KeyCode.Mouse0) && trueParent.transform.childCount > 0)//rotating the toy
@@ -130,7 +137,7 @@ public class ToyBuilder : MonoBehaviour
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(1));
                     mainParent.transform.rotation = resetRot;
                     trueParent.transform.SetParent(objectsBeingUsedParent.transform.GetChild(0));
-                    mainParent.transform.Rotate(0, Input.GetAxis("Mouse X") * -1, 0 * Time.deltaTime * rotSpeed);
+                    mainParent.transform.Rotate(0, Input.GetAxis("Mouse X") * -1 * Time.deltaTime * rotSpeed, 0);
                 }
                 else
                 {
@@ -272,17 +279,49 @@ public class ToyBuilder : MonoBehaviour
         movingTo = false;
         movingCam = true;
     }
-    public void LockInPosition()
+    public void LockInPosition()//doesnt work
     {
+        waitTimeAfterLockChange = 0;
         GameObject LockInObj = heldStationObjHolder.transform.GetChild(1).gameObject;
+        LockInObj.layer = 3;
+        foreach (Transform child in LockInObj.transform)
+        {
+            child.gameObject.layer = 3;
+        }
         Destroy(buildModeUi.prefabButtons[indexer]); // removes it from the hotbar
         buildModeUi.prefabButtons.RemoveAt(indexer);
         LockInObj.transform.SetParent(trueParent.transform);
         tinkering = false;
     }
+    public void UnlockPosition(GameObject unlockObj)//doesnt work
+    {
+        if (unlockObj != trueParent.transform.GetChild(0).gameObject)
+        {
+            unlockObj.layer = 0;
+            foreach (Transform child in unlockObj.transform)
+            {
+                child.gameObject.layer = 0;
+            }
+            waitTimeAfterLockChange = 0;
+            //re-add button
+            buildModeUi.addButtons(unlockObj);//re-add button, does this work, idk?
+            unlockObj.transform.SetParent(heldStationObjHolder.transform);
+            tinkering = true;
+        }
+    }
     public void CompleteToy()
     {
+        ExitBuildMode();
+        GameObject completedToy = Instantiate(gameObject.GetComponent<AssemblyController>().emptyObj, trueParent.transform);
+        //completedToy.name = ToyBuilder.type; ex: windup
+        //give completed toy colliders
+        for (int i = 0; i < trueParent.transform.childCount; i++)
+        {
+            GameObject child = trueParent.transform.GetChild(trueParent.transform.childCount - i).gameObject;
+            child.transform.SetParent(completedToy.transform);
+            child.layer = 6;//pickupable
 
+        }
     }
     public void MoveTinkeringObj()
     {

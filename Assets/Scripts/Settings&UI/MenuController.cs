@@ -91,11 +91,11 @@ public class MenuController : MonoBehaviour
             }
         }
 
-
+        /*
         if (Input.GetKeyDown(KeyCode.C))
         {
             togglePopUp(commissionsUI);
-        }
+        }*/
 
     }
     // ---------------------------------- Menu Navigation Functions ----------------------------------
