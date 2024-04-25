@@ -194,7 +194,6 @@ public class AssemblyController : MonoBehaviour
     {
         if (gameObject.GetComponent<ToyBuilder>().tinkering)
         {
-            gameObject.GetComponent<ToyBuilder>().tinkering
             gameObject.GetComponent<ToyBuilder>().CompleteToy();
         }
         building = true;
