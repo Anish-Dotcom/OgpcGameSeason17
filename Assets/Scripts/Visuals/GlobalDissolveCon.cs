@@ -15,6 +15,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public bool[] consAdded;
     public DissolveController[] areas;// mainroom = 0, void = 1
     public int inArea;
+    public int trueArea;
     public List<DissolveController> updatingAreas;
     public footStepCon footStepCon;
     public Material boxMat;
@@ -197,6 +198,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 if (consAdded[i])//cons added is asking if it is updating
                 {
                     consAdded[i] = false;//its no longer updating
+                    decideArea(inArea, i);
                     Debug.Log("Entered area " + i + ", section " + inArea);
                     areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
 
@@ -223,6 +225,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 if (!consAdded[i])//cons added is asking if it is updating, if its not updating, make it update
                 {
                     consAdded[i] = true;
+                    decideArea(inArea, i);
                     Debug.Log("Entered area " + i + ", section " + inArea);
 
                     for (int j = 0; j < areas[i].objsToEnable.Length; j++)
@@ -239,6 +242,7 @@ public class GlobalDissolveCon : MonoBehaviour
             {
                 if (consAdded[i])
                 {
+                    decideArea(inArea, i);
                     consAdded[i] = false;
                     Debug.Log("Entered area " + i + ", section " + inArea);
                     areas[i].setCutoffNoChange(new Vector3(0, 0, 0));
@@ -262,5 +266,16 @@ public class GlobalDissolveCon : MonoBehaviour
             areaMatsList.Add(areas[areaI].areaMats[j]);
         }
         areas[areaI].SetObjPos(areaMatsList);
+    }
+    public void decideArea(int InArea, int i)
+    {
+        if (InArea >= 0)
+        {
+            trueArea = i;
+        }
+        else
+        {
+            trueArea = -1;
+        }
     }
 }

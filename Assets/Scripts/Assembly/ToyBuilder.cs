@@ -287,6 +287,10 @@ public class ToyBuilder : MonoBehaviour
     }
     public void EnterBuildMode()
     {
+        if (gameObject.GetComponent<AssemblyController>().building)
+        {
+
+        }
         completedLocation = heldObjContainer.transform.position;
         menuCon.openMenu(stationMenu, false, false, crosshairOutisde, true);
         velocity = Vector3.zero;

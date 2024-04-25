@@ -18,6 +18,7 @@ public class AssemblyController : MonoBehaviour
     public float distFromPlayer;
     public GameObject playerCam;
     public GameObject heldObjContainer;
+    public bool building;
 
     public GameObject[] assemblyPartsInScene;
 
@@ -174,7 +175,6 @@ public class AssemblyController : MonoBehaviour
                     ChangeColliderTrigger(objToAdd, false);
 
                     objToAdd.GetComponent<Rigidbody>().isKinematic = true;
-                    Vector3 velocity = objToAdd.GetComponent<Rigidbody>().velocity;
 
                     objToAdd.GetComponent<Transform>().SetParent(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(b).GetComponent<Transform>());//sets to be a child of the assosciated
                     objToAdd.transform.rotation = RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().GetChild(b).transform.rotation;
@@ -192,6 +192,12 @@ public class AssemblyController : MonoBehaviour
     //outline
     public void SetAssembly(GameObject RecipeObj, GameObject CompletedAssembly)//works
     {
+        if (gameObject.GetComponent<ToyBuilder>().tinkering)
+        {
+            gameObject.GetComponent<ToyBuilder>().tinkering
+            gameObject.GetComponent<ToyBuilder>().CompleteToy();
+        }
+        building = true;
         completedAssembly = CompletedAssembly;
         GameObject RecipeObject = Instantiate(RecipeObj, RecipeForAssemblyObj.transform.position + RecipeObj.transform.position, Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
         toyNamesForFinal = new string[RecipeObject.transform.childCount];//get children of gameobject, each child is a part of the assembly
