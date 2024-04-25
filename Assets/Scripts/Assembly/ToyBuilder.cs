@@ -73,6 +73,12 @@ public class ToyBuilder : MonoBehaviour
     void Update()
     {
         waitTimeAfterLockChange += Time.deltaTime;
+        if (gameObject.GetComponent<AssemblyController>().building)
+        {
+            lookingAtCheck.lookingAt[1] = false;
+            lookingAtCheck.lookingAt[2] = false;
+            menuCon.closePopup(raycastCon.popups[5]);
+        }
         if (inBuildMode)
         {
             if (Input.GetKeyDown(KeyCode.V))

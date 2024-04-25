@@ -192,9 +192,9 @@ public class AssemblyController : MonoBehaviour
     //outline
     public void SetAssembly(GameObject RecipeObj, GameObject CompletedAssembly)//works
     {
-        if (gameObject.GetComponent<ToyBuilder>().tinkering)
+        if (gameObject.GetComponent<ToyBuilder>().trueParent.transform.childCount > 0)
         {
-            gameObject.GetComponent<ToyBuilder>().CompleteToy();
+            //gameObject.GetComponent<ToyBuilder>().CompleteOutsideMenu();
         }
         building = true;
         completedAssembly = CompletedAssembly;
