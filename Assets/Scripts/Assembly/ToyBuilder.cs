@@ -238,8 +238,11 @@ public class ToyBuilder : MonoBehaviour
                     stationCam.SetActive(false);
                     stationCam.transform.position = stationCamStartPos;
                     stationCam.transform.rotation = stationCam.transform.rotation;
-                    playerMove.gameObject.GetComponent<ObjectPickUp>().PickUp(toyCompleted);
-                    completingToy = false;
+                    if (completingToy)
+                    {
+                        playerMove.gameObject.GetComponent<ObjectPickUp>().PickUp(toyCompleted);
+                        completingToy = false;
+                    }
                     movingCam = false;
                     timeMovingCam = 0;
                 }
@@ -271,6 +274,7 @@ public class ToyBuilder : MonoBehaviour
             for (int i = 0; i <= objToAdd.transform.childCount; i++)
             {
                 GameObject child = objToAdd.transform.GetChild(0).gameObject;
+                SwitchIfColliderEnabled(child, true);
                 child.layer = 3;//stationLayer
                 foreach (Transform chilled in child.transform)
                 {
@@ -361,7 +365,7 @@ public class ToyBuilder : MonoBehaviour
         for (int i = 0; i <= trueParent.transform.childCount; i++)
         {
             GameObject child = trueParent.transform.GetChild(0).gameObject;
-            ScrapCollider(child);//gets rid of collider used to pickup obj
+            SwitchIfColliderEnabled(child, false);//gets rid of collider used to pickup obj
             foreach (Transform chilled in child.transform)
             {
                 chilled.gameObject.layer = 6;
@@ -412,7 +416,7 @@ public class ToyBuilder : MonoBehaviour
             tinkeringObj.SetActive(false);
         }
     }
-    public void ScrapCollider(GameObject collObj)//remove box collider used for pickup, and rigidbody
+    public void SwitchIfColliderEnabled(GameObject collObj, bool enabled)//remove box collider used for pickup, and rigidbody
     {
         Collider[] coll = collObj.GetComponents<Collider>();
         Destroy(collObj.GetComponent<Rigidbody>());
@@ -423,19 +427,19 @@ public class ToyBuilder : MonoBehaviour
         }
         else if (coll.Length == 1)//only a box collider
         {
-            Destroy(coll[0]);
+            coll[0].enabled = enabled;
         }
         else//also another type
         {
             if (coll[0].GetType() == typeof(BoxCollider))//if is a box collider, make other not a trigger
             {
-                Destroy(coll[0]);
-                coll[1].isTrigger = false;
+                coll[0].enabled = enabled;
+                coll[1].isTrigger = enabled;
             }
             else//2nd collider is a box collider, 1st is other type, !!!- means that there cannot be two box colliders
             {
-                Destroy(coll[1]);
-                coll[0].isTrigger = false;
+                coll[1].enabled = enabled;
+                coll[0].isTrigger = enabled;
             }
         }
     }
