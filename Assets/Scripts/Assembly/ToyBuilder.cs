@@ -56,6 +56,10 @@ public class ToyBuilder : MonoBehaviour
     private Vector3 negitiveNorm;
 
     private float waitTimeAfterLockChange;
+    private bool completingToy = false;
+    private Vector3 completedLocation;
+    private Vector3 velo;
+    private GameObject toyCompleted;
 
     // Start is called before the first frame update
     void Start()
@@ -210,11 +214,19 @@ public class ToyBuilder : MonoBehaviour
             {
                 if (timeMovingCam < 0.7)
                 {
+                    if (completingToy)
+                    {
+                        toyCompleted.transform.position = Vector3.SmoothDamp(toyCompleted.transform.position, completedLocation, ref velo, 0.3f);
+                    }
                     stationCam.transform.position = Vector3.SmoothDamp(stationCam.transform.position, playerCam.transform.position, ref velocity, 0.3f);
                     stationCam.transform.rotation = QuaternionUtils.SmoothDamp(stationCam.transform.rotation, playerCam.transform.rotation, ref deriv, 0.3f);
                 }
                 else
                 {
+                    if (completingToy)
+                    {
+                        toyCompleted.transform.position = Vector3.SmoothDamp(toyCompleted.transform.position, completedLocation, ref velo, 0.1f);
+                    }
                     stationCam.transform.position = Vector3.SmoothDamp(stationCam.transform.position, playerCam.transform.position, ref velocity, 0.1f);
                     stationCam.transform.rotation = QuaternionUtils.SmoothDamp(stationCam.transform.rotation, playerCam.transform.rotation, ref deriv, 0.1f);
                 }
@@ -226,6 +238,11 @@ public class ToyBuilder : MonoBehaviour
                     stationCam.SetActive(false);
                     stationCam.transform.position = stationCamStartPos;
                     stationCam.transform.rotation = stationCam.transform.rotation;
+                    if (completingToy)
+                    {
+                        playerMove.gameObject.GetComponent<ObjectPickUp>().PickUp(toyCompleted);
+                        completingToy = false;
+                    }
                     movingCam = false;
                     timeMovingCam = 0;
                 }
@@ -234,14 +251,14 @@ public class ToyBuilder : MonoBehaviour
     }
     public void AddToBuilder(GameObject objToAdd)
     {
-        if (trueParent.transform.childCount > 0 && !objToAdd.transform.CompareTag("Central Assembly") || !objToAdd.transform.CompareTag("Central Assembly"))//any other parts
+        if (trueParent.transform.childCount > 0 && objToAdd.name != "gearboxputtogether" && objToAdd.CompareTag("finished Toy") || objToAdd.name != "gearboxputtogether" && !objToAdd.CompareTag("finished Toy"))//any other parts
         {
             objectsInStation.Add(objToAdd);
             objToAdd.transform.SetParent(disabledStationObjsHolder.transform);
             objToAdd.SetActive(false);
             buildModeUi.addButtons(objToAdd);
         }
-        else//central obj
+        else if (objToAdd.name == "gearboxputtogether")//central obj
         {
             objToAdd.transform.SetParent(trueParent.transform);
             objToAdd.transform.position = trueParent.transform.position;
@@ -251,9 +268,26 @@ public class ToyBuilder : MonoBehaviour
                 child.gameObject.layer = 3;
             }
         }
+        else if (objToAdd.CompareTag("finished Toy"))//re-adding a completed toy
+        {
+            objToAdd.transform.position = trueParent.transform.position;
+            for (int i = 0; i <= objToAdd.transform.childCount; i++)
+            {
+                GameObject child = objToAdd.transform.GetChild(0).gameObject;
+                SwitchIfColliderEnabled(child, true);
+                child.layer = 3;//stationLayer
+                foreach (Transform chilled in child.transform)
+                {
+                    chilled.gameObject.layer = 3;
+                }
+                child.transform.SetParent(trueParent.transform);
+            }
+            Destroy(objToAdd);
+        }
     }
     public void EnterBuildMode()
     {
+        completedLocation = heldObjContainer.transform.position;
         menuCon.openMenu(stationMenu, false, false, crosshairOutisde, true);
         velocity = Vector3.zero;
         deriv = Quaternion.identity;
@@ -283,7 +317,7 @@ public class ToyBuilder : MonoBehaviour
         movingTo = false;
         movingCam = true;
     }
-    public void LockInPosition()//doesnt work
+    public void LockInPosition()
     {
         waitTimeAfterLockChange = 0;
         GameObject LockInObj = heldStationObjHolder.transform.GetChild(1).gameObject;
@@ -299,7 +333,7 @@ public class ToyBuilder : MonoBehaviour
     }
     public void UnlockPosition(GameObject unlockObj)//doesnt work
     {
-        if (unlockObj != trueParent.transform.GetChild(0).gameObject)
+        if (unlockObj.name != "gearboxputtogether")
         {
             unlockObj.layer = 0;
             foreach (Transform child in unlockObj.transform)
@@ -310,6 +344,7 @@ public class ToyBuilder : MonoBehaviour
             //re-add button
             buildModeUi.addButtons(unlockObj);//re-add button, does this work, idk?
             unlockObj.transform.SetParent(heldStationObjHolder.transform);
+            tinkeringObj = unlockObj;
             tinkering = true;
         }
     }
@@ -318,17 +353,19 @@ public class ToyBuilder : MonoBehaviour
         ExitBuildMode();
         GameObject completedToy = Instantiate(gameObject.GetComponent<AssemblyController>().emptyObj, playerMove.gameObject.GetComponent<ObjectPickUp>().droppedObjectsContainer);
         completedToy.layer = 6;
+        completedToy.name = "finished Toy";
+        completedToy.tag = "finished Toy";
         completedToy.AddComponent(typeof(Rigidbody));
+        completedToy.GetComponent<Rigidbody>().useGravity = false;
+        completedToy.GetComponent<Rigidbody>().isKinematic = true;
         completedToy.AddComponent(typeof(BoxCollider));//shouldnt need this
         BoxCollider boxCol = completedToy.GetComponent<BoxCollider>();
         boxCol.isTrigger = true;
         completedToy.transform.position = trueParent.transform.position;
-        //completedToy.name = ToyBuilder.type;
-        //give completed toy colliders
         for (int i = 0; i <= trueParent.transform.childCount; i++)
         {
             GameObject child = trueParent.transform.GetChild(0).gameObject;
-            ScrapCollider(child);//gets rid of collider used to pickup obj
+            SwitchIfColliderEnabled(child, false);//gets rid of collider used to pickup obj
             foreach (Transform chilled in child.transform)
             {
                 chilled.gameObject.layer = 6;
@@ -336,6 +373,8 @@ public class ToyBuilder : MonoBehaviour
             child.transform.SetParent(completedToy.transform);
             child.layer = 6;//pickupable
         }
+        toyCompleted = completedToy;
+        completingToy = true;
     }
     public void MoveTinkeringObj()
     {
@@ -352,6 +391,7 @@ public class ToyBuilder : MonoBehaviour
                 heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
 
                 //Debug.DrawRay(hit.point, hit.normal, Color.red, 10f);
+                Debug.Log(tinkeringObj.name);
                 attachPointPos = tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position;
                 referPos = tinkeringObj.GetComponent<attachInfo>().refer.transform.position;
 
@@ -376,26 +416,30 @@ public class ToyBuilder : MonoBehaviour
             tinkeringObj.SetActive(false);
         }
     }
-    public void ScrapCollider(GameObject collObj)//remove box collider used for pickup, and rigidbody
+    public void SwitchIfColliderEnabled(GameObject collObj, bool enabled)//remove box collider used for pickup, and rigidbody
     {
         Collider[] coll = collObj.GetComponents<Collider>();
         Destroy(collObj.GetComponent<Rigidbody>());
 
-        if (coll.Length == 1)//only a box collider
+        if (coll.Length == 0)
         {
-            Destroy(coll[0]);
+            return;
+        }
+        else if (coll.Length == 1)//only a box collider
+        {
+            coll[0].enabled = enabled;
         }
         else//also another type
         {
             if (coll[0].GetType() == typeof(BoxCollider))//if is a box collider, make other not a trigger
             {
-                Destroy(coll[0]);
-                coll[1].isTrigger = false;
+                coll[0].enabled = enabled;
+                coll[1].isTrigger = enabled;
             }
             else//2nd collider is a box collider, 1st is other type, !!!- means that there cannot be two box colliders
             {
-                Destroy(coll[1]);
-                coll[0].isTrigger = false;
+                coll[1].enabled = enabled;
+                coll[0].isTrigger = enabled;
             }
         }
     }
