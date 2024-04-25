@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Audio;
 public class bedScript : MonoBehaviour
 {
 
@@ -21,6 +22,12 @@ public class bedScript : MonoBehaviour
     public bool lookingAt;
     public GameObject sleepQuestionMark;
     public int Day = 0;
+    public AudioMixer Mixer;
+    public AudioMixerSnapshot Default;
+    public AudioMixerSnapshot Muffled;
+    public int sleepingLength;
+    public GameObject crosshair;
+
     public void Start()
 
     {
@@ -63,6 +70,8 @@ public class bedScript : MonoBehaviour
     }
     IEnumerator transparentUp ()
     {
+        Muffled.TransitionTo(1f);
+        crosshair.SetActive(false);
         //print("transparentUp");
 
         if (profile.TryGet<Vignette>(out vig))
@@ -72,7 +81,7 @@ public class bedScript : MonoBehaviour
         transparent.GetComponent<CanvasGroup>().alpha += 0.015f;
         yield return new WaitForSeconds(0.01f);
         z++;
-        if (z <= 100)
+        if (z <= sleepingLength)
         {
             StartCoroutine(transparentUp());
         }
@@ -94,12 +103,14 @@ public class bedScript : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         z--;
 
-        if (z <= 100 && z > 0)
+        if (z <= sleepingLength && z > 0)
         {
             StartCoroutine(transparentDown());
         }
         if (z == 0)
         {
+            Default.TransitionTo(1f);
+            crosshair.SetActive(true);
             caledarScript.text = caledarScript.text + " /";
 
             Day++;

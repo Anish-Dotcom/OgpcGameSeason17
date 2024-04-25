@@ -5,7 +5,7 @@ using UnityEngine;
 public class FatigueController : MonoBehaviour
 {
     public int iter = 0;
-    public float fatigue = 0    ;
+    public float fatigue = 1    ;
     public float fatugueUnchanged = 0;
     public GameObject shadowBorder;
     public DissolveController DissolveController;
@@ -37,7 +37,7 @@ public class FatigueController : MonoBehaviour
             fatigue = 0;//Resets fatigue
         }
 
-        Vector3 cutDistanceChanges = new Vector3(DissolveSpeed.x / fatugueUnchanged, DissolveSpeed.y / fatugueUnchanged, DissolveSpeed.z / fatugueUnchanged);
+        Vector3 cutDistanceChanges = new Vector3(DissolveSpeed.x / fatigue, DissolveSpeed.y / fatigue, DissolveSpeed.z / fatigue);
         DissolveController.SetCutoffDist(cutDistanceChanges);
     }
     void OutputTime() {
@@ -73,7 +73,7 @@ public class FatigueController : MonoBehaviour
     {//Resets transpareny referenced in bedscript
         Vector3 cutDistanceChanges = new Vector3(5, 4, 10);
         fatugueUnchanged = 0;
-        fatigue = 0;
+        fatigue = 1;
         DissolveController.setCutoffNoChange(cutDistanceChanges);
         StopAllCoroutines();
 

@@ -39,9 +39,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Cutoff_Distance_X: 5.6174517
-    - _Cutoff_Distance_Y: 3.449306
-    - _Cutoff_Distance_Z: 8.680988
+    - _Cutoff_Distance_X: 5
+    - _Cutoff_Distance_Y: 4
+    - _Cutoff_Distance_Z: 10
     - _Noise_Scale: 50
     - _Noise_Strength: 0
     - _WindIntensity: 0.3
