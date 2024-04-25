@@ -27,7 +27,7 @@ public class SurfaceDetector : MonoBehaviour
     private void DetectSurface()
     {
 
-        if (GlobalDissolveCon.inArea == 1)
+        if (GlobalDissolveCon.inArea == -1)
         {
 
             if (canPlayFootstep)
