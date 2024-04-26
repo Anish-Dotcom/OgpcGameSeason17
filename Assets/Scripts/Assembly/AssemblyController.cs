@@ -194,7 +194,7 @@ public class AssemblyController : MonoBehaviour
     {
         if (gameObject.GetComponent<ToyBuilder>().trueParent.transform.childCount > 0)
         {
-            //gameObject.GetComponent<ToyBuilder>().CompleteOutsideMenu();
+            gameObject.GetComponent<ToyBuilder>().CompleteToy();
         }
         building = true;
         completedAssembly = CompletedAssembly;
@@ -209,6 +209,17 @@ public class AssemblyController : MonoBehaviour
             GameObject Recent = Instantiate(emptyObj, new Vector3(0, 0, 0), Quaternion.identity, AssemblyPartsInPosition.GetComponent<Transform>());
             Recent.name = toyNamesForFinal[i] + " " + i.ToString();//setNameToSameAsToyNames + something to differentiate
         }
+    }
+    public void CancelAssembly()
+    {
+        Destroy(RecipeForAssemblyObj.transform.GetChild(0));
+        GameObject parentObj = gameObject.GetComponent<ToyBuilder>().playerMove.GetComponent<ObjectPickUp>().droppedObjectsContainer.gameObject;
+        for (int i = 0; i < AssemblyPartsInPosition.GetComponent<Transform>().childCount; i++)
+        {
+            AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).GetChild(0).SetParent(parentObj.transform);
+            Destroy(AssemblyPartsInPosition.GetComponent<Transform>().GetChild(i).gameObject);
+        }
+
     }
     public void ChangeColliderTrigger(GameObject collObj, bool setToType)
     {

@@ -98,7 +98,7 @@ public class ObjectPickUp : MonoBehaviour
         }
         else if(equipped && !menuOpen && playerInputs.Player.PickUp.WasPerformedThisFrame()) // drop the object picked up
         {
-            Drop(currentObject);
+            Drop(objectContainer.transform.GetChild(0).gameObject);
         }
 
         if (lookingAtCheck.lookingAt[1] && equipped) // storing object on shelf/boxes
@@ -108,7 +108,7 @@ public class ObjectPickUp : MonoBehaviour
             {
                 if (playerInputs.Player.Interact.WasPerformedThisFrame())
                 {
-                    Drop(currentObject);
+                    Drop(objectContainer.transform.GetChild(0).gameObject);
 
                     for (int i = 0; i < coll.Length - 1; i++)
                     {

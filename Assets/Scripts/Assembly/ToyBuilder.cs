@@ -17,6 +17,7 @@ public class ToyBuilder : MonoBehaviour
     Vector3 stationCamStartPos;
     Quaternion stationCamStartRot;
     public GameObject stationCamRig;
+    bool moving;
     bool movingCam;
     bool movingTo;
     float timeMovingCam;
@@ -192,7 +193,7 @@ public class ToyBuilder : MonoBehaviour
                 EnterBuildMode();
             }
         }
-        if (movingCam)
+        if (moving)
         {
             timeMovingCam += Time.deltaTime;
             if (movingTo)//(entering build mode)
@@ -211,7 +212,8 @@ public class ToyBuilder : MonoBehaviour
                 {
                     stationCam.transform.position = stationCamStartPos;
                     stationCam.transform.rotation = stationCam.transform.rotation;
-                    movingCam = false;
+                    movingCam = true;
+                    moving = false;
                     timeMovingCam = 0;
                     inBuildMode = true;
                 }
@@ -224,8 +226,11 @@ public class ToyBuilder : MonoBehaviour
                     {
                         toyCompleted.transform.position = Vector3.SmoothDamp(toyCompleted.transform.position, completedLocation, ref velo, 0.3f);
                     }
-                    stationCam.transform.position = Vector3.SmoothDamp(stationCam.transform.position, playerCam.transform.position, ref velocity, 0.3f);
-                    stationCam.transform.rotation = QuaternionUtils.SmoothDamp(stationCam.transform.rotation, playerCam.transform.rotation, ref deriv, 0.3f);
+                    if (movingCam)
+                    {
+                        stationCam.transform.position = Vector3.SmoothDamp(stationCam.transform.position, playerCam.transform.position, ref velocity, 0.3f);
+                        stationCam.transform.rotation = QuaternionUtils.SmoothDamp(stationCam.transform.rotation, playerCam.transform.rotation, ref deriv, 0.3f);
+                    }
                 }
                 else
                 {
@@ -233,24 +238,31 @@ public class ToyBuilder : MonoBehaviour
                     {
                         toyCompleted.transform.position = Vector3.SmoothDamp(toyCompleted.transform.position, completedLocation, ref velo, 0.1f);
                     }
-                    stationCam.transform.position = Vector3.SmoothDamp(stationCam.transform.position, playerCam.transform.position, ref velocity, 0.1f);
-                    stationCam.transform.rotation = QuaternionUtils.SmoothDamp(stationCam.transform.rotation, playerCam.transform.rotation, ref deriv, 0.1f);
+                    if (movingCam)
+                    {
+                        stationCam.transform.position = Vector3.SmoothDamp(stationCam.transform.position, playerCam.transform.position, ref velocity, 0.1f);
+                        stationCam.transform.rotation = QuaternionUtils.SmoothDamp(stationCam.transform.rotation, playerCam.transform.rotation, ref deriv, 0.1f);
+                    }
                 }
                 if (timeMovingCam > 1)
                 {
-                    raycastCon.ReopenPopups();
-                    playerMove.isControllable = true;
-                    playerCam.SetActive(true);
-                    stationCam.SetActive(false);
-                    stationCam.transform.position = stationCamStartPos;
-                    stationCam.transform.rotation = stationCam.transform.rotation;
+                    if (movingCam)
+                    {
+                        raycastCon.ReopenPopups();
+                        playerMove.isControllable = true;
+                        playerCam.SetActive(true);
+                        stationCam.SetActive(false);
+                        stationCam.transform.position = stationCamStartPos;
+                        stationCam.transform.rotation = stationCam.transform.rotation;
+                        movingCam = false;
+                        timeMovingCam = 0;
+                    }
                     if (completingToy)
                     {
                         playerMove.gameObject.GetComponent<ObjectPickUp>().PickUp(toyCompleted);
                         completingToy = false;
                     }
-                    movingCam = false;
-                    timeMovingCam = 0;
+                    moving = false;
                 }
             }
         }
@@ -293,10 +305,6 @@ public class ToyBuilder : MonoBehaviour
     }
     public void EnterBuildMode()
     {
-        if (gameObject.GetComponent<AssemblyController>().building)
-        {
-
-        }
         completedLocation = heldObjContainer.transform.position;
         menuCon.openMenu(stationMenu, false, false, crosshairOutisde, true);
         velocity = Vector3.zero;
@@ -309,6 +317,7 @@ public class ToyBuilder : MonoBehaviour
         stationCam.transform.rotation = playerCam.transform.rotation;
         stationCam.transform.position = playerCam.transform.position;
         movingTo = true;
+        moving = true;
         movingCam = true;
     }
     public void ExitBuildMode()
@@ -325,6 +334,7 @@ public class ToyBuilder : MonoBehaviour
         velocity = Vector3.zero;
         deriv = Quaternion.identity;
         movingTo = false;
+        moving = true;
         movingCam = true;
     }
     public void LockInPosition()
@@ -360,31 +370,39 @@ public class ToyBuilder : MonoBehaviour
     }
     public void CompleteToy()
     {
-        ExitBuildMode();
+        if (inBuildMode)
+        {
+            ExitBuildMode();
+        }
+        else
+        {
+            moving = true;
+            movingTo = false;
+        }
+        completingToy = true;
         GameObject completedToy = Instantiate(gameObject.GetComponent<AssemblyController>().emptyObj, playerMove.gameObject.GetComponent<ObjectPickUp>().droppedObjectsContainer);
         completedToy.layer = 6;
         completedToy.name = "finished Toy";
         completedToy.tag = "finished Toy";
         completedToy.AddComponent(typeof(Rigidbody));
-        completedToy.GetComponent<Rigidbody>().useGravity = false;
+        //completedToy.GetComponent<Rigidbody>().useGravity = false;
         completedToy.GetComponent<Rigidbody>().isKinematic = true;
-        completedToy.AddComponent(typeof(BoxCollider));//shouldnt need this
+        completedToy.AddComponent(typeof(BoxCollider));//need to resize
         BoxCollider boxCol = completedToy.GetComponent<BoxCollider>();
         boxCol.isTrigger = true;
         completedToy.transform.position = trueParent.transform.position;
         for (int i = 0; i <= trueParent.transform.childCount; i++)
         {
             GameObject child = trueParent.transform.GetChild(0).gameObject;
-            SwitchIfColliderEnabled(child, false);//gets rid of collider used to pickup obj
+            SwitchIfColliderEnabled(child, false);//disables collider used to pickup obj
             foreach (Transform chilled in child.transform)
             {
-                chilled.gameObject.layer = 6;
+                chilled.gameObject.layer = 0;//defualt layer
             }
             child.transform.SetParent(completedToy.transform);
-            child.layer = 6;//pickupable
+            child.layer = 0;//default
         }
         toyCompleted = completedToy;
-        completingToy = true;
     }
     public void MoveTinkeringObj()
     {
