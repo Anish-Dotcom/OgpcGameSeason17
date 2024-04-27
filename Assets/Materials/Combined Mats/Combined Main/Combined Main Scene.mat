@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Combined Main Scene
-  m_Shader: {fileID: -6465566751694194690, guid: d3513f62807bf93429bd140993138b9d,
+  m_Shader: {fileID: -6465566751694194690, guid: 6ba5180df78acea46814276b4527be3d,
     type: 3}
   m_ValidKeywords:
   - _HAFTONESHAPES_DOT
@@ -116,9 +116,16 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Cutoff_Distance: 10
-    - _Cutoff_Distance_X: 5.6504054
-    - _Cutoff_Distance_Y: 4.668964
-    - _Cutoff_Distance_Z: 8.708556
+    - _Cutoff_Distance_X: 5.7497096
+    - _Cutoff_Distance_X_non_move: 10
+    - _Cutoff_Distance_Y: 5.3314753
+    - _Cutoff_Distance_Y_non_move: 10
+    - _Cutoff_Distance_Z: 8.791412
+    - _Cutoff_Distance_Z_non_move: 10
+    - _Cutoff_Radius: 9
+    - _Cutoff_X_non_move: 5.848177
+    - _Cutoff_Y_non_move: 5.9878345
+    - _Cutoff_Z_non_move: 8.87346
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DitherTexelSize: 4
@@ -181,6 +188,7 @@ Material:
     - _HalftoneColor: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
+    - _Obj_Pos_non_move: {r: -0.76, g: 0.029, b: 1.55, a: 0}
     - _Object_Position_For_Ref_Dis: {r: -0.76, g: 0.029, b: 1.55, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0.052}
     - _ShadowColor: {r: 0.2863564, g: 0.2899227, b: 0.31132078, a: 0.744}

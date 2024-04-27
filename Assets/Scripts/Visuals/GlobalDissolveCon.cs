@@ -214,6 +214,7 @@ public class GlobalDissolveCon : MonoBehaviour
                     SingleUpdateMat(i);
 
                     areas[i].updatingMats.Clear();// actually no longer updating
+                    areas[i].dualDissolveUpdatingMats.Clear();
                 }
             }
             else if (inArea == 2)//bigger area
@@ -221,6 +222,8 @@ public class GlobalDissolveCon : MonoBehaviour
                 areas[i].transform.GetChild(0).position = player.transform.position;//sets the center to follow the player
                 Vector3 cutoff = new Vector3(areas[i].startingDissolveDistances.x / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear), areas[i].startingDissolveDistances.y, areas[i].startingDissolveDistances.z / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear));
                 areas[i].setCutoffNoChange(cutoff);
+                float cut = areas[i].startingRadius / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear);
+                areas[i].setSecondDissolveRadius(cut);
 
                 if (!consAdded[i])//cons added is asking if it is updating, if its not updating, make it update
                 {
@@ -235,6 +238,10 @@ public class GlobalDissolveCon : MonoBehaviour
                     for (int j = 0; j < areas[i].areaMats.Length; j++)
                     {
                         areas[i].updatingMats.Add(areas[i].areaMats[j]);
+                    }
+                    for (int j = 0; j < areas[i].dualDissolveAreaMats.Length; j++)
+                    {
+                        areas[i].dualDissolveUpdatingMats.Add(areas[i].dualDissolveAreaMats[j]);
                     }
                 }
             }
@@ -254,6 +261,7 @@ public class GlobalDissolveCon : MonoBehaviour
                     SingleUpdateMat(i);
 
                     areas[i].updatingMats.Clear();//stop updating, area should no longer be in view
+                    areas[i].dualDissolveUpdatingMats.Clear();
                 }
             }
         }

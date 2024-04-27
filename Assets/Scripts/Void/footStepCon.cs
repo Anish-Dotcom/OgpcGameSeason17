@@ -21,7 +21,9 @@ public class footStepCon : MonoBehaviour
     public Material footPrintMat;//original footprint mat
     public List<Material> footPrintMatsInScene;//each different color of footprint requires a different material
 
-
+    public float startingTransparency;
+    public float radiusScaleFactor;
+    public float currentRadius;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,8 @@ public class footStepCon : MonoBehaviour
     {
         Material newPrintMat = new Material(footPrintMat);
         newPrintMat.SetColor("_Color", color);
+        newPrintMat.SetFloat("_Transparency", startingTransparency);
+        newPrintMat.SetFloat("_CurrentRadius", 500);
 
         float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position) - 2 * sideSpacing;
         stepCount = Mathf.RoundToInt(totalDist/distance);//calculates the number of footsteps based on distance between locations divided by distance between steps
@@ -74,5 +78,12 @@ public class footStepCon : MonoBehaviour
             recentPrint.GetComponent<Renderer>().material = newPrintMat;
         }
         footPrintMatsInScene.Add(newPrintMat);
+    }
+    public void showPrintsRadarPulse()
+    {
+        for (int i = 0; i < footPrintMatsInScene.Count; i++)
+        {
+            footPrintMatsInScene[i].SetFloat("_CurrentRadius", currentRadius);
+        }
     }
 }

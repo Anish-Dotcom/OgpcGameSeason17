@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mail Grass
-  m_Shader: {fileID: -6465566751694194690, guid: 87f34263647566d4a82aaecfe09f0f4f,
+  m_Shader: {fileID: -6465566751694194690, guid: 6ba5180df78acea46814276b4527be3d,
     type: 3}
   m_ValidKeywords:
   - _HAFTONESHAPES_DOT
@@ -117,9 +117,15 @@ Material:
     - _Cutoff: 0.5
     - _Cutoff_Distance: 10
     - _Cutoff_Distance_X: 2
+    - _Cutoff_Distance_X_non_move: 10
     - _Cutoff_Distance_Y: 4
+    - _Cutoff_Distance_Y_non_move: 10
     - _Cutoff_Distance_Z: 2
+    - _Cutoff_Distance_Z_non_move: 10
+    - _Cutoff_Radius: 9
     - _Cutoff_X_non_move: 2
+    - _Cutoff_Y_non_move: 4
+    - _Cutoff_Z_non_move: 2
     - _Cutoff_y_non_move: 4
     - _Cutoff_z_non_move: 2
     - _DetailAlbedoMapScale: 1

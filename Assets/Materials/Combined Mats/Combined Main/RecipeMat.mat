@@ -86,9 +86,9 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Cutoff_Distance_X: 5.650393
-    - _Cutoff_Distance_Y: 4.668883
-    - _Cutoff_Distance_Z: 8.708547
+    - _Cutoff_Distance_X: 5.8488436
+    - _Cutoff_Distance_Y: 5.992279
+    - _Cutoff_Distance_Z: 8.874016
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
