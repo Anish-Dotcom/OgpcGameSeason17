@@ -24,6 +24,10 @@ public class footStepCon : MonoBehaviour
     public float startingTransparency;
     public float radiusScaleFactor;
     public float currentRadius;
+    public bool updateFootPrints;
+    public float timeSincePulse;
+    public float totalTimeOfPulse;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -31,12 +35,39 @@ public class footStepCon : MonoBehaviour
         //setFootPrints(new Color(0,0,255), 0);//red
     }
 
+    private void Update()
+    {
+        if (updateFootPrints)
+        {
+            timeSincePulse += Time.deltaTime;
+            if (timeSincePulse > totalTimeOfPulse)
+            {
+                updateFootPrints = false;
+                timeSincePulse = 0;
+                currentRadius = 0;
+                for (int i = 0; i < footPrintMatsInScene.Count; i++)//make disappear
+                {
+                    footPrintMatsInScene[i].SetFloat("_CurrentRadius", 500);
+                }
+                return;
+            }
+            showPrintsRadarPulse();
+        }
+    }
+
     public void setFootPrints(Color color, int areaInt)
     {
         Material newPrintMat = new Material(footPrintMat);
         newPrintMat.SetColor("_Color", color);
         newPrintMat.SetFloat("_Transparency", startingTransparency);
-        newPrintMat.SetFloat("_CurrentRadius", 500);
+        if (updateFootPrints)
+        {
+            newPrintMat.SetFloat("_CurrentRadius", currentRadius);
+        }
+        else
+        {
+            newPrintMat.SetFloat("_CurrentRadius", 500);
+        }
 
         float totalDist = Vector3.Distance(startingPointObj.transform.position, endingPointObj.transform.position) - 2 * sideSpacing;
         stepCount = Mathf.RoundToInt(totalDist/distance);//calculates the number of footsteps based on distance between locations divided by distance between steps
@@ -81,9 +112,11 @@ public class footStepCon : MonoBehaviour
     }
     public void showPrintsRadarPulse()
     {
+        currentRadius += (Time.deltaTime * radiusScaleFactor) / (currentRadius + 1);
         for (int i = 0; i < footPrintMatsInScene.Count; i++)
         {
             footPrintMatsInScene[i].SetFloat("_CurrentRadius", currentRadius);
+            footPrintMatsInScene[i].SetVector("_Object_Position_For_Ref_Dis", player.transform.position);
         }
     }
 }

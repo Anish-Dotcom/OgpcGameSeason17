@@ -220,10 +220,26 @@ public class GlobalDissolveCon : MonoBehaviour
             else if (inArea == 2)//bigger area
             {
                 areas[i].transform.GetChild(0).position = player.transform.position;//sets the center to follow the player
-                Vector3 cutoff = new Vector3(areas[i].startingDissolveDistances.x / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear), areas[i].startingDissolveDistances.y, areas[i].startingDissolveDistances.z / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear));
-                areas[i].setCutoffNoChange(cutoff);
+                float cutDivide = ((distance - areas[i].size[1]) / inverseSpeedOfDissappear);
+                Debug.Log(cutDivide.ToString());
+                if (cutDivide < 1)
+                {
+                    areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
+                }
+                else
+                {
+                    Vector3 cutoff = new Vector3(areas[i].startingDissolveDistances.x / (cutDivide), areas[i].startingDissolveDistances.y, areas[i].startingDissolveDistances.z / (cutDivide));
+                    areas[i].setCutoffNoChange(cutoff);
+                }
                 float cut = areas[i].startingRadius / ((distance - areas[i].size[1]) / inverseSpeedOfDissappear);
-                areas[i].setSecondDissolveRadius(cut);
+                if (cut > areas[i].startingRadius) 
+                {
+                    areas[i].setSecondDissolveRadius(areas[i].startingRadius);
+                }
+                else
+                {
+                    areas[i].setSecondDissolveRadius(cut);
+                }
 
                 if (!consAdded[i])//cons added is asking if it is updating, if its not updating, make it update
                 {
@@ -285,5 +301,9 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             trueArea = -1;
         }
+    }
+    public void SetRoomLocations()
+    {
+
     }
 }

@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 public class PlayerMove : MonoBehaviour
 {
     public FatigueController FatigueController;
+    public footStepCon footStep;
 
     public float pullpower = 5;
     public bool crouching = false;
@@ -126,6 +127,10 @@ public class PlayerMove : MonoBehaviour
         if (isControllable)
         {
             MovePlayer();
+        }
+        if (!footStep.updateFootPrints && Input.GetKeyDown(KeyCode.Mouse1) && footStep.footPrintMatsInScene.Count > 0)
+        {
+            footStep.updateFootPrints = true;
         }
     }
 
