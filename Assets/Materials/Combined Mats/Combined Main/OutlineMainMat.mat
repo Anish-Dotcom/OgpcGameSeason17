@@ -102,9 +102,9 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Cutoff_Distance_X: -0.017555796
-    - _Cutoff_Distance_Y: -0.11703882
-    - _Cutoff_Distance_Z: -0.014629853
+    - _Cutoff_Distance_X: 5.701797
+    - _Cutoff_Distance_Y: 5.012307
+    - _Cutoff_Distance_Z: 8.751606
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DitherTexelSize: 4
@@ -165,7 +165,7 @@ Material:
     - _HalftoneColor: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 10.928045, g: 1.8173378, b: -0.4761955, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: -0.76, g: 0.029, b: 1.55, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

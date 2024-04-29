@@ -14,6 +14,8 @@ public class GlobalDissolveCon : MonoBehaviour
 
     public bool[] consAdded;
     public DissolveController[] areas;// mainroom = 0, void = 1
+    public GameObject[] areaObjects;
+    public float[] radiusPlacedUpon;
     public int inArea;
     public int trueArea;
     public List<DissolveController> updatingAreas;
@@ -68,6 +70,7 @@ public class GlobalDissolveCon : MonoBehaviour
                         areas[0].updatingMats.RemoveAt(i);
                     }
                 }
+                SetRoomLocations();
                 placeSteps();//if outside of room give player a guide on where to go to
                 for (int i = 0; i < footStepCon.footPrintMatsInScene.Count; i++)
                 {
@@ -199,8 +202,8 @@ public class GlobalDissolveCon : MonoBehaviour
                 {
                     consAdded[i] = false;//its no longer updating
                     decideArea(inArea, i);
-                    Debug.Log("Entered area " + i + ", section " + inArea);
-                    areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
+                    //Debug.Log("Entered area " + i + ", section " + inArea);
+                    //areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
 
                     removeSteps();//remove footprints and then, if not entering main room, set footsteps back to main room
                     if (i != 0)
@@ -213,6 +216,7 @@ public class GlobalDissolveCon : MonoBehaviour
                     areas[i].transform.GetChild(0).position = areas[i].centralPos;//only needs to do once, sets what was following player to the center of its area
                     SingleUpdateMat(i);
 
+
                     areas[i].updatingMats.Clear();// actually no longer updating
                     areas[i].dualDissolveUpdatingMats.Clear();
                 }
@@ -221,7 +225,7 @@ public class GlobalDissolveCon : MonoBehaviour
             {
                 areas[i].transform.GetChild(0).position = player.transform.position;//sets the center to follow the player
                 float cutDivide = ((distance - areas[i].size[1]) / inverseSpeedOfDissappear);
-                Debug.Log(cutDivide.ToString());
+                //Debug.Log(cutDivide.ToString());
                 if (cutDivide < 1)
                 {
                     areas[i].setCutoffNoChange(areas[i].startingDissolveDistances);
@@ -245,7 +249,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 {
                     consAdded[i] = true;
                     decideArea(inArea, i);
-                    Debug.Log("Entered area " + i + ", section " + inArea);
+                    //Debug.Log("Entered area " + i + ", section " + inArea);
 
                     for (int j = 0; j < areas[i].objsToEnable.Length; j++)
                     {
@@ -267,7 +271,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 {
                     decideArea(inArea, i);
                     consAdded[i] = false;
-                    Debug.Log("Entered area " + i + ", section " + inArea);
+                    //Debug.Log("Entered area " + i + ", section " + inArea);
                     areas[i].setCutoffNoChange(new Vector3(0, 0, 0));
 
                     for (int j = 0; j < areas[i].objsToEnable.Length; j++)
@@ -290,6 +294,13 @@ public class GlobalDissolveCon : MonoBehaviour
             areaMatsList.Add(areas[areaI].areaMats[j]);
         }
         areas[areaI].SetObjPos(areaMatsList);
+        List<Material> dualMatList = new List<Material>();
+        for (int j = 0; j < areas[areaI].dualDissolveAreaMats.Length; j++)
+        {
+            areaMatsList.Add(areas[areaI].dualDissolveAreaMats[j]);
+        }
+        areas[areaI].setSecondDissolveCenter(areaMatsList);
+
     }
     public void decideArea(int InArea, int i)
     {
@@ -304,6 +315,73 @@ public class GlobalDissolveCon : MonoBehaviour
     }
     public void SetRoomLocations()
     {
+        float[] angle = new float[areaObjects.Length];
+        angle[0] = Random.Range(0f, 1f);
+        float oneMinusAng = 1 - angle[0];
+        Vector2 eitherSideNum = Vector2.zero;
+        for (int i = 1; i < areaObjects.Length; i++)
+        {
+            if (oneMinusAng / i > angle[0] / (areaObjects.Length - i))// if the other side angle is greater than each divided up angle add one to other side, remove one from that side
+            {
+                eitherSideNum = new Vector2(i, areaObjects.Length - i);//x+y always adds to areaObjects.Length
+            }
+            else//in optimal angles
+            {
+                eitherSideNum = new Vector2(i - 1, areaObjects.Length - (i - 1));
+                break;
+            }
+        }
+        Vector2 eitherSideUsedNum = Vector2.zero;
+        for (int i = 0; i < areaObjects.Length; i++)
+        {
+            if (i > 0)
+            {
+                int side;
+                //Debug.Log(eitherSideNum);
+                if (eitherSideNum.x - eitherSideUsedNum.x != 0 && eitherSideNum.y - eitherSideUsedNum.y != 0)
+                {
+                    side = Random.Range(1, 3);
+                }
+                else if (eitherSideNum.x - eitherSideUsedNum.x != 0)
+                {
+                    side = 1;
+                }
+                else
+                {
+                    side = 0;
+                }
+                Debug.Log(side.ToString());
+                if (side == 1)//left side
+                {
+                    angle[i] = angle[0] + (oneMinusAng / eitherSideNum.x) * eitherSideUsedNum.x;
+                    //Debug.Log(angle[0].ToString() + " eitherSide: " + eitherSideNum.x.ToString() + " eitherSideUsed: " + eitherSideUsedNum.x.ToString());
+                    eitherSideUsedNum += new Vector2(1, 0);
+                }
+                else//right side
+                {
+                    angle[i] = angle[0] - (angle[0] / eitherSideNum.y) * eitherSideUsedNum.y;
+                    //Debug.Log(angle[0].ToString() + " eitherSide: " + eitherSideNum.x.ToString() + " eitherSideUsed: " + eitherSideUsedNum.x.ToString());
+                    eitherSideUsedNum += new Vector2(0, 1);
+                }
+            }
+            //Debug.Log("angle " + angle[i] + " sinangle: " + Mathf.Cos(angle[i]).ToString() + " radius: " + radiusPlacedUpon[i]);
 
+            areaObjects[i].transform.position = new Vector3(Mathf.Cos(angle[i]) * radiusPlacedUpon[i], transform.position.y, Mathf.Sin(angle[i]) * radiusPlacedUpon[i]);
+
+
+            List<Material> areaMatsT = new List<Material>();
+            List<Material> dualAreaMats = new List<Material>();
+            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().areaMats.Length; j++)
+            {
+                areaMatsT.Add(areaObjects[i].GetComponent<DissolveController>().areaMats[j]);
+            }
+            areaObjects[i].GetComponent<DissolveController>().SetObjPos(areaMatsT);
+
+            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats.Length; j++)
+            {
+                dualAreaMats.Add(areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats[j]);
+            }
+            areaObjects[i].GetComponent<DissolveController>().objNonMoveCenterSet(dualAreaMats);
+        }
     }
 }

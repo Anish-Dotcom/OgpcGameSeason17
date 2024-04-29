@@ -122,4 +122,14 @@ public class DissolveController : MonoBehaviour
             updating[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
         }
     }
+    public void objNonMoveCenterSet(List<Material> updating)
+    {
+        centralPos = centralObj.transform.position;
+        for (int i = 0; i < updating.Count; i++)
+        {
+            //Debug.Log(updating[i].GetVector("_Obj_Pos_non_move") + " " + gameObject.name);
+            updating[i].SetVector("_Obj_Pos_non_move", centralObj.transform.position);
+            //Debug.Log(updating[i].GetVector("_Obj_Pos_non_move") + " " + gameObject.name);
+        }
+    }
 }
