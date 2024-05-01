@@ -487,4 +487,17 @@ public class ToyBuilder : MonoBehaviour
             }
         }
     }
+    public Color AvgColors(Color color1, Color color2)
+    {
+        color1 *= color1;
+        color2 *= color2;
+
+        Color resultingColor = color1 + color2;
+        resultingColor *= (1 / 2);
+        resultingColor.r = Mathf.Sqrt(resultingColor.r);
+        resultingColor.g = Mathf.Sqrt(resultingColor.g);
+        resultingColor.b = Mathf.Sqrt(resultingColor.b);
+
+        return resultingColor;
+    }
 }
