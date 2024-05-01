@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1341883360492941261}
   - component: {fileID: 872815770158979885}
   - component: {fileID: 7369692281470922007}
+  - component: {fileID: 4756167121335841176}
   m_Layer: 5
   m_Name: Radar
   m_TagString: Untagged
@@ -35,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 378, y: 187}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &872815770158979885
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 87b9be4b193991643a5269aa6440b853, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,3 +77,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4756167121335841176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2356653166461976137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea517651f82481945995cb74e0c4c737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectInRange: 0
+  distToObject: 0
+  Image: {fileID: 7369692281470922007}
+  DefaultRadar: {fileID: 21300000, guid: 87b9be4b193991643a5269aa6440b853, type: 3}
+  Radar1: {fileID: 21300000, guid: 9ff4330dea87d874aa216dfd9088fd49, type: 3}
+  Radar2: {fileID: 21300000, guid: e13df77d5a208884eb5fa5cf1e2af526, type: 3}
+  Radar3: {fileID: 21300000, guid: d0eefd27a0778f643a5e39f6b24b0e80, type: 3}
