@@ -26,6 +26,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public bool firstFrameOutside = true;
 
     public float inverseSpeedOfDissappear;
+    private Vector3 axis;
 
     // Start is called before the first frame update
     void Start()
@@ -350,7 +351,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 {
                     side = 0;
                 }
-                Debug.Log(side.ToString());
+                //Debug.Log(side.ToString());
                 if (side == 1)//left side
                 {
                     angle[i] = angle[0] + (oneMinusAng / eitherSideNum.x) * eitherSideUsedNum.x;
@@ -367,7 +368,16 @@ public class GlobalDissolveCon : MonoBehaviour
             //Debug.Log("angle " + angle[i] + " sinangle: " + Mathf.Cos(angle[i]).ToString() + " radius: " + radiusPlacedUpon[i]);
 
             areaObjects[i].transform.position = new Vector3(Mathf.Cos(angle[i]) * radiusPlacedUpon[i], transform.position.y, Mathf.Sin(angle[i]) * radiusPlacedUpon[i]);
-
+            Vector3 direction = areaObjects[i].transform.GetChild(0).GetChild(0).position - areaObjects[i].transform.GetChild(0).position;
+            float ang = Vector3.Angle(direction, areas[0].centralPos - areaObjects[i].transform.position);
+            Vector3 axis1 = Vector3.Cross(direction, areas[0].centralPos - areaObjects[i].transform.position).normalized;
+            if (axis1 != Vector3.zero)
+            {
+                axis = axis1;
+            }
+            //Debug.Log("axis: " + axis);
+            // rotate around the attachPointPos
+            areaObjects[i].transform.RotateAround(areaObjects[i].GetComponent<DissolveController>().centralObj.transform.position, axis, ang);
 
             List<Material> areaMatsT = new List<Material>();
             List<Material> dualAreaMats = new List<Material>();
