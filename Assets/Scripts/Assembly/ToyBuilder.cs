@@ -473,7 +473,7 @@ public class ToyBuilder : MonoBehaviour
     }
     public void PaintPart(Color color, GameObject objToPaint)
     {
-        if (!tinkering)
+        if (!tinkering && inBuildMode)
         {
             RaycastHit hit;
             Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
