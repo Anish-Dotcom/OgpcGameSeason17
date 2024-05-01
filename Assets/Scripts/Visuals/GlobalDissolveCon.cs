@@ -332,18 +332,18 @@ public class GlobalDissolveCon : MonoBehaviour
                 break;
             }
         }
-        Vector2 eitherSideUsedNum = Vector2.zero;
+        Vector2 eitherSideUsedNum = Vector2.one;
         for (int i = 0; i < areaObjects.Length; i++)
         {
             if (i > 0)
             {
                 int side;
                 //Debug.Log(eitherSideNum);
-                if (eitherSideNum.x - eitherSideUsedNum.x != 0 && eitherSideNum.y - eitherSideUsedNum.y != 0)
+                if (eitherSideNum.x - (eitherSideUsedNum.x - 1) != 0 && eitherSideNum.y - (eitherSideUsedNum.y - 1) != 0)
                 {
                     side = Random.Range(1, 3);
                 }
-                else if (eitherSideNum.x - eitherSideUsedNum.x != 0)
+                else if (eitherSideNum.x - (eitherSideUsedNum.x - 1) != 0)
                 {
                     side = 1;
                 }
@@ -360,14 +360,15 @@ public class GlobalDissolveCon : MonoBehaviour
                 }
                 else//right side
                 {
-                    angle[i] = angle[0] - (angle[0] / eitherSideNum.y) * eitherSideUsedNum.y;
+                    angle[i] = -1 * angle[0] - (angle[0] / eitherSideNum.y) * eitherSideUsedNum.y;
                     //Debug.Log(angle[0].ToString() + " eitherSide: " + eitherSideNum.x.ToString() + " eitherSideUsed: " + eitherSideUsedNum.x.ToString());
                     eitherSideUsedNum += new Vector2(0, 1);
                 }
             }
             //Debug.Log("angle " + angle[i] + " sinangle: " + Mathf.Cos(angle[i]).ToString() + " radius: " + radiusPlacedUpon[i]);
-
+            Debug.Log("angle " + angle[i]);
             areaObjects[i].transform.position = new Vector3(Mathf.Cos(angle[i]) * radiusPlacedUpon[i], transform.position.y, Mathf.Sin(angle[i]) * radiusPlacedUpon[i]);
+
             Vector3 direction = areaObjects[i].transform.GetChild(0).GetChild(0).position - areaObjects[i].transform.GetChild(0).position;
             float ang = Vector3.Angle(direction, areas[0].centralPos - areaObjects[i].transform.position);
             Vector3 axis1 = Vector3.Cross(direction, areas[0].centralPos - areaObjects[i].transform.position).normalized;
@@ -380,18 +381,18 @@ public class GlobalDissolveCon : MonoBehaviour
             areaObjects[i].transform.RotateAround(areaObjects[i].GetComponent<DissolveController>().centralObj.transform.position, axis, ang);
 
             List<Material> areaMatsT = new List<Material>();
-            List<Material> dualAreaMats = new List<Material>();
-            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().areaMats.Length; j++)
+            //List<Material> dualAreaMats = new List<Material>();
+            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats.Length; j++)//add just the mats with dual
+            {
+                areaMatsT.Add(areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats[j]);
+            }
+            areaObjects[i].GetComponent<DissolveController>().objNonMoveCenterSet(areaMatsT);//set center for dual
+
+            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().areaMats.Length; j++)//add the other mats
             {
                 areaMatsT.Add(areaObjects[i].GetComponent<DissolveController>().areaMats[j]);
             }
-            areaObjects[i].GetComponent<DissolveController>().SetObjPos(areaMatsT);
-
-            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats.Length; j++)
-            {
-                dualAreaMats.Add(areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats[j]);
-            }
-            areaObjects[i].GetComponent<DissolveController>().objNonMoveCenterSet(dualAreaMats);
+            areaObjects[i].GetComponent<DissolveController>().SetObjPos(areaMatsT);//set other center for both
         }
     }
 }

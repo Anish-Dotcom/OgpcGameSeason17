@@ -471,4 +471,20 @@ public class ToyBuilder : MonoBehaviour
             }
         }
     }
+    public void PaintPart(Color color, GameObject objToPaint)
+    {
+        if (!tinkering)
+        {
+            RaycastHit hit;
+            Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            LayerMask layer = LayerMask.GetMask("ToonLayer");
+            if (Physics.Raycast(ray, out hit, 3.5f, layer))
+            {
+                if (objToPaint != tinkeringObj)
+                {
+                    hit.transform.GetComponent<Material>().SetColor("_Color", color);
+                }
+            }
+        }
+    }
 }
