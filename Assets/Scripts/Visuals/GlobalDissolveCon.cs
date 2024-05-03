@@ -31,7 +31,7 @@ public class GlobalDissolveCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        areas[1].updatingMats.Add(boxMat);
+        areas[1].dualDissolveUpdatingMats.Add(boxMat);
         consAdded = new bool[areas.Length];
         /*
         for (int i = 0; i < areas.Length; i++) // this makes it so that if an area is not the main room, it is invis by default
@@ -63,12 +63,12 @@ public class GlobalDissolveCon : MonoBehaviour
             WrapAround();
             if (firstFrameOutside)
             {
-                areas[1].updatingMats.Add(boxMat);
-                for (int i = 0; i < areas[0].updatingMats.Count; i++)
+                areas[1].dualDissolveUpdatingMats.Add(boxMat);
+                for (int i = 0; i < areas[0].dualDissolveUpdatingMats.Count; i++)
                 {
-                    if (areas[0].updatingMats[i] == boxMat)
+                    if (areas[0].dualDissolveUpdatingMats[i] == boxMat)
                     {
-                        areas[0].updatingMats.RemoveAt(i);
+                        areas[0].dualDissolveUpdatingMats.RemoveAt(i);
                     }
                 }
                 SetRoomLocations();

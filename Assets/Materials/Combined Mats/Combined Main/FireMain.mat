@@ -39,14 +39,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Cutoff_Distance_X: 5.724514
-    - _Cutoff_Distance_Y: 5.1639996
-    - _Cutoff_Distance_Z: 8.770778
+    - _Cutoff_Distance_X: 5.7651577
+    - _Cutoff_Distance_Y: 5.4344096
+    - _Cutoff_Distance_Z: 8.804348
+    - _Cutoff_Radius: 9
+    - _Cutoff_X_non_move: 5.949384
+    - _Cutoff_Y_non_move: 6.662569
+    - _Cutoff_Z_non_move: 8.957818
     - _Noise_Scale: 50
     - _Noise_Strength: 0
     - _WindIntensity: 0.3
     - _WindSpeed: 0.4
     m_Colors:
     - _Obj_Pos_For_Ref: {r: 0, g: 0, b: 0, a: 0}
+    - _Obj_Pos_non_move: {r: -0.76, g: 0.029, b: 1.55, a: 0}
     - _Object_Position_For_Ref_Dis: {r: -0.76, g: 0.029, b: 1.55, a: 0}
   m_BuildTextureStacks: []
