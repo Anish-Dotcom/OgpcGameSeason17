@@ -10,8 +10,8 @@ public class DissolveController : MonoBehaviour
     public GameObject centralObj;//able to change positon to cleanly make something appear
     public Vector3 centralPos;//position central obj starts at
 
-    public Material[] areaMats;
-    public Material[] dualDissolveAreaMats;
+    public List<Material> areaMats;
+    public List<Material> dualDissolveAreaMats;
     public List<Material> updatingMats;
     public List<Material> dualDissolveUpdatingMats;
     public float updatedRadius;
@@ -26,7 +26,7 @@ public class DissolveController : MonoBehaviour
     {
         dissolveDistances = startingDissolveDistances;
         centralPos = centralObj.transform.position;
-        for (int i = 0; i < areaMats.Length; i++)
+        for (int i = 0; i < areaMats.Count; i++)
         {
             areaMats[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
             //Debug.Log(areaMats[i].GetVector("_Object_Position_For_Ref_Dis"));
@@ -35,7 +35,7 @@ public class DissolveController : MonoBehaviour
             areaMats[i].SetFloat("_Cutoff_Distance_Z", dissolveDistances.z);
             areaMats[i].SetFloat("_Noise_Strength", dissolveNoiseStrength);
         }
-        for (int i = 0; i < dualDissolveAreaMats.Length; i++)//for mats with two layers of dissolve
+        for (int i = 0; i < dualDissolveAreaMats.Count; i++)//for mats with two layers of dissolve
         {
             dualDissolveAreaMats[i].SetVector("_Obj_Pos_non_move", centralObj.transform.position);
             dualDissolveAreaMats[i].SetFloat("_Cutoff_X_non_move", dissolveDistances.x);
@@ -67,7 +67,7 @@ public class DissolveController : MonoBehaviour
     }
     public void SetCutoffDist(Vector3 distanceChanges)
     {
-        for (int i = 0; i < areaMats.Length; i++)
+        for (int i = 0; i < areaMats.Count; i++)
         {
             dissolveDistances -= distanceChanges;
 
@@ -79,7 +79,7 @@ public class DissolveController : MonoBehaviour
             Debug.Log(areaMats[i].GetFloat("_Cutoff_Distance_Y"));
             Debug.Log(areaMats[i].GetFloat("_Cutoff_Distance_Z"));*/
         }
-        for (int i = 0; i < dualDissolveAreaMats.Length; i++)
+        for (int i = 0; i < dualDissolveAreaMats.Count; i++)
         {
             dualDissolveAreaMats[i].SetFloat("_Cutoff_X_non_move", dissolveDistances.x);
             dualDissolveAreaMats[i].SetFloat("_Cutoff_Y_non_move", dissolveDistances.y);
@@ -88,7 +88,7 @@ public class DissolveController : MonoBehaviour
     }
     public void setCutoffNoChange(Vector3 distanceChanges)
     {
-        for (int i = 0; i < areaMats.Length; i++)
+        for (int i = 0; i < areaMats.Count; i++)
         {
             dissolveDistances = distanceChanges;
 
@@ -100,7 +100,7 @@ public class DissolveController : MonoBehaviour
             Debug.Log(areaMats[i].GetFloat("_Cutoff_Distance_Y"));
             Debug.Log(areaMats[i].GetFloat("_Cutoff_Distance_Z"));*/
         }
-        for (int i = 0; i < dualDissolveAreaMats.Length; i++)
+        for (int i = 0; i < dualDissolveAreaMats.Count; i++)
         {
             dualDissolveAreaMats[i].SetFloat("_Cutoff_X_non_move", dissolveDistances.x);
             dualDissolveAreaMats[i].SetFloat("_Cutoff_Y_non_move", dissolveDistances.y);
@@ -110,7 +110,7 @@ public class DissolveController : MonoBehaviour
     public void setSecondDissolveRadius(float radius)//for player dissovle
     {
         updatedRadius = radius;
-        for (int i = 0; i < dualDissolveAreaMats.Length; i++)
+        for (int i = 0; i < dualDissolveAreaMats.Count; i++)
         {
             dualDissolveAreaMats[i].SetFloat("_Cutoff_Radius", radius);
         }
@@ -131,5 +131,18 @@ public class DissolveController : MonoBehaviour
             updating[i].SetVector("_Obj_Pos_non_move", centralObj.transform.position);
             //Debug.Log(updating[i].GetVector("_Obj_Pos_non_move") + " " + gameObject.name);
         }
+    }
+    public void BoxUpdate(Material boxmat)
+    {
+        boxmat.SetVector("_Obj_Pos_non_move", centralObj.transform.position);
+        boxmat.SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
+    }
+    public void BoxSet(Material boxmat)
+    {
+        boxmat.SetFloat("_Cutoff_X_non_move", dissolveDistances.x);
+        boxmat.SetFloat("_Cutoff_Y_non_move", dissolveDistances.y);
+        boxmat.SetFloat("_Cutoff_Z_non_move", dissolveDistances.z);
+
+        boxmat.SetFloat("_Cutoff_Radius", startingRadius);
     }
 }

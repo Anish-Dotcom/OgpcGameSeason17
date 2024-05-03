@@ -20,7 +20,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public int trueArea;
     public List<DissolveController> updatingAreas;
     public footStepCon footStepCon;
-    public Material boxMat;
+    public List<Material> boxMats;
 
     public float[] mainRoomDistances = new float[4];
     public bool firstFrameOutside = true;
@@ -31,7 +31,11 @@ public class GlobalDissolveCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        areas[1].dualDissolveUpdatingMats.Add(boxMat);
+        for (int i = 0; i < boxMats.Count; i++)
+        {
+            areas[0].BoxSet(boxMats[i]);
+            areas[0].BoxUpdate(boxMats[i]);
+        }
         consAdded = new bool[areas.Length];
         /*
         for (int i = 0; i < areas.Length; i++) // this makes it so that if an area is not the main room, it is invis by default
@@ -61,16 +65,13 @@ public class GlobalDissolveCon : MonoBehaviour
         if (!inMainRoom())
         {
             WrapAround();
+            for (int i = 0; i < boxMats.Count; i++)
+            {
+                areas[1].BoxUpdate(boxMats[i]);
+                //Debug.Log(i + " area: 1");
+            }
             if (firstFrameOutside)
             {
-                areas[1].dualDissolveUpdatingMats.Add(boxMat);
-                for (int i = 0; i < areas[0].dualDissolveUpdatingMats.Count; i++)
-                {
-                    if (areas[0].dualDissolveUpdatingMats[i] == boxMat)
-                    {
-                        areas[0].dualDissolveUpdatingMats.RemoveAt(i);
-                    }
-                }
                 SetRoomLocations();
                 placeSteps();//if outside of room give player a guide on where to go to
                 for (int i = 0; i < footStepCon.footPrintMatsInScene.Count; i++)
@@ -84,6 +85,11 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             if (!firstFrameOutside)//(first frame inside)
             {
+                for (int i = 0; i < boxMats.Count; i++)
+                {
+                    areas[0].BoxUpdate(boxMats[i]);
+                    //Debug.Log(i + " area: 0");
+                }
                 removeSteps();
                 firstFrameOutside = true;
             }
@@ -167,14 +173,6 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             Destroy(footStepCon.parentObj.transform.GetChild(i).gameObject);
         }
-        areas[0].updatingMats.Add(boxMat);
-        for (int i = 0; i < areas[0].updatingMats.Count; i++)
-        {
-            if (areas[0].updatingMats[i] == boxMat)
-            {
-                areas[0].updatingMats.RemoveAt(i);
-            }
-        }
     }
     public void AreaCheck()//tells which area you are in
     {
@@ -256,11 +254,11 @@ public class GlobalDissolveCon : MonoBehaviour
                     {
                         areas[i].objsToEnable[j].SetActive(true);
                     }
-                    for (int j = 0; j < areas[i].areaMats.Length; j++)
+                    for (int j = 0; j < areas[i].areaMats.Count; j++)
                     {
                         areas[i].updatingMats.Add(areas[i].areaMats[j]);
                     }
-                    for (int j = 0; j < areas[i].dualDissolveAreaMats.Length; j++)
+                    for (int j = 0; j < areas[i].dualDissolveAreaMats.Count; j++)
                     {
                         areas[i].dualDissolveUpdatingMats.Add(areas[i].dualDissolveAreaMats[j]);
                     }
@@ -290,13 +288,13 @@ public class GlobalDissolveCon : MonoBehaviour
     public void SingleUpdateMat(int areaI)//turns into a list and then updates, terminates, (some issue)
     {
         List<Material> areaMatsList = new List<Material>();
-        for (int j = 0; j < areas[areaI].areaMats.Length; j++)
+        for (int j = 0; j < areas[areaI].areaMats.Count; j++)
         {
             areaMatsList.Add(areas[areaI].areaMats[j]);
         }
         areas[areaI].SetObjPos(areaMatsList);
         List<Material> dualMatList = new List<Material>();
-        for (int j = 0; j < areas[areaI].dualDissolveAreaMats.Length; j++)
+        for (int j = 0; j < areas[areaI].dualDissolveAreaMats.Count; j++)
         {
             areaMatsList.Add(areas[areaI].dualDissolveAreaMats[j]);
         }
@@ -382,13 +380,13 @@ public class GlobalDissolveCon : MonoBehaviour
 
             List<Material> areaMatsT = new List<Material>();
             //List<Material> dualAreaMats = new List<Material>();
-            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats.Length; j++)//add just the mats with dual
+            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats.Count; j++)//add just the mats with dual
             {
                 areaMatsT.Add(areaObjects[i].GetComponent<DissolveController>().dualDissolveAreaMats[j]);
             }
             areaObjects[i].GetComponent<DissolveController>().objNonMoveCenterSet(areaMatsT);//set center for dual
 
-            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().areaMats.Length; j++)//add the other mats
+            for (int j = 0; j < areaObjects[i].GetComponent<DissolveController>().areaMats.Count; j++)//add the other mats
             {
                 areaMatsT.Add(areaObjects[i].GetComponent<DissolveController>().areaMats[j]);
             }
