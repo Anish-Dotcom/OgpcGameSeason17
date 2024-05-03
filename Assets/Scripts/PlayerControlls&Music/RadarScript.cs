@@ -23,8 +23,12 @@ public class RadarScript : MonoBehaviour
     {
         for (int i = 0; i < VoidObjects.Length; i++)
         {
-            if(other == VoidObjects[i])
+
+            print("terf");
+            if (other == VoidObjects[i])
             {
+
+                print("terf2");
                 Vector3 objectPosition = other.gameObject.transform.position;
 
                 UpdateRadarposition(objectPosition);
@@ -34,6 +38,7 @@ public class RadarScript : MonoBehaviour
 
     private void UpdateRadarposition(Vector3 objectPosition) 
     {
+        print("terf");
         Vector3 center = radar.position;
         Vector3 relativePosition = objectPosition - center;
         Vector3 radarPos = new Vector2(relativePosition.x, relativePosition.y);
