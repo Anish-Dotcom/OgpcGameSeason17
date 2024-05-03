@@ -1,44 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class RadarScript : MonoBehaviour
 {
-    public bool objectInRange;
-    public float distToObject;
-    public Image Image;
-    public Sprite DefaultRadar;
-    public Sprite Radar1;
-    public Sprite Radar2;
-    public Sprite Radar3;
-    // Start is called before the first frame update
+    public RectTransform radar;
+    public GameObject posDotFab;
+    public GameObject[] VoidObjects;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (objectInRange)
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        for (int i = 0; i < VoidObjects.Length; i++)
         {
-            if(distToObject < 1)
+            if(other == VoidObjects[i])
             {
-                Image.sprite = Radar1;
-            }
-            else if (distToObject < 2)
-            {
-                Image.sprite = Radar2;
-            }
-            else if (distToObject < 3)
-            {
-                Image.sprite = Radar3;
-            } else
-            {
-                Image.sprite = DefaultRadar;
+                Vector3 objectPosition = other.gameObject.transform.position;
+
+                UpdateRadarposition(objectPosition);
             }
         }
+    }
+
+    private void UpdateRadarposition(Vector3 objectPosition) 
+    {
+        Vector3 center = radar.position;
+        Vector3 relativePosition = objectPosition - center;
+        Vector3 radarPos = new Vector2(relativePosition.x, relativePosition.y);
+
+
+        GameObject posDot = Instantiate(posDotFab, radar);
+
+        Image posDotImage = posDot.GetComponent<Image>();
+        posDotImage.rectTransform.anchoredPosition = radarPos;
     }
 }

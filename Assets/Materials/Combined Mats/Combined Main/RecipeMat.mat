@@ -90,9 +90,9 @@ Material:
     - _Cutoff_Distance_Y: 5.4341936
     - _Cutoff_Distance_Z: 8.804321
     - _Cutoff_Radius: 9
-    - _Cutoff_X_non_move: 5.949384
-    - _Cutoff_Y_non_move: 6.662569
-    - _Cutoff_Z_non_move: 8.957818
+    - _Cutoff_X_non_move: 6
+    - _Cutoff_Y_non_move: 7
+    - _Cutoff_Z_non_move: 9
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
