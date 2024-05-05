@@ -68,6 +68,7 @@ public class ObjectPickUp : MonoBehaviour
         mask = LayerMask.GetMask("Pickupable");
         playerInputs = new PlayerInputs();
         playerInputs.Enable();
+        StartCoroutine(latefire());
     }
 
     // Update is called once per frame
@@ -205,5 +206,11 @@ public class ObjectPickUp : MonoBehaviour
             FireInRange = false;
             Burn.SetActive(false);
         }
+    }
+    IEnumerator latefire()
+    {
+        yield return new WaitForSeconds(.01f);
+        FireInRange = false;
+        Burn.SetActive(false);
     }
 }
