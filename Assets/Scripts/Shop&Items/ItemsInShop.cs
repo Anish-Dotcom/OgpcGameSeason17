@@ -51,6 +51,11 @@ public class ItemsInShop : MonoBehaviour
 
     public MoneyScrip MoneyScript;
 
+    public Button scrollUp;
+    public Button scrollDown;
+    public Button scrollUpBuying;
+    public Button scrollDownBuying;
+
     void Start()
     {
         CreateShopButtonsAllTab(); // starts it with the all tab
@@ -305,6 +310,44 @@ public class ItemsInShop : MonoBehaviour
             Destroy(button);
         }
         prefabButtons.Clear();
+    }
+
+    public void ScrollUpFunction()
+    {
+        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
+        layout.padding.top += 159;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
+        if (layout.padding.top == 81)
+        {
+            scrollUp.interactable = false;
+        }
+    }
+
+    public void ScrollDownFunction()
+    {
+        scrollUp.interactable = true;
+        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
+        layout.padding.top -= 159;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
+    }
+
+    public void ScrollUpBUYINGFunction()
+    {
+        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
+        layout.padding.top += 159;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
+        if (layout.padding.top == 81)
+        {
+            scrollUp.interactable = false;
+        }
+    }
+
+    public void ScrollDownBUYINGFunction()
+    {
+        scrollUp.interactable = true;
+        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
+        layout.padding.top -= 159;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
     }
 }
 
