@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sell Glass
+  m_Name: SellGlass
   m_Shader: {fileID: -6465566751694194690, guid: 5d47315b144d5de4f87e7d63c90a698d,
     type: 3}
   m_ValidKeywords: []
@@ -86,27 +86,28 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _CutoffRadius: 5.5
-    - _Cutoff_X_non_move: 10
-    - _Cutoff_Y_non_move: 10
-    - _Cutoff_Z_non_move: 10
+    - _CutoffRadius: 9
+    - _Cutoff_Radius: 15
+    - _Cutoff_X_non_move: 20
+    - _Cutoff_Y_non_move: 20
+    - _Cutoff_Z_non_move: 20
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FresnelRimPower: 5
+    - _FresnelRimPower: 1.84
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _InnerRimPower: 0.3
-    - _InnerRimSmooth: 0.05
-    - _LightSpecCutoff: 0.5
-    - _LightSpecCutoffSmoothness: 0.05
+    - _InnerRimPower: 0.15
+    - _InnerRimSmooth: 0.25
+    - _LightSpecCutoff: 0.2
+    - _LightSpecCutoffSmoothness: 0
     - _Metallic: 0
     - _Noise_Scale: 50
     - _Noise_Strength: 0.7
     - _OcclusionStrength: 1
-    - _OuterRimSmooth: 0.01
+    - _OuterRimSmooth: 0
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -116,21 +117,22 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _ViewSpecCutoff: 0.93
-    - _ViewSpecCutoffSmoothness: 0.05
+    - _ViewSpecCutoff: 0.99
+    - _ViewSpecCutoffSmoothness: 0.0025
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GlassTint: {r: 1, g: 1, b: 1, a: 1}
-    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Obj_Pos_non_move: {r: 0, g: 0, b: 0, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 0, g: 0, b: 0, a: 0}
-    - _OuterRimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GlassTint: {r: 0.8915094, g: 0.9227739, b: 1, a: 0.09803922}
+    - _InnerRimColor: {r: 0.990566, g: 0.94181234, b: 0.70554465, a: 0.019607844}
+    - _Obj_Pos_non_move: {r: 30.543661, g: 9.895302e-10, b: -53.036465, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: 30.543661, g: 9.895302e-10, b: -53.036465,
+        a: 0}
+    - _OuterRimColor: {r: 0.7429245, g: 0.92091686, b: 0.990566, a: 0.1764706}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Spec_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Spec_Color: {r: 0.122807, g: 0, b: 1, a: 0.23137255}
   m_BuildTextureStacks: []
 --- !u!114 &7905928245026375683
 MonoBehaviour:
