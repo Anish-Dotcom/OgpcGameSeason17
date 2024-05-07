@@ -22,6 +22,8 @@ public class GlobalDissolveCon : MonoBehaviour
     public footStepCon footStepCon;
     public List<Material> boxMats;
 
+    public Material planeMat;
+
     public float[] mainRoomDistances = new float[4];
     public bool firstFrameOutside = true;
 
@@ -61,6 +63,7 @@ public class GlobalDissolveCon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        planeMat.SetVector("_Input_Pos", player.transform.position);
         AreaCheck();
         if (!inMainRoom())
         {
