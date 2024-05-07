@@ -33,6 +33,8 @@ public class ItemsInShop : MonoBehaviour
     public GameObject prefabButtonInShop; // viewable button you see when you enter shop
     private List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
     public Transform itemsToGoObject; // where the editted prefab gets instantiated
+    public GameObject itemsToGoGameObject;
+    public GameObject BuyingGameObject;
 
     public GameObject prefabBuying;
     public Transform prefabToGoBuyingObject;
@@ -101,6 +103,9 @@ public class ItemsInShop : MonoBehaviour
                 }
             }
         }
+        GridLayoutGroup layout = itemsToGoGameObject.GetComponent<GridLayoutGroup>(); // makes sure it starts the shop grid from the top
+        layout.padding.top = 81;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoGameObject.GetComponent<RectTransform>());
     }
 
     void CreateShopButtonsAllTab() // specifically for the all tab. i needed this to be a seperate function to prevent the same items in 2 different tabs from appearing twice
@@ -109,6 +114,9 @@ public class ItemsInShop : MonoBehaviour
         {
             CreateShopButtons(i);
         }
+        GridLayoutGroup layout = itemsToGoGameObject.GetComponent<GridLayoutGroup>(); // makes sure it starts the shop grid from the top
+        layout.padding.top = 81;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoGameObject.GetComponent<RectTransform>());
     }
 
     void CreateShopButtons(int i)
@@ -314,40 +322,46 @@ public class ItemsInShop : MonoBehaviour
 
     public void ScrollUpFunction()
     {
-        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
-        layout.padding.top += 159;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
-        if (layout.padding.top == 81)
+        if (itemsToGoGameObject != null)
         {
-            scrollUp.interactable = false;
+            GridLayoutGroup layout = itemsToGoGameObject.GetComponent<GridLayoutGroup>();
+            layout.padding.top += 159;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoGameObject.GetComponent<RectTransform>());
+            if (layout.padding.top == 81)
+            {
+                scrollUp.interactable = false;
+            }
         }
     }
 
     public void ScrollDownFunction()
     {
-        scrollUp.interactable = true;
-        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
-        layout.padding.top -= 159;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
+        if (itemsToGoGameObject != null)
+        {
+            scrollUp.interactable = true;
+            GridLayoutGroup layout = itemsToGoGameObject.GetComponent<GridLayoutGroup>();
+            layout.padding.top -= 159;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoGameObject.GetComponent<RectTransform>());
+        }
     }
 
     public void ScrollUpBUYINGFunction()
     {
-        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
-        layout.padding.top += 159;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
-        if (layout.padding.top == 81)
+        VerticalLayoutGroup layout = BuyingGameObject.GetComponent<VerticalLayoutGroup>();
+        layout.padding.top += 40;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(BuyingGameObject.GetComponent<RectTransform>());
+        if (layout.padding.top == 0)
         {
-            scrollUp.interactable = false;
+            scrollUpBuying.interactable = false;
         }
     }
 
     public void ScrollDownBUYINGFunction()
     {
-        scrollUp.interactable = true;
-        HorizontalLayoutGroup layout = itemsToGoObject.GetComponent<HorizontalLayoutGroup>();
-        layout.padding.top -= 159;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(itemsToGoObject.GetComponent<RectTransform>());
+        scrollUpBuying.interactable = true;
+        VerticalLayoutGroup layout = BuyingGameObject.GetComponent<VerticalLayoutGroup>();
+        layout.padding.top -= 40;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(BuyingGameObject.GetComponent<RectTransform>());
     }
 }
 
