@@ -110,14 +110,14 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseScale: 50
+    - _NoiseScale: 40
     - _Noise_Scale: 500
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Scale: 1.4
+    - _Scale: 1.3
     - _Scale_Factor: 2
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -129,7 +129,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorInput: {r: 0.27100393, g: 0.27100393, b: 0.2830189, a: 1}
+    - _ColorInput: {r: 0.25490195, g: 0.25490195, b: 0.2627451, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _InputColor: {r: 1, g: 1, b: 1, a: 1}
     - _Input_Pos: {r: 0, g: 1.8173378, b: 0.5799997, a: 0}
