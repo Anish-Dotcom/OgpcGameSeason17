@@ -39,6 +39,8 @@ public class ObjectPickUp : MonoBehaviour
 
     PlayerInputs playerInputs;
 
+    public PopupInfo otherPopupInfo;
+
     // box stuff that i need here so i can access for all the instantiated boxes
     public Transform prefabButtonParent;
     public Transform objectInstantiatedParent;
@@ -68,14 +70,14 @@ public class ObjectPickUp : MonoBehaviour
         mask = LayerMask.GetMask("Pickupable");
         playerInputs = new PlayerInputs();
         playerInputs.Enable();
-        StartCoroutine(latefire());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && FireInRange)
+        if(Input.GetKeyDown(KeyCode.E) && otherPopupInfo.lookingAt[0])
         {
+            print("IND");
             if (objController.transform.GetChild(0).gameObject != null)
             {
                 box = objController.transform.GetChild(0).gameObject;
@@ -191,26 +193,5 @@ public class ObjectPickUp : MonoBehaviour
         rb.AddForce(fpsCam.up * dropUpwardForce, ForceMode.Impulse);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "FireInRange")
-        {
-            FireInRange = true;
-            Burn.SetActive(true);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "FireInRange")
-        {
-            FireInRange = false;
-            Burn.SetActive(false);
-        }
-    }
-    IEnumerator latefire()
-    {
-        yield return new WaitForSeconds(.01f);
-        FireInRange = false;
-        Burn.SetActive(false);
-    }
+    
 }
