@@ -16,14 +16,12 @@ public class MusicController : MonoBehaviour
     public List<AudioClip> mailboxSongs;
     public List<AudioClip> sellAreaSongs;
     public GlobalDissolveCon gdc;
-    private int currentZone = -1;
 
-    // 0: main menu
-    // 1: void
-    // 2: main room
-    // 3: nothing? Erm, what the sigma
-    // 4: mailbox
-    // 5: sell area
+    public float fadeOutTime = 0.5f;
+    private bool fading = false;
+    private float currentFadeTime;
+
+    private int currentZone = -1;
     private List<AudioClip>[] audioTracks = new List<AudioClip>[6]; // audioTracks[area][songNumber]
 
     void Start()
@@ -58,14 +56,30 @@ public class MusicController : MonoBehaviour
             area = 0;
         }
 
-        if (currentZone != area)
+        if (currentZone != area && !fading)
         {
-            currentZone = area;
-            PlayAreaSongs(currentZone);
+            // switch song
+            currentFadeTime = fadeOutTime;
+            fading = true;
             
         }
+        if (currentFadeTime <= 0 && fading)
+        {
+            fading = false;
+            currentZone = area;
+            PlayAreaSongs(currentZone);
+        }
+        if (!fading)
+        {
+            musicSource.volume = PlayerPrefs.GetFloat("music volume") * PlayerPrefs.GetFloat("master volume");
 
-        musicSource.volume = PlayerPrefs.GetFloat("music volume") * PlayerPrefs.GetFloat("master volume");
+        }
+        else
+        {
+            currentFadeTime -= Time.deltaTime;
+            musicSource.volume = PlayerPrefs.GetFloat("music volume") * PlayerPrefs.GetFloat("master volume") * (currentFadeTime / fadeOutTime);
+
+        }
         SFXSource.volume = PlayerPrefs.GetFloat("sfx volume") * PlayerPrefs.GetFloat("master volume");
         dialogSource.volume = PlayerPrefs.GetFloat("dialog volume") * PlayerPrefs.GetFloat("master volume");
     }
