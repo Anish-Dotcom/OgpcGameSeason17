@@ -21,7 +21,7 @@ public class TutorialCode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        numTutorialToHappen(0);
     }
 
     public void numTutorialToHappen(int num) // this function should be called in the other scripts where if the requirement is met, this will happen
@@ -38,7 +38,7 @@ public class TutorialCode : MonoBehaviour
     IEnumerator showOpenText()
     {
         openText.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         openText.SetActive(false);
     }
 
