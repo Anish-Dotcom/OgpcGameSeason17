@@ -94,7 +94,7 @@ public class MusicController : MonoBehaviour
         int totalLength = 0;
         foreach (AudioClip clip in audioClips)
         {
-            totalLength += clip.samples * clip.channels;
+            totalLength += clip.samples;
         }
 
         Debug.Log("totalLength: " + totalLength.ToString());
