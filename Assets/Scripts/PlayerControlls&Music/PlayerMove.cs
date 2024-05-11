@@ -116,9 +116,11 @@ public class PlayerMove : MonoBehaviour
                 float scrollDirection = Input.GetAxis("Mouse ScrollWheel");
                 Gobackandforth(scrollDirection);
             }*/
-
+            if (!footStep.updateFootPrints && Input.GetKeyDown(KeyCode.Mouse1) && footStep.footPrintMatsInScene.Count > 0)
+            {
+                footStep.updateFootPrints = true;
+            }
         }
-        
     }
 
     private void FixedUpdate()//physic based movements
@@ -128,12 +130,7 @@ public class PlayerMove : MonoBehaviour
         {
             MovePlayer();
         }
-        if (!footStep.updateFootPrints && Input.GetKeyDown(KeyCode.Mouse1) && footStep.footPrintMatsInScene.Count > 0)
-        {
-            footStep.updateFootPrints = true;
-        }
     }
-
     private void PlayerInput()
     {
    

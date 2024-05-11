@@ -98,10 +98,11 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
+    - _CurrentRadius: 0
     - _Cutoff: 0.5
-    - _Cutoff_Distance_X: 10
-    - _Cutoff_Distance_Y: 10
-    - _Cutoff_Distance_Z: 10
+    - _Cutoff_Distance_X: 100
+    - _Cutoff_Distance_Y: 100
+    - _Cutoff_Distance_Z: 100
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
