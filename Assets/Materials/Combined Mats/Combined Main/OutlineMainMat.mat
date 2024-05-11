@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OutlineMainMat
-  m_Shader: {fileID: -6465566751694194690, guid: d3513f62807bf93429bd140993138b9d,
+  m_Shader: {fileID: -6465566751694194690, guid: 6ba5180df78acea46814276b4527be3d,
     type: 3}
   m_ValidKeywords:
   - _HAFTONESHAPES_DOT
@@ -105,6 +105,10 @@ Material:
     - _Cutoff_Distance_X: 6
     - _Cutoff_Distance_Y: 7
     - _Cutoff_Distance_Z: 9
+    - _Cutoff_Radius: 4.5235615
+    - _Cutoff_X_non_move: 6
+    - _Cutoff_Y_non_move: 7
+    - _Cutoff_Z_non_move: 9
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DitherTexelSize: 4
@@ -165,7 +169,8 @@ Material:
     - _HalftoneColor: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: -0.76, g: 0.029, b: 1.55, a: 0}
+    - _Obj_Pos_non_move: {r: -0.76, g: 0, b: 1.55, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: 10.761288, g: 1.8173378, b: 4.2347975, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

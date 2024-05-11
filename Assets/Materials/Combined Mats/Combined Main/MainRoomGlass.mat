@@ -87,7 +87,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _CutoffRadius: 5.5
-    - _Cutoff_Radius: 9
+    - _Cutoff_Radius: 4.5235615
     - _Cutoff_X_non_move: 6
     - _Cutoff_Y_non_move: 7
     - _Cutoff_Z_non_move: 9
@@ -127,8 +127,8 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlassTint: {r: 0.8915094, g: 0.9227739, b: 1, a: 0.09803922}
     - _InnerRimColor: {r: 1, g: 0.9476537, b: 0.7028302, a: 0.019607844}
-    - _Obj_Pos_non_move: {r: -0.76, g: 0.029, b: 1.55, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: -0.76, g: 0.029, b: 1.55, a: 0}
+    - _Obj_Pos_non_move: {r: -0.76, g: 0, b: 1.55, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: 10.761288, g: 1.8173378, b: 4.2347975, a: 0}
     - _OuterRimColor: {r: 0.7429245, g: 0.92091686, b: 0.990566, a: 0.1764706}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Spec_Color: {r: 0.122807, g: 0, b: 1, a: 0.23137255}

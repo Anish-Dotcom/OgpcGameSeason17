@@ -42,22 +42,21 @@ public class GlobalDissolveCon : MonoBehaviour
         /*
         for (int i = 0; i < areas.Length; i++) // this makes it so that if an area is not the main room, it is invis by default
         {
-            if (i != 1)
+            if (i > 1)
             {
                 areas[i].setCutoffNoChange(new Vector3(0, 0, 0));
+                areas[i].setSecondDissolveRadius(0);
 
                 for (int j = 0; j < areas[i].objsToEnable.Length; j++)
                 {
-                    if (i != 0)//if not main room
-                    {
-                        areas[i].objsToEnable[j].SetActive(false);
-                    }
+                    areas[i].objsToEnable[j].SetActive(false);
                 }
                 SingleUpdateMat(i);
 
                 areas[i].updatingMats.Clear();
+                areas[i].dualDissolveUpdatingMats.Clear();
             }
-        }*/ // will want this active, just nice to be able to see each area for testing
+        }//*/ // will want this active, just nice to be able to see each area for testing
     }
 
     // Update is called once per frame
@@ -291,18 +290,16 @@ public class GlobalDissolveCon : MonoBehaviour
     public void SingleUpdateMat(int areaI)//turns into a list and then updates, terminates, (some issue)
     {
         List<Material> areaMatsList = new List<Material>();
-        for (int j = 0; j < areas[areaI].areaMats.Count; j++)
-        {
-            areaMatsList.Add(areas[areaI].areaMats[j]);
-        }
-        areas[areaI].SetObjPos(areaMatsList);
-        List<Material> dualMatList = new List<Material>();
         for (int j = 0; j < areas[areaI].dualDissolveAreaMats.Count; j++)
         {
             areaMatsList.Add(areas[areaI].dualDissolveAreaMats[j]);
         }
         areas[areaI].setSecondDissolveCenter(areaMatsList);
-
+        for (int j = 0; j < areas[areaI].areaMats.Count; j++)
+        {
+            areaMatsList.Add(areas[areaI].areaMats[j]);
+        }
+        areas[areaI].SetObjPos(areaMatsList);
     }
     public void decideArea(int InArea, int i)
     {

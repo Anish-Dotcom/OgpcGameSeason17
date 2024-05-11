@@ -42,7 +42,7 @@ public class DissolveController : MonoBehaviour
             dualDissolveAreaMats[i].SetFloat("_Cutoff_Y_non_move", dissolveDistances.y);
             dualDissolveAreaMats[i].SetFloat("_Cutoff_Z_non_move", dissolveDistances.z);
 
-            dualDissolveAreaMats[i].SetFloat("_Cutoff_Radius", startingRadius);
+            dualDissolveAreaMats[i].SetFloat("_Cutoff_Radius", updatedRadius);
             dualDissolveAreaMats[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
         }
     }
@@ -62,6 +62,14 @@ public class DissolveController : MonoBehaviour
         for (int i = 0; i < updating.Count; i++)
         {
             updating[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
+            //Debug.Log(updating[i].GetVector("_Object_Position_For_Ref_Dis"));
+        }
+    }
+    public void SetObjPos(List<Material> updating, Vector3 position)
+    {
+        for (int i = 0; i < updating.Count; i++)
+        {
+            updating[i].SetVector("_Object_Position_For_Ref_Dis", position);
             //Debug.Log(updating[i].GetVector("_Object_Position_For_Ref_Dis"));
         }
     }
@@ -113,6 +121,7 @@ public class DissolveController : MonoBehaviour
         for (int i = 0; i < dualDissolveAreaMats.Count; i++)
         {
             dualDissolveAreaMats[i].SetFloat("_Cutoff_Radius", radius);
+            Debug.Log(dualDissolveAreaMats[i].GetFloat("_Cutoff_Radius") + " " + gameObject.name);
         }
     }
     public void setSecondDissolveCenter(List<Material> updating)
@@ -120,6 +129,13 @@ public class DissolveController : MonoBehaviour
         for (int i = 0; i < updating.Count; i++)
         {
             updating[i].SetVector("_Object_Position_For_Ref_Dis", centralObj.transform.position);
+        }
+    }
+    public void setSecondDissolveCenter(List<Material> updating, Vector3 position)
+    {
+        for (int i = 0; i < updating.Count; i++)
+        {
+            updating[i].SetVector("_Object_Position_For_Ref_Dis", position);
         }
     }
     public void objNonMoveCenterSet(List<Material> updating)
