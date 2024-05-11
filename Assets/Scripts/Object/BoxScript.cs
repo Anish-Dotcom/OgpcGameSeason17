@@ -42,6 +42,7 @@ public class BoxScript : MonoBehaviour
             objectPickUpScript = ObjectPickUp.objectPickUpScriptStatic;
             Name = ObjectPickUp.NameStatic;
             boxUI = ObjectPickUp.boxUIStatic;
+            store = ObjectPickUp.storeStatic;
         }
     }
 
@@ -85,7 +86,7 @@ public class BoxScript : MonoBehaviour
                     {
                         objectPickUpScript.Drop(objectPickUpScript.currentObject);
                         itemsReceived.Add(objectPickUpScript.currentObject);
-                        Destroy(objectPickUpScript.currentObject);
+                        objectPickUpScript.currentObject.SetActive(false);
                     }
                 }
             }
@@ -148,7 +149,7 @@ public class BoxScript : MonoBehaviour
         {
             for (int j = 0; j < allItemGameObjects.Length; j++)
             {
-                if (itemsReceived[i] == allItemGameObjects[j])
+                if (allItemGameObjects[j].name.Contains(itemsReceived[i].name))
                 {
                     int index = i;
                     int gameObjectIndex = j;

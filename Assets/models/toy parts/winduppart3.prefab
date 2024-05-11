@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 8197575216225143225}
   - component: {fileID: 8197575216225143224}
   - component: {fileID: 5593987337408136017}
+  - component: {fileID: 3058068010202502337}
   m_Layer: 6
   m_Name: winduppart3
   m_TagString: Untagged
@@ -215,6 +216,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3058068010202502337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079973279516448191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90dd53fdabaeec2469661138d685472a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIndex: 8
 --- !u!1 &3494557014163634319
 GameObject:
   m_ObjectHideFlags: 0

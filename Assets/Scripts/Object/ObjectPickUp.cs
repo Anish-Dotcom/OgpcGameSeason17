@@ -48,12 +48,14 @@ public class ObjectPickUp : MonoBehaviour
     public ObjectPickUp objectPickUpScript;
     public TMP_Text Name;
     public GameObject boxUI;
+    public GameObject storeForBox;
     public static Transform prefabButtonParentStatic;
     public static Transform objectInstantiatedParentStatic;
     public static Transform droppedObjectsParentStatic;
     public static ObjectPickUp objectPickUpScriptStatic;
     public static TMP_Text NameStatic;
     public static GameObject boxUIStatic;
+    public static GameObject storeStatic;
 
     public GameObject box;
 
@@ -134,7 +136,6 @@ public class ObjectPickUp : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void PickUp(GameObject item) // pick up function

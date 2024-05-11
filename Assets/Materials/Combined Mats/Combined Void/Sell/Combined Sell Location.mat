@@ -188,8 +188,8 @@ Material:
     - _HalftoneColor: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
-    - _Obj_Pos_non_move: {r: 34.18818, g: 0, b: -62.475925, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 34.18818, g: 0, b: -62.475925, a: 0}
+    - _Obj_Pos_non_move: {r: 5.86, g: -0.07000017, b: -37.99264, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: 5.86, g: -0.07000017, b: -37.99264, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0.052}
     - _ShadowColor: {r: 0.2863564, g: 0.2899227, b: 0.31132078, a: 0.744}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

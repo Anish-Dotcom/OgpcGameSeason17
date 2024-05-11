@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3552398054724985529}
   - component: {fileID: 3552398054724985528}
   - component: {fileID: 5701152081567569730}
+  - component: {fileID: -6820789039876682858}
   m_Layer: 6
   m_Name: gearboxtop
   m_TagString: Untagged
@@ -130,6 +131,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-6820789039876682858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261008051451726886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90dd53fdabaeec2469661138d685472a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIndex: 2
 --- !u!1 &3193041963800664483
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2179778979281755321}
   - component: {fileID: 2179778979281755320}
   - component: {fileID: 3752089674547131936}
+  - component: {fileID: 8537341404385761759}
   m_Layer: 6
   m_Name: springgear
   m_TagString: Untagged
@@ -131,6 +132,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8537341404385761759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021151835310411546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90dd53fdabaeec2469661138d685472a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIndex: 7
 --- !u!1 &6782711677028025570
 GameObject:
   m_ObjectHideFlags: 0
