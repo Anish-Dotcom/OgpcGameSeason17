@@ -21,7 +21,7 @@ public class ComissionController : MonoBehaviour
     {
         numberOfComissions = 0;
         SetNewComission();
-        SetNewComission();
+        //SetNewComission();
     }
 
     public void SetNewComission()
@@ -65,11 +65,6 @@ public class ComissionController : MonoBehaviour
         {
             toDoPoster.text = toDoPoster.text + "\n\n" + "- " + simplifiedText;
         }
-    }
-
-    public void SetChildComission()//set a comm
-    {
-
     }
 
     public void RemoveOldComission(int commissionIndex)
