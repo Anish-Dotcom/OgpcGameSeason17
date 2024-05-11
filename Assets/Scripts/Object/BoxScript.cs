@@ -149,7 +149,7 @@ public class BoxScript : MonoBehaviour
         {
             for (int j = 0; j < allItemGameObjects.Length; j++)
             {
-                if (allItemGameObjects[j].name.Contains(itemsReceived[i].name))
+                if (itemsReceived[i].GetComponent<ItemIndex>().itemIndex == j)
                 {
                     int index = i;
                     int gameObjectIndex = j;
