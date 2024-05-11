@@ -3446,9 +3446,16 @@ MonoBehaviour:
   SFXSource: {fileID: 1230687011}
   dialogSource: {fileID: 1230687010}
   audioClip: {fileID: 8300000, guid: b3dd9c03296ecaa4caafc84fc4c6b3e6, type: 3}
-  SFXVolume: 0
-  musicVolume: 1
-  dialogVolume: 0
+  mainMenuSongs:
+  - {fileID: 8300000, guid: 135cf052411e3da429de39eab6556859, type: 3}
+  - {fileID: 8300000, guid: 62990e8d0bc718945824226aeec10d73, type: 3}
+  voidSongs: []
+  mainRoomSongs:
+  - {fileID: 8300000, guid: 0127cf279975dd64192e04ecb14f5887, type: 3}
+  mailboxSongs:
+  - {fileID: 8300000, guid: 62990e8d0bc718945824226aeec10d73, type: 3}
+  sellAreaSongs: []
+  gdc: {fileID: 0}
 --- !u!82 &1230687008
 AudioSource:
   m_ObjectHideFlags: 0
