@@ -87,7 +87,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _CutoffRadius: 5.5
-    - _Cutoff_Radius: 10
+    - _Cutoff_Radius: 11
     - _Cutoff_X_non_move: 9
     - _Cutoff_Y_non_move: 10
     - _Cutoff_Z_non_move: 12
