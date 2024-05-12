@@ -5,15 +5,20 @@ using UnityEngine;
 public class ConveyorScript : MonoBehaviour
 {
     private SellCalculation sellCalculation;
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         sellCalculation = transform.parent.GetComponent<SellCalculation>();
+        player = sellCalculation.player;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
+    }
+    public void Sellitem()
+    {
+        //sellCalculation.CalculatePrice(player, );
     }
 }

@@ -7,6 +7,8 @@ public class SellCalculation : MonoBehaviour
     public ComissionController comissionController;
     public ItemsInShop itemsInShop;
 
+    public GameObject player;
+
     public float colorWeight;
     public float priceWeight;
     public float typeWeight;
@@ -22,6 +24,7 @@ public class SellCalculation : MonoBehaviour
     public int toyType;
     public void CalculatePrice(GameObject objToSell, int completingComission)
     {
+        float price = 0f;
         colorsUsed.Clear();
         for (int i = 0; i < objToSell.transform.childCount; i++)
         {
@@ -47,7 +50,6 @@ public class SellCalculation : MonoBehaviour
             }
 
             //check how much each item added costs
-            float price = 0f;
             for (int j = 0; j < currentObj.transform.childCount; j++)
             {
                 GameObject currentPart = currentObj.transform.GetChild(j).gameObject;
@@ -95,9 +97,38 @@ public class SellCalculation : MonoBehaviour
                     }
                 }
             }
-            
-            //add each of the components of price together
         }
+        //calculate
+        float totalPrice = 0f;
+        int intDex = -1;
+        for (int i = 0; i < colorsUsed.Count; i++)
+        {
+            float highestWeight = 0f;
+            if (colorWeights[i] > highestWeight)
+            {
+                highestWeight = colorWeights[i];
+                intDex = i;
+            }
+        }//finds the most used color based on calculated weights
+
+        int current = 2 + (4 * (completingComission - 1));
+        Vector3 goalColor = comissionController.colorRGBValues[current];
+        Vector3 reformattedGoalColor = new Vector3(Mathf.Pow(goalColor.x, 2), Mathf.Pow(goalColor.y, 2), Mathf.Pow(goalColor.z, 2));
+        Vector3 reformattedMostUsedColor = Vector3.zero;
+
+        if (intDex != -1)
+        {
+            reformattedMostUsedColor = new Vector3(Mathf.Pow(colorsUsed[intDex].r, 2), Mathf.Pow(colorsUsed[intDex].g, 2), Mathf.Pow(colorsUsed[intDex].b, 2));
+        }
+        float colorDistance = Mathf.Sqrt(Vector3.Distance(reformattedGoalColor, reformattedMostUsedColor));
+        totalPrice += colorWeight / colorDistance;
+
+        totalPrice += price * priceWeight;
+
+        //toy requirements
+
+
+        totalPrice = Mathf.RoundToInt(totalPrice);
     }
     public float GetSurfaceArea(GameObject objToCalculate)
     {

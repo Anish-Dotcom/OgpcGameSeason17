@@ -103,7 +103,7 @@ public class telephoneScript : MonoBehaviour
 
     void Start()
     {
-        musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
+        //musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
         
     }
 
