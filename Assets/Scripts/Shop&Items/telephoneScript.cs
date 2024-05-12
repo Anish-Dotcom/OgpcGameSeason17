@@ -16,7 +16,7 @@ public class telephoneScript : MonoBehaviour
 
     public GameObject callShopButton; // i have this button as a gameobject so i can set it active false whenever you open up the shop
     public GameObject shopUI; // this is the canvas ui menu that pops up when you open the shop
-    public AudioSource greeting;
+    public AudioClip greeting;
 
     private float moveSpeedSaved; // the following variables are here to store what the sens was and then set it to 0 so that they cant look around when inside the menu and then goes back when the ui is closed
     private float sensXSaved;
@@ -71,8 +71,7 @@ public class telephoneScript : MonoBehaviour
         else
         {
             StartCoroutine(showText());
-            //musicController.PlayDialog(greeting);
-            greeting.Play();
+            musicController.PlayDialog(greeting);
         }
     }
 
@@ -102,10 +101,9 @@ public class telephoneScript : MonoBehaviour
         awayButton.interactable = true;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        //musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
+        musicController = GameObject.FindGameObjectsWithTag("Music Controller")[0].GetComponent<MusicController>();
         
     }
 
