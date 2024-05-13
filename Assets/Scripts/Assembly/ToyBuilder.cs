@@ -62,6 +62,12 @@ public class ToyBuilder : MonoBehaviour
     private Vector3 velo;
     private GameObject toyCompleted;
 
+    private bool painting;
+    public Color currentColor;
+    public GameObject paintingMenu;
+    public Texture2D cursorSprite;//the cursor yours changes to when you are aiming at the paint bucket
+    public Texture2D originalCursor;//the cursor that is used normally
+
     // Start is called before the first frame update
     void Start()
     {
@@ -114,22 +120,22 @@ public class ToyBuilder : MonoBehaviour
             }
 
             GameObject mainParent = objectsBeingUsedParent.transform.GetChild(0).gameObject;
-            if (tinkering)//moving the item around the scene
+            if (tinkering || painting)//moving the item around the scene or painting items
             {
-                if (Input.GetKeyDown(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f)
+                if (Input.GetKeyDown(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f && tinkering)
                 {
                     LockInPosition();
                 }
                 else if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
-                    if (Input.GetKey(KeyCode.Mouse0))//rotate the item upon the perpendicular axis
+                    if (Input.GetKey(KeyCode.Mouse0) && tinkering)//rotate the item upon the perpendicular axis
                     {
                         tinkeringObj.SetActive(true);
                         tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
                         float angle2 = Input.GetAxis("Mouse X") * anglerSpeed;
                         tinkeringObj.transform.RotateAround(attachPointPos, -negitiveNorm, angle2);
                     }
-                    else
+                    else//painting
                     {
                         MoveTinkeringObj();
                     }
@@ -145,10 +151,6 @@ public class ToyBuilder : MonoBehaviour
                     if (hit.transform.gameObject.name != "painbucket")
                     {
                         UnlockPosition(hit.transform.gameObject);
-                    }
-                    else
-                    {
-                        //open paint menu
                     }
                 }
             }
@@ -418,32 +420,70 @@ public class ToyBuilder : MonoBehaviour
         LayerMask layer = LayerMask.GetMask("ToonLayer");//make work with raycast system
         if (Physics.Raycast(ray, out hit, 3.5f, layer))
         {
-            negitiveNorm = -hit.normal;
-            tinkeringObj.SetActive(true);
-            tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
-            if (hit.transform.gameObject != tinkeringObj)
+            if (hit.transform.gameObject.name != "painbucket")
             {
-                heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
-
-                //Debug.DrawRay(hit.point, hit.normal, Color.red, 10f);
-                Debug.Log(tinkeringObj.name);
-                attachPointPos = tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position;
-                referPos = tinkeringObj.GetComponent<attachInfo>().refer.transform.position;
-
-                //angle between current vectors
-                angle = Vector3.Angle(referPos - attachPointPos, -hit.normal);
-                // Calculate the axis of rotation
-                Vector3 axis1 = Vector3.Cross(referPos - attachPointPos, -hit.normal).normalized;
-                if (axis1 != Vector3.zero)
+                if (tinkering)
                 {
-                    axis = axis1;
-                }
-                //Debug.Log("axis: " + axis);
-                // rotate around the attachPointPos
-                tinkeringObj.transform.RotateAround(attachPointPos, axis, angle);
+                    Vector2 hotspot = new Vector2(originalCursor.width, originalCursor.height);//sets the center of screen to top left of cursor sprite
+                    Cursor.SetCursor(originalCursor, hotspot, CursorMode.Auto);
+                    negitiveNorm = -hit.normal;
+                    tinkeringObj.SetActive(true);
+                    tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
+                    if (hit.transform.gameObject != tinkeringObj)
+                    {
+                        heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
 
-                //then compare position and move
-                tinkeringObj.transform.position = hit.point - (tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position - tinkeringObj.transform.position);//sets the postition to where the attach point will be at the hit point, facing into the mesh
+                        //Debug.DrawRay(hit.point, hit.normal, Color.red, 10f);
+                        Debug.Log(tinkeringObj.name);
+                        attachPointPos = tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position;
+                        referPos = tinkeringObj.GetComponent<attachInfo>().refer.transform.position;
+
+                        //angle between current vectors
+                        angle = Vector3.Angle(referPos - attachPointPos, -hit.normal);
+                        // Calculate the axis of rotation
+                        Vector3 axis1 = Vector3.Cross(referPos - attachPointPos, -hit.normal).normalized;
+                        if (axis1 != Vector3.zero)
+                        {
+                            axis = axis1;
+                        }
+                        //Debug.Log("axis: " + axis);
+                        // rotate around the attachPointPos
+                        tinkeringObj.transform.RotateAround(attachPointPos, axis, angle);
+
+                        //then compare position and move
+                        tinkeringObj.transform.position = hit.point - (tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position - tinkeringObj.transform.position);//sets the postition to where the attach point will be at the hit point, facing into the mesh
+
+                    }
+
+                }
+                else if (painting)
+                {
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        PaintPart(currentColor, hit.transform.gameObject);
+                    }
+                }
+            }
+            else//aiming at paintBucket
+            {
+                if (!painting)
+                {
+                    Vector2 hotspot = new Vector2(cursorSprite.width / 2, cursorSprite.height / 2);//sets the center of screen to center of cursor
+                    Cursor.SetCursor(cursorSprite, hotspot, CursorMode.Auto);
+                    if (Input.GetKeyDown(KeyCode.Mouse0))//open up painting menu
+                    {
+                        if (tinkering)
+                        {
+                            tinkering = false;
+                            heldStationObjHolder.transform.GetChild(1).SetParent(disabledStationObjsHolder.transform);
+                            tinkeringObj.SetActive(false);
+                        }
+                        painting = true;
+                        currentColor = Color.white;
+                        paintingMenu.SetActive(true);
+
+                    }
+                }
             }
         }
         else
@@ -478,19 +518,13 @@ public class ToyBuilder : MonoBehaviour
             }
         }
     }
-    public void PaintPart(Color color)
+    public void PaintPart(Color color, GameObject hit)
     {
         if (!tinkering && inBuildMode)
         {
-            RaycastHit hit;
-            Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-            LayerMask layer = LayerMask.GetMask("ToonLayer");
-            if (Physics.Raycast(ray, out hit, 3.5f, layer))
+            if (hit.GetComponent<Collider>().gameObject.name != "painBucket")
             {
-                if (hit.collider.gameObject.name != "painBucket")
-                {
-                    hit.transform.GetComponent<Material>().SetColor("_Color", color);
-                }
+                hit.transform.GetComponent<Material>().SetColor("_Color", color);
             }
         }
     }
