@@ -89,7 +89,7 @@ Material:
     - _Cutoff_Distance_X: 5.7651253
     - _Cutoff_Distance_Y: 5.4341936
     - _Cutoff_Distance_Z: 8.804321
-    - _Cutoff_Radius: 11
+    - _Cutoff_Radius: 6.61956
     - _Cutoff_X_non_move: 9
     - _Cutoff_Y_non_move: 10
     - _Cutoff_Z_non_move: 12

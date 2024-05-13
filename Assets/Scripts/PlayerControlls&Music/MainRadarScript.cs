@@ -8,42 +8,30 @@ public class MainRadarScript : MonoBehaviour
     public GameObject radarDotPrefab;
     public RectTransform radarUI; 
     public float maxDistance;
+    public GameObject[] detectable;
 
     
     void Update()
     {
-        
-        CalculateAndMapRadarDots();
+        InvokeRepeating("Mapdots",0,1);
     }
 
-    void CalculateAndMapRadarDots()
+    
+    void Mapdots()
     {
-       
-        ClearRadarDots();
-
-        GameObject[] objectsToTrack = GameObject.FindGameObjectsWithTag("Detectable");
-
-        foreach (GameObject obj in objectsToTrack)
+        for (int i = 0; i < detectable.Length; i++)
         {
-            Vector3 relativePosition = obj.transform.position - centerObject.position;
+            float distance = Vector3.Distance(transform.position, detectable[i].transform.position);
+            print(distance.ToString() + detectable[i]);
+            if(distance<10)
+            {
+                Vector2 playerPos = new Vector2(transform.position.x, transform.position.z);
+                Vector2 objPos = new Vector2(detectable[i].transform.position.x, detectable[i].transform.position.z);
+                Vector2 reletivePosition = playerPos - objPos;
+                Vector2 dotposition = reletivePosition * 5;
+            }
 
-            float angle = Mathf.Atan2(relativePosition.z, relativePosition.x) * Mathf.Rad2Deg;
-            float distance = relativePosition.magnitude;
-
-            float radarRadius = Mathf.Min(radarUI.rect.width, radarUI.rect.height) / 2f;
-            float normalizedDistance = distance / maxDistance; 
-            Vector2 radarPosition = new Vector2(Mathf.Cos(angle) * radarRadius * normalizedDistance, Mathf.Sin(angle) * radarRadius * normalizedDistance);
-
-            GameObject radarDot = Instantiate(radarDotPrefab, radarPosition, Quaternion.identity, radarUI);
-            print("didthat");
         }
     }
-
-    void ClearRadarDots()
-    {
-        foreach (Transform child in radarUI)
-        {
-            Destroy(child.gameObject);
-        }
-    }
+    
 }
