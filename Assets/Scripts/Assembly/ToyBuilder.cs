@@ -524,7 +524,7 @@ public class ToyBuilder : MonoBehaviour
         {
             if (hit.GetComponent<Collider>().gameObject.name != "painBucket")
             {
-                hit.transform.GetComponent<Material>().SetColor("_Color", color);
+                hit.transform.GetComponent<Material>().SetColor("_BaseColor", color);
             }
         }
     }

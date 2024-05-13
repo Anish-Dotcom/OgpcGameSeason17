@@ -41,7 +41,10 @@ public class AssemblyController : MonoBehaviour
     public float easeSpeedPreFinal = 0.025f;//lower numbers coraspond to faster movement
     public float easeSpeedFinal = 0.04f;//lower numbers coraspond to faster movement
 
-
+    public GlobalDissolveCon globalDissolveCon;
+    public Material partMat;
+    public List<Material> partMatsInScene;
+    public List<GameObject> objsWithMaterial;
 
     void Start()
     {
@@ -159,6 +162,21 @@ public class AssemblyController : MonoBehaviour
         }
         Destroy(RecipeForAssemblyObj.GetComponent<Transform>().GetChild(0).gameObject);//Destroy previous assembly
         GameObject completed = Instantiate(completedAssembly, position + completedAssembly.transform.position, Quaternion.identity);//parent
+        Material newPartMaterial = new Material(partMat);
+        partMatsInScene.Add(newPartMaterial);
+        objsWithMaterial.Add(completed);
+        globalDissolveCon.boxMats.Add(newPartMaterial);
+        for (int i = 0; i < completed.transform.childCount; i++)
+        {
+            GameObject currObj = completed.transform.GetChild(i).gameObject;
+            for (int j = 0; j < currObj.transform.childCount; j++)
+            {
+                if (currObj.transform.GetChild(j).GetComponent<Renderer>().material == partMat)
+                {
+                    currObj.transform.GetChild(j).GetComponent<Renderer>().material = newPartMaterial;
+                }
+            }
+        }
     }
     //---
 
