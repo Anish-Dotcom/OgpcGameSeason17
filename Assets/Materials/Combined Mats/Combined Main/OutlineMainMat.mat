@@ -105,7 +105,7 @@ Material:
     - _Cutoff_Distance_X: 6
     - _Cutoff_Distance_Y: 7
     - _Cutoff_Distance_Z: 9
-    - _Cutoff_Radius: 13
+    - _Cutoff_Radius: 3.73965
     - _Cutoff_X_non_move: 9
     - _Cutoff_Y_non_move: 10
     - _Cutoff_Z_non_move: 12
@@ -170,7 +170,7 @@ Material:
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
     - _Obj_Pos_non_move: {r: 1.483, g: 0, b: 2.3, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 1.483, g: 0, b: 2.3, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: 14.967075, g: 1.8173378, b: -0.7902856, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

@@ -20,6 +20,7 @@ TagManager:
   - FireInRange
   - Central Assembly
   - Detectable
+  - Dot
   layers:
   - Default
   - TransparentFX
