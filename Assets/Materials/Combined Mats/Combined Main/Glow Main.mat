@@ -131,6 +131,6 @@ Material:
     - _HDR_color: {r: 1, g: 1, b: 1, a: 0}
     - _Obj_Pos_For_Ref: {r: 0, g: 0, b: 0, a: 0}
     - _Obj_Pos_non_move: {r: 1.483, g: 0, b: 2.3, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 8.090791, g: 1.8173378, b: -2.42124, a: 0}
+    - _Object_Position_For_Ref_Dis: {r: 1.483, g: 0, b: 2.3, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

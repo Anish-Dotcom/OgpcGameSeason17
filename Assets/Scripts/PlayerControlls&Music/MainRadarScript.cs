@@ -11,21 +11,20 @@ public class MainRadarScript : MonoBehaviour
     public GameObject[] detectable;
     public int radarInt;
     public RectTransform swiper;
-
     
     void Start()
     {
-        InvokeRepeating("Mapdots",0,1);
-
+        InvokeRepeating("Mapdots",0,01f);
     }
 
 
     void Update()
     {
-        
-        swiper.eulerAngles += new Vector3(0, 0, 10 * Time.deltaTime);
+        Vector3 center = radarUI.position;
+        swiper.RotateAround(center,Vector3.forward, 100*Time.deltaTime);
     }
-    void Mapdots()
+    
+    public void Mapdots()
     {
         foreach (Transform child in radarUI.transform)
         {
@@ -54,5 +53,5 @@ public class MainRadarScript : MonoBehaviour
         }
 
     }
-
+    
 }
