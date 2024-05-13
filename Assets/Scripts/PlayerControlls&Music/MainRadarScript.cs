@@ -9,29 +9,41 @@ public class MainRadarScript : MonoBehaviour
     public RectTransform radarUI; 
     public float maxDistance;
     public GameObject[] detectable;
+    public int radarInt;
 
     
-    void Update()
+    void Start()
     {
         InvokeRepeating("Mapdots",0,1);
+
     }
 
     
     void Mapdots()
     {
-        for (int i = 0; i < detectable.Length; i++)
+        foreach (Transform child in radarUI.transform)
         {
-            float distance = Vector3.Distance(transform.position, detectable[i].transform.position);
-            print(distance.ToString() + detectable[i]);
-            if(distance<10)
-            {
-                Vector2 playerPos = new Vector2(transform.position.x, transform.position.z);
-                Vector2 objPos = new Vector2(detectable[i].transform.position.x, detectable[i].transform.position.z);
-                Vector2 reletivePosition = playerPos - objPos;
-                Vector2 dotposition = reletivePosition * 5;
-            }
-
+            Destroy(child.gameObject);
         }
+        foreach (GameObject obj in detectable)
+        {
+            float distance = Vector3.Distance(transform.position, obj.transform.position);
+            if (distance < maxDistance)
+            {
+                Vector3 playerPos = new Vector3(transform.position.x, transform.position.z, 0);
+                Vector3 objPos = new Vector3(obj.transform.position.x, obj.transform.position.z, 0);
+                Vector3 relativePosition = objPos - playerPos;
+                Vector2 dotPosition = new Vector2(relativePosition.x, relativePosition.y);
+
+                dotPosition /= maxDistance;
+                dotPosition *= radarUI.sizeDelta.x / 2;
+
+                GameObject radarDot = Instantiate(radarDotPrefab, radarUI);
+                radarDot.GetComponent<RectTransform>().anchoredPosition = dotPosition;
+                
+            }
+        }
+
     }
-    
+
 }
