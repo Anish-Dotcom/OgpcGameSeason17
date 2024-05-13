@@ -10,6 +10,7 @@ public class MainRadarScript : MonoBehaviour
     public float maxDistance;
     public GameObject[] detectable;
     public int radarInt;
+    public RectTransform swiper;
 
     
     void Start()
@@ -18,12 +19,20 @@ public class MainRadarScript : MonoBehaviour
 
     }
 
-    
+
+    void Update()
+    {
+        
+        swiper.eulerAngles += new Vector3(0, 0, 10 * Time.deltaTime);
+    }
     void Mapdots()
     {
         foreach (Transform child in radarUI.transform)
         {
-            Destroy(child.gameObject);
+            if (child != swiper)
+            {
+                Destroy(child.gameObject);
+            }
         }
         foreach (GameObject obj in detectable)
         {
