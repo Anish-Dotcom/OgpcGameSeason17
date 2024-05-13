@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class sellProperties
+{
+    public string toyType;
+    public List<string> typesOfParts = new List<string>();
+    public List<int> numOfType = new List<int>();
+}
+
 public class SellCalculation : MonoBehaviour
 {
     public ComissionController comissionController;
@@ -22,10 +30,13 @@ public class SellCalculation : MonoBehaviour
     public int[] toyIndexes;
     public string[] toyPartSubstrings;
     public int toyType;
+
+    public List<sellProperties> sellItemProperties = new List<sellProperties>();
     public void CalculatePrice(GameObject objToSell, int completingComission)
     {
         float price = 0f;
         colorsUsed.Clear();
+        toyType = -1;
         for (int i = 0; i < objToSell.transform.childCount; i++)
         {
             GameObject currentObj = objToSell.transform.GetChild(i).gameObject;//the current object we are checking, component
@@ -90,7 +101,6 @@ public class SellCalculation : MonoBehaviour
                                 numOfParts[k] += 1;
                                 return;
                             }
-                            continue;
                         }
                         partTypes.Add(toySubstrings[j]);
                         numOfParts.Add(1);
@@ -126,7 +136,51 @@ public class SellCalculation : MonoBehaviour
         totalPrice += price * priceWeight;
 
         //toy requirements
-
+        current = 1 + (4 * (completingComission - 1));
+        float toytype = 0.3f;
+        if (toyType == -1)
+        {
+            int goaltype = comissionController.inputNums[current];
+            List<bool> partsSatisfied = new List<bool>(sellItemProperties[goaltype].typesOfParts.Count);
+            for (int i = 0; i < partTypes.Count; i++)//iterate through each type of part in the toy
+            {
+                for (int j = 0; j < sellItemProperties[goaltype].typesOfParts.Count; j++)
+                {
+                    if (partTypes[i].Contains(sellItemProperties[goaltype].typesOfParts[j]))//contains one of the goal parts
+                    {
+                        if (numOfParts[i] == sellItemProperties[goaltype].numOfType[j])
+                        {
+                            partsSatisfied[j] = true;
+                        }
+                    }
+                }
+            }
+            bool allSatisfied = true;
+            for (int i = 0; i < partsSatisfied.Count; i++)
+            {
+                if (!partsSatisfied[i])
+                {
+                    allSatisfied = false;
+                    break;
+                }
+            }
+            if (allSatisfied)
+            {
+                toytype = 1.1f;
+            }
+        }
+        else
+        {
+            if (comissionController.toyTypes[comissionController.inputNums[current]].Contains(toySubstrings[toyType]))
+            {
+                toytype = 1;
+            }
+            else
+            {
+                toytype = 0.2f;
+            }
+        }
+        totalPrice *= typeWeight * toytype;
 
         totalPrice = Mathf.RoundToInt(totalPrice);
     }
