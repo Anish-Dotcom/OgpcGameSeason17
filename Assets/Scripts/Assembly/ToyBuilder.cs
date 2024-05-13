@@ -142,7 +142,14 @@ public class ToyBuilder : MonoBehaviour
                 LayerMask layer = LayerMask.GetMask("ToonLayer");//make work with raycast system
                 if (Physics.Raycast(ray, out hit, 3.5f, layer))
                 {
-                    UnlockPosition(hit.transform.gameObject);
+                    if (hit.transform.gameObject.name != "painbucket")
+                    {
+                        UnlockPosition(hit.transform.gameObject);
+                    }
+                    else
+                    {
+                        //open paint menu
+                    }
                 }
             }
             else if (Input.GetKey(KeyCode.Mouse0) && trueParent.transform.childCount > 0)//rotating the toy
@@ -471,7 +478,7 @@ public class ToyBuilder : MonoBehaviour
             }
         }
     }
-    public void PaintPart(Color color, GameObject objToPaint)
+    public void PaintPart(Color color)
     {
         if (!tinkering && inBuildMode)
         {
@@ -480,7 +487,7 @@ public class ToyBuilder : MonoBehaviour
             LayerMask layer = LayerMask.GetMask("ToonLayer");
             if (Physics.Raycast(ray, out hit, 3.5f, layer))
             {
-                if (objToPaint != tinkeringObj)
+                if (hit.collider.gameObject.name != "painBucket")
                 {
                     hit.transform.GetComponent<Material>().SetColor("_Color", color);
                 }
