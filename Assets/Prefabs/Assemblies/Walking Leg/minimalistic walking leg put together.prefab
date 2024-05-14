@@ -510,6 +510,7 @@ GameObject:
   - component: {fileID: 9026182837247342899}
   - component: {fileID: 2461293057858582611}
   - component: {fileID: 4039354359332076935}
+  - component: {fileID: 5716511694751571974}
   m_Layer: 6
   m_Name: minimalistic walking leg put together
   m_TagString: Finished Assembly
@@ -581,6 +582,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5716511694751571974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364530932811730954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90dd53fdabaeec2469661138d685472a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIndex: 13
 --- !u!1 &3653777565711459546
 GameObject:
   m_ObjectHideFlags: 0
