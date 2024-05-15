@@ -68,6 +68,7 @@ public class ObjectPickUp : MonoBehaviour
         objectPickUpScriptStatic = objectPickUpScript;
         NameStatic = Name;
         boxUIStatic = boxUI;
+        storeStatic = storeForBox;
 
         mask = LayerMask.GetMask("Pickupable");
         playerInputs = new PlayerInputs();

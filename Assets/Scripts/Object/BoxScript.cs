@@ -49,63 +49,76 @@ public class BoxScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (popupInfo.lookingAt[0])
+        if (!boxUI.activeInHierarchy)
         {
-            if (popupInfo.hitObj[0] == gameObject)
+            if (popupInfo.lookingAt[0])
             {
-                //Debug.Log("worky 1");
-                menuController.openPopup(open);
-
-                if (Input.GetKeyDown(KeyCode.X)) // opens and sets up the menu for the inventory of the box
+                if (popupInfo.hitObj[0] == gameObject)
                 {
-                    //Debug.Log("worky 2");
-                    menuController.closePopup(open);
-                    menuController.openMenu(boxUI);
+                    //Debug.Log("worky 1");
+                    menuController.openPopup(open);
 
-                    foreach(Transform child in prefabButtonParent)
+                    if (Input.GetKeyDown(KeyCode.X)) // opens and sets up the menu for the inventory of the box
                     {
-                        Destroy(child.gameObject);
+                        //Debug.Log("worky 2");
+                        menuController.closePopup(open);
+                        menuController.openMenu(boxUI);
+
+                        foreach (Transform child in prefabButtonParent)
+                        {
+                            Destroy(child.gameObject);
+                        }
+
+                        UpdateButtons();
+
+                        if (prefabButtons.Count == 0)
+                        {
+                            Name.text = "Box (Empty)";
+                        }
+                        else
+                        {
+                            Name.text = "Box";
+                        }
                     }
-
-                    UpdateButtons();
-
-                    if (prefabButtons.Count == 0)
+                    if (ObjectPickUp.equipped && objectPickUpScript.currentObject.tag != "Box") // storing items in box
                     {
-                        Name.text = "Box (Empty)";
-                    }
-                    else
-                    {
-                        Name.text = "Box";
+                        Debug.Log("worky");
+                        menuController.openPopup(store);
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            objectPickUpScript.Drop(objectPickUpScript.currentObject);
+                            itemsReceived.Add(objectPickUpScript.currentObject);
+                            objectPickUpScript.currentObject.SetActive(false);
+                        }
                     }
                 }
-                if (ObjectPickUp.equipped) // storing items in box
+                else
                 {
-                    Debug.Log("worky");
-                    menuController.openPopup(store);
-                    if (Input.GetKeyDown(KeyCode.E))
+                    menuController.closePopup(open);
+                    if (store.activeInHierarchy)
                     {
-                        objectPickUpScript.Drop(objectPickUpScript.currentObject);
-                        itemsReceived.Add(objectPickUpScript.currentObject);
-                        objectPickUpScript.currentObject.SetActive(false);
+                        menuController.closePopup(store);
                     }
                 }
             }
             else
             {
                 menuController.closePopup(open);
-                menuController.closePopup(store);
+                if (store.activeInHierarchy)
+                {
+                    menuController.closePopup(store);
+                }
             }
         }
         else
         {
-            menuController.closePopup(open);
-            menuController.closePopup(store);
-        }
-        if (boxUI.activeInHierarchy) {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 menuController.closePopup(open);
-                menuController.closePopup(store);
+                if (store.activeInHierarchy)
+                {
+                    menuController.closePopup(store);
+                }
                 menuController.closeMenu(boxUI);
             }
         }
