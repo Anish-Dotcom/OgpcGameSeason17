@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ConveyorScript : MonoBehaviour
 {
+    private ComissionController comissionController;
     private SellCalculation sellCalculation;
     private GameObject player;
     private PopupInfo popupInfo;
@@ -11,6 +13,7 @@ public class ConveyorScript : MonoBehaviour
     void Start()
     {
         sellCalculation = transform.parent.GetComponent<SellCalculation>();
+        comissionController = transform.parent.GetComponent<ComissionController>();
         player = sellCalculation.player;
         popupInfo = GetComponent<PopupInfo>();
     }
@@ -28,9 +31,23 @@ public class ConveyorScript : MonoBehaviour
     public void Sellitem()
     {
         GameObject objToSell = player.GetComponent<ObjectPickUp>().currentObject.transform.GetChild(0).gameObject;
-        if (objToSell.name.Contains("sellbox"))
+        if (objToSell.name.Contains("Box"))
         {
-            //sellCalculation.CalculatePrice(objToSell.transform.GetChild(0).gameObject, );
+            TMP_Text tagCanvas = objToSell.GetComponent<BoxScript>().TagSlot.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_Text>();//Gets the canvas
+            int comissionCompleting = -1;
+            for (int i = 0; i < comissionController.numberOfComissions; i++)
+            {
+                int inputNum = comissionController.inputNums[4 * i];
+                Debug.Log("Name " + comissionController.names[inputNum] + "Text " + tagCanvas.text);
+                if (comissionController.names[inputNum] == tagCanvas.text)
+                {
+                    comissionCompleting = i;
+                }
+            }
+            if (comissionCompleting != -1)
+            {
+                sellCalculation.CalculatePrice(objToSell.transform.GetChild(0).gameObject, comissionCompleting);
+            }
         }
     }
 }

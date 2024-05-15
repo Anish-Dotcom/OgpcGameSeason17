@@ -26,6 +26,7 @@ public class BoxScript : MonoBehaviour
     public TMP_Text Name;
 
     public GameObject boxUI;
+    public GameObject TagSlot;
 
     public int index;
 

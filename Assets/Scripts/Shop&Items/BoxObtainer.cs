@@ -8,6 +8,7 @@ public class BoxObtainer : MonoBehaviour
     public int myInfoIndex;
 
     public GameObject Box;
+    public GameObject Tag;
     public Transform BoxPosition;
 
     public Transform fpsCam;
@@ -31,14 +32,17 @@ public class BoxObtainer : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 GameObject box = Instantiate(Box, Vector3.zero, Quaternion.identity, BoxPosition);
+                BoxScript boxScript = box.GetComponent<BoxScript>();
                 box.transform.position = BoxPosition.transform.position;
-                box.GetComponent<BoxScript>().fpsCam = fpsCam;
-                box.GetComponent<BoxScript>().player = player;
-                box.GetComponent<BoxScript>().open = boxInteract;
-                box.GetComponent<BoxScript>().menuController = menuController;
+                boxScript.fpsCam = fpsCam;
+                boxScript.player = player;
+                boxScript.open = boxInteract;
+                boxScript.menuController = menuController;
 
                 objectPickUp.currentObject = box;
                 objectPickUp.PickUp(box);
+                GameObject TagSlot = boxScript.TagSlot;
+                GameObject tag = Instantiate(Tag, TagSlot.transform.position, Tag.transform.rotation, TagSlot.transform);
             }
         }
     }

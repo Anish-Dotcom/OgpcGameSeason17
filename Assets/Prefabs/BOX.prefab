@@ -467,6 +467,7 @@ MonoBehaviour:
   objectPickUpScript: {fileID: 0}
   Name: {fileID: 0}
   boxUI: {fileID: 0}
+  TagSlot: {fileID: 8914758825043306925}
   index: 0
 --- !u!65 &6840675553552533315
 BoxCollider:
