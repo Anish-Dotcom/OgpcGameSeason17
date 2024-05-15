@@ -132,7 +132,7 @@ Material:
     - _ColorInput: {r: 0.25490195, g: 0.25490195, b: 0.2627451, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _InputColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Input_Pos: {r: -0.07501682, g: 1.8173378, b: 1.4099463, a: 0}
+    - _Input_Pos: {r: 30.347193, g: 1.8173378, b: 0.3305361, a: 0}
     - _Input_Position: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

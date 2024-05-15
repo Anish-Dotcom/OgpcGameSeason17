@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4089679618437690217}
   - component: {fileID: 4089679618437690219}
   - component: {fileID: 4089679618437690216}
+  - component: {fileID: 4312592401755274574}
   m_Layer: 5
   m_Name: PosDot
   m_TagString: Dot
@@ -76,3 +77,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!70 &4312592401755274574
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089679618437690214}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.022064209, y: 0}
+  m_Size: {x: 19.940857, y: 19.940857}
+  m_Direction: 0

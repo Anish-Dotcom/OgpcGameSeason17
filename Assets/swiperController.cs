@@ -16,11 +16,11 @@ public class swiperController : MonoBehaviour
     {
         
     }
-    void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
         print("detected");
-        if (other.tag == "Dot")
+        if (collision.tag == "Dot")
         {
             print("detected");
         }

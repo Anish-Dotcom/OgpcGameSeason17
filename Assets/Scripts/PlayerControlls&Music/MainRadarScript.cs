@@ -22,6 +22,11 @@ public class MainRadarScript : MonoBehaviour
     {
         Vector3 center = radarUI.position;
         swiper.RotateAround(center,Vector3.forward, 100*Time.deltaTime);
+        if (RectOverlaps(radarDotPrefab, swiper))
+        {
+            Debug.Log("UI elements are overlapping!");
+            // Do something when the UI elements overlap
+        }
     }
     
     public void Mapdots()
@@ -53,5 +58,8 @@ public class MainRadarScript : MonoBehaviour
         }
 
     }
-    
+    private bool RectOverlaps(Rect rect1, Rect rect2)
+    {
+        return rect1.Overlaps(rect2);
+    }
 }
