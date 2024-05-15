@@ -121,7 +121,7 @@ public class DissolveController : MonoBehaviour
         for (int i = 0; i < dualDissolveAreaMats.Count; i++)
         {
             dualDissolveAreaMats[i].SetFloat("_Cutoff_Radius", radius);
-            Debug.Log(dualDissolveAreaMats[i].GetFloat("_Cutoff_Radius") + " " + gameObject.name);
+            //Debug.Log(dualDissolveAreaMats[i].GetFloat("_Cutoff_Radius") + " " + gameObject.name);
         }
     }
     public void setSecondDissolveCenter(List<Material> updating)

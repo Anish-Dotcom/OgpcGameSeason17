@@ -120,7 +120,7 @@ public class ToyBuilder : MonoBehaviour
             }
 
             GameObject mainParent = objectsBeingUsedParent.transform.GetChild(0).gameObject;
-            if (tinkering || painting)//moving the item around the scene or painting items
+            if (tinkering)//moving the item around the scene or painting items
             {
                 if (Input.GetKeyDown(KeyCode.Mouse1) && waitTimeAfterLockChange > 0.5f && tinkering)
                 {
@@ -183,6 +183,10 @@ public class ToyBuilder : MonoBehaviour
                     resetRot = stationCamRig.transform.rotation;
                     trueParent.transform.SetParent(mainParent.transform);
                 }
+            }
+            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            {
+                MoveTinkeringObj();
             }
         }
         else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0 || lookingAtCheck.lookingAt[2] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
@@ -420,7 +424,8 @@ public class ToyBuilder : MonoBehaviour
         LayerMask layer = LayerMask.GetMask("ToonLayer");//make work with raycast system
         if (Physics.Raycast(ray, out hit, 3.5f, layer))
         {
-            if (hit.transform.gameObject.name != "painbucket")
+            //Debug.Log(hit.transform.name);
+            if (hit.transform.gameObject.name != "paintbucket")
             {
                 if (tinkering)
                 {
@@ -488,7 +493,10 @@ public class ToyBuilder : MonoBehaviour
         }
         else
         {
-            tinkeringObj.SetActive(false);
+            if (tinkeringObj != null)
+            {
+                tinkeringObj.SetActive(false);
+            }
         }
     }
     public void SwitchIfColliderEnabled(GameObject collObj, bool enabled)//remove box collider used for pickup, and rigidbody

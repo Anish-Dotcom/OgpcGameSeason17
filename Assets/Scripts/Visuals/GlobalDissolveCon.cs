@@ -364,7 +364,7 @@ public class GlobalDissolveCon : MonoBehaviour
                 }
             }
             //Debug.Log("angle " + angle[i] + " sinangle: " + Mathf.Cos(angle[i]).ToString() + " radius: " + radiusPlacedUpon[i]);
-            Debug.Log("angle " + angle[i]);
+            Debug.Log("angle " + angle[i] + " area " + i);
             areaObjects[i].transform.position = new Vector3(Mathf.Cos(angle[i]) * radiusPlacedUpon[i], transform.position.y, Mathf.Sin(angle[i]) * radiusPlacedUpon[i]);
 
             Vector3 direction = areaObjects[i].transform.GetChild(0).GetChild(0).position - areaObjects[i].transform.GetChild(0).position;
