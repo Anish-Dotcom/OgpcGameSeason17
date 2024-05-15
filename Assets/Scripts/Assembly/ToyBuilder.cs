@@ -67,6 +67,9 @@ public class ToyBuilder : MonoBehaviour
     public GameObject paintingMenu;
     public Texture2D cursorSprite;//the cursor yours changes to when you are aiming at the paint bucket
     public Texture2D originalCursor;//the cursor that is used normally
+    public GameObject paintBucketPos;
+    public int PaintBucketUses = 0;
+    public int PaintBucketMaxUses = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -282,7 +285,24 @@ public class ToyBuilder : MonoBehaviour
     }
     public void AddToBuilder(GameObject objToAdd)
     {
-        if (trueParent.transform.childCount > 0 && objToAdd.name != "gearboxputtogether" && objToAdd.CompareTag("finished Toy") || objToAdd.name != "gearboxputtogether" && !objToAdd.CompareTag("finished Toy"))//any other parts
+        if (objToAdd.name == "paintbucket")//adding the paint bucket to the station
+        {
+            if (paintBucketPos.transform.childCount == 0)
+            {
+                objToAdd.layer = 3;
+                objToAdd.transform.position = paintBucketPos.transform.position;
+                objToAdd.transform.rotation = Quaternion.identity;
+                objToAdd.transform.SetParent(paintBucketPos.transform);
+                objToAdd.transform.Rotate(-90, 0, 0);
+                SwitchIfColliderEnabled(objToAdd, false);
+            }
+            else
+            {
+                Destroy(objToAdd);
+            }
+            PaintBucketUses += 5;
+        }
+        else if (trueParent.transform.childCount > 0 && objToAdd.name != "gearboxputtogether" && objToAdd.CompareTag("finished Toy") || objToAdd.name != "gearboxputtogether" && !objToAdd.CompareTag("finished Toy"))//any other parts
         {
             objectsInStation.Add(objToAdd);
             objToAdd.transform.SetParent(disabledStationObjsHolder.transform);

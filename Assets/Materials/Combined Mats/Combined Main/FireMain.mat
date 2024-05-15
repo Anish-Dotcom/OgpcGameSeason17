@@ -42,7 +42,7 @@ Material:
     - _Cutoff_Distance_X: 5.7651577
     - _Cutoff_Distance_Y: 5.4344096
     - _Cutoff_Distance_Z: 8.804348
-    - _Cutoff_Radius: 3.7472394
+    - _Cutoff_Radius: 13
     - _Cutoff_X_non_move: 9
     - _Cutoff_Y_non_move: 10
     - _Cutoff_Z_non_move: 12
@@ -53,6 +53,5 @@ Material:
     m_Colors:
     - _Obj_Pos_For_Ref: {r: 0, g: 0, b: 0, a: 0}
     - _Obj_Pos_non_move: {r: 1.483, g: 0, b: 2.3, a: 0}
-    - _Object_Position_For_Ref_Dis: {r: 15.0807905, g: 1.8173378, b: -0.16526191,
-        a: 0}
+    - _Object_Position_For_Ref_Dis: {r: 1.483, g: 0, b: 2.3, a: 0}
   m_BuildTextureStacks: []

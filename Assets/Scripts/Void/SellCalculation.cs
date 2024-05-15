@@ -14,6 +14,7 @@ public class SellCalculation : MonoBehaviour
 {
     public ComissionController comissionController;
     public ItemsInShop itemsInShop;
+    public MoneyScrip moneyScript;
 
     public GameObject player;
 
@@ -183,6 +184,7 @@ public class SellCalculation : MonoBehaviour
         totalPrice *= typeWeight * toytype;
 
         totalPrice = Mathf.RoundToInt(totalPrice);
+        moneyScript.IncreaseMoney(totalPrice);
     }
     public float GetSurfaceArea(GameObject objToCalculate)
     {
