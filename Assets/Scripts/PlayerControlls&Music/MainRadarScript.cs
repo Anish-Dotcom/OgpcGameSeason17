@@ -11,6 +11,7 @@ public class MainRadarScript : MonoBehaviour
     public GameObject[] detectable;
     public int radarInt;
     public RectTransform swiper;
+    public float prevRot;
     
     void Start()
     {
@@ -40,10 +41,35 @@ public class MainRadarScript : MonoBehaviour
             float distance = Vector3.Distance(transform.position, obj.transform.position);
             if (distance < maxDistance)
             {
-                Vector3 playerPos = new Vector3(transform.position.x, transform.position.z, 0);
-                Vector3 objPos = new Vector3(obj.transform.position.x, obj.transform.position.z, 0);
-                Vector3 relativePosition = objPos - playerPos;
+                Vector2 playerPos = new Vector3(transform.position.x, transform.position.z);
+                Vector2 objPos = new Vector3(obj.transform.position.x, obj.transform.position.z);
+                Vector2 relativePosition = objPos - playerPos;
                 Vector2 dotPosition = new Vector2(relativePosition.x, relativePosition.y);
+
+                float referanceAngle = Mathf.Atan(relativePosition.y/relativePosition.x);
+                float angleOfRotation = 0f;
+                if (relativePosition.x > 0 && relativePosition.y > 0)
+                {
+                    angleOfRotation = referanceAngle;
+                }
+                else if (relativePosition.x < 0 && relativePosition.y > 0)
+                {
+                    angleOfRotation = Mathf.PI - referanceAngle;
+                }
+                else if (relativePosition.x < 0 && relativePosition.y < 0)
+                {
+                    angleOfRotation = Mathf.PI + Mathf.Abs(referanceAngle);
+                }
+                else if (relativePosition.x > 0 && relativePosition.y < 0)
+                {
+                    angleOfRotation = (Mathf.PI * 2) - Mathf.Abs(referanceAngle);
+                }
+                float swiperRotation = swiper.rotation.z;
+                if (swiperRotation < 0)
+                {
+                    swiperRotation = Mathf.PI + Mathf.Abs((swiper.rotation.z/360) * Mathf.PI * 2);
+                }
+
 
                 dotPosition /= maxDistance;
                 dotPosition *= radarUI.sizeDelta.x / 2;
