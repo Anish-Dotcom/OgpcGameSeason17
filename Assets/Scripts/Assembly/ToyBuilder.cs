@@ -513,6 +513,11 @@ public class ToyBuilder : MonoBehaviour
         }
         else
         {
+            if (!painting)
+            {
+                Vector2 hotspot = new Vector2(originalCursor.width, originalCursor.height);
+                Cursor.SetCursor(originalCursor, hotspot, CursorMode.Auto);
+            }
             if (tinkeringObj != null)
             {
                 tinkeringObj.SetActive(false);
@@ -556,7 +561,7 @@ public class ToyBuilder : MonoBehaviour
             }
         }
     }
-    public Color AvgColors(Color color1, Color color2)
+    public void AvgColors(Color color1, Color color2)
     {
         color1 *= color1;
         color2 *= color2;
@@ -567,6 +572,6 @@ public class ToyBuilder : MonoBehaviour
         resultingColor.g = Mathf.Sqrt(resultingColor.g);
         resultingColor.b = Mathf.Sqrt(resultingColor.b);
 
-        return resultingColor;
+        currentColor = resultingColor;
     }
 }
