@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SplashScreen : MonoBehaviour
 {
-    public GameObject[] frames;
     bool finished = false;
 
     // Start is called before the first frame update
@@ -17,7 +16,7 @@ public class SplashScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (finished && Input.anyKeyDown)
+        if (finished)
         {
             SceneManager.LoadScene("MainMenu");
         }
@@ -25,12 +24,7 @@ public class SplashScreen : MonoBehaviour
 
     IEnumerator runIt()
     {
-        yield return new WaitForSeconds(0.3f);
-        for (int i = 1; i < frames.Length; i++)
-        {
-            yield return new WaitForSeconds(0.085f);
-            frames[i].SetActive(true);
-        }
+        yield return new WaitForSeconds(3f);
         finished = true;
     }
 }
