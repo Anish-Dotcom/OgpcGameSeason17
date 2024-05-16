@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ToyBuilder : MonoBehaviour
 {
@@ -65,8 +66,7 @@ public class ToyBuilder : MonoBehaviour
     private bool painting;
     public Color currentColor;
     public GameObject paintingMenu;
-    public Texture2D cursorSprite;//the cursor yours changes to when you are aiming at the paint bucket
-    public Texture2D originalCursor;//the cursor that is used normally
+    public GameObject cursorObj;//the cursor yours changes to when you are aiming at the paint bucket
     public GameObject paintBucketPos;
     public int PaintBucketUses = 0;
     public int PaintBucketMaxUses = 5;
@@ -121,7 +121,6 @@ public class ToyBuilder : MonoBehaviour
                     stationCam.transform.position += Input.GetAxis("Mouse ScrollWheel") * stationCam.transform.forward * speed;
                 }
             }
-
             GameObject mainParent = objectsBeingUsedParent.transform.GetChild(0).gameObject;
             if (tinkering)//moving the item around the scene or painting items
             {
@@ -449,8 +448,7 @@ public class ToyBuilder : MonoBehaviour
             {
                 if (tinkering)
                 {
-                    Vector2 hotspot = new Vector2(originalCursor.width, originalCursor.height);//sets the center of screen to top left of cursor sprite
-                    Cursor.SetCursor(originalCursor, hotspot, CursorMode.Auto);
+                    cursorObj.SetActive(false);
                     negitiveNorm = -hit.normal;
                     tinkeringObj.SetActive(true);
                     tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
@@ -493,8 +491,8 @@ public class ToyBuilder : MonoBehaviour
             {
                 if (!painting)
                 {
-                    Vector2 hotspot = new Vector2(cursorSprite.width / 2, cursorSprite.height / 2);//sets the center of screen to center of cursor
-                    Cursor.SetCursor(cursorSprite, hotspot, CursorMode.Auto);
+                    cursorObj.SetActive(true);
+                    
                     if (Input.GetKeyDown(KeyCode.Mouse0))//open up painting menu
                     {
                         if (tinkering)
@@ -515,8 +513,7 @@ public class ToyBuilder : MonoBehaviour
         {
             if (!painting)
             {
-                Vector2 hotspot = new Vector2(originalCursor.width, originalCursor.height);
-                Cursor.SetCursor(originalCursor, hotspot, CursorMode.Auto);
+                cursorObj.SetActive(false);
             }
             if (tinkeringObj != null)
             {
@@ -573,5 +570,18 @@ public class ToyBuilder : MonoBehaviour
         resultingColor.b = Mathf.Sqrt(resultingColor.b);
 
         currentColor = resultingColor;
+        cursorObj.transform.GetChild(0).gameObject.GetComponent<Image>().color = currentColor;
+    }
+    public void AddRed()
+    {
+        AvgColors(currentColor, Color.red);
+    }
+    public void AddBlue()
+    {
+        AvgColors(currentColor, Color.blue);
+    }
+    public void AddYellow()
+    {
+        AvgColors(currentColor, Color.yellow);
     }
 }
