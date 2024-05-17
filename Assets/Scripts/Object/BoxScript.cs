@@ -32,6 +32,8 @@ public class BoxScript : MonoBehaviour
 
     private PopupInfo popupInfo;
 
+    public bool isPopupOpen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,15 +56,17 @@ public class BoxScript : MonoBehaviour
         {
             if (popupInfo.lookingAt[0])
             {
-                if (popupInfo.hitObj[0].tag == "Box")
+                if (popupInfo.hitObj[0] == gameObject)
                 {
                     //Debug.Log("worky 1");
                     menuController.openPopup(open);
+                    isPopupOpen = true;
 
                     if (Input.GetKeyDown(KeyCode.X)) // opens and sets up the menu for the inventory of the box
                     {
                         //Debug.Log("worky 2");
                         menuController.closePopup(open);
+                        isPopupOpen = false;
                         menuController.openMenu(boxUI);
 
                         foreach (Transform child in prefabButtonParent)
@@ -85,6 +89,7 @@ public class BoxScript : MonoBehaviour
                     {
                         Debug.Log("worky");
                         menuController.openPopup(store);
+                        isPopupOpen = true;
                         if (Input.GetKeyDown(KeyCode.E))
                         {
                             objectPickUpScript.Drop(objectPickUpScript.currentObject);
@@ -93,8 +98,10 @@ public class BoxScript : MonoBehaviour
                         }
                     }
                 }
-                else
+                else if (isPopupOpen)
                 {
+                    isPopupOpen = false;
+
                     menuController.closePopup(open);
                     if (store.activeInHierarchy)
                     {
@@ -102,8 +109,9 @@ public class BoxScript : MonoBehaviour
                     }
                 }
             }
-            else
+            else if (isPopupOpen)
             {
+                isPopupOpen = false;
                 menuController.closePopup(open);
                 if (store.activeInHierarchy)
                 {
@@ -115,6 +123,7 @@ public class BoxScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                isPopupOpen = false;
                 menuController.closePopup(open);
                 if (store.activeInHierarchy)
                 {
