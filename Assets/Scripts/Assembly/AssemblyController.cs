@@ -49,8 +49,6 @@ public class AssemblyController : MonoBehaviour
     void Start()
     {
         assemblyPartsInScene = GameObject.FindGameObjectsWithTag("assemblyPart");//call this whenever new objects get added to scene as well
-        objectsBeingMoved = new GameObject[assemblyPartsInScene.Length];
-        timeBeenMoved = new float[assemblyPartsInScene.Length];
 
         //for testing:
         //SetAssembly(assembly, finalObj);
@@ -223,6 +221,8 @@ public class AssemblyController : MonoBehaviour
         GameObject RecipeObject = Instantiate(RecipeObj, RecipeForAssemblyObj.transform.position + RecipeObj.transform.position, Quaternion.identity, RecipeForAssemblyObj.GetComponent<Transform>());//should work, position should be inherited, if not set the world position to RecipeForAssemblyObj world pos
         toyNamesForFinal = new string[RecipeObject.transform.childCount];//get children of gameobject, each child is a part of the assembly
         toyPartInFinalPos = new bool[RecipeObject.transform.childCount];
+        objectsBeingMoved = new GameObject[toyNamesForFinal.Length];
+        timeBeenMoved = new float[toyNamesForFinal.Length];
 
         for (int i = 0; i < RecipeObject.transform.childCount; i++)
         {
