@@ -139,7 +139,7 @@ public class ToyBuilder : MonoBehaviour
                     }
                     else//painting
                     {
-                        MoveTinkeringObj();
+                        MoveTinkeringObj(true);
                     }
                 }
             }
@@ -188,7 +188,7 @@ public class ToyBuilder : MonoBehaviour
             }
             if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             {
-                MoveTinkeringObj();
+                MoveTinkeringObj(false);
             }
         }
         else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0 || lookingAtCheck.lookingAt[2] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
@@ -383,9 +383,9 @@ public class ToyBuilder : MonoBehaviour
         LockInObj.transform.SetParent(trueParent.transform);
         tinkering = false;
     }
-    public void UnlockPosition(GameObject unlockObj)//doesnt work
+    public void UnlockPosition(GameObject unlockObj)
     {
-        if (unlockObj.name != "gearboxputtogether")
+        if (unlockObj.name != "gearboxputtogether" && !unlockObj.name.Contains("paintbucket"))
         {
             unlockObj.layer = 0;
             foreach (Transform child in unlockObj.transform)
@@ -436,7 +436,7 @@ public class ToyBuilder : MonoBehaviour
         }
         toyCompleted = completedToy;
     }
-    public void MoveTinkeringObj()
+    public void MoveTinkeringObj(bool letMove)
     {
         RaycastHit hit;
         Ray ray = stationCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
@@ -448,36 +448,38 @@ public class ToyBuilder : MonoBehaviour
             {
                 if (tinkering)
                 {
-                    cursorObj.SetActive(false);
-                    negitiveNorm = -hit.normal;
-                    tinkeringObj.SetActive(true);
-                    tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
-                    if (hit.transform.gameObject != tinkeringObj)
+                    if (letMove)
                     {
-                        heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
-
-                        //Debug.DrawRay(hit.point, hit.normal, Color.red, 10f);
-                        Debug.Log(tinkeringObj.name);
-                        attachPointPos = tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position;
-                        referPos = tinkeringObj.GetComponent<attachInfo>().refer.transform.position;
-
-                        //angle between current vectors
-                        angle = Vector3.Angle(referPos - attachPointPos, -hit.normal);
-                        // Calculate the axis of rotation
-                        Vector3 axis1 = Vector3.Cross(referPos - attachPointPos, -hit.normal).normalized;
-                        if (axis1 != Vector3.zero)
+                        cursorObj.SetActive(false);
+                        negitiveNorm = -hit.normal;
+                        tinkeringObj.SetActive(true);
+                        tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
+                        if (hit.transform.gameObject != tinkeringObj)
                         {
-                            axis = axis1;
+                            heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
+
+                            //Debug.DrawRay(hit.point, hit.normal, Color.red, 10f);
+                            Debug.Log(tinkeringObj.name);
+                            attachPointPos = tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position;
+                            referPos = tinkeringObj.GetComponent<attachInfo>().refer.transform.position;
+
+                            //angle between current vectors
+                            angle = Vector3.Angle(referPos - attachPointPos, -hit.normal);
+                            // Calculate the axis of rotation
+                            Vector3 axis1 = Vector3.Cross(referPos - attachPointPos, -hit.normal).normalized;
+                            if (axis1 != Vector3.zero)
+                            {
+                                axis = axis1;
+                            }
+                            //Debug.Log("axis: " + axis);
+                            // rotate around the attachPointPos
+                            tinkeringObj.transform.RotateAround(attachPointPos, axis, angle);
+
+                            //then compare position and move
+                            tinkeringObj.transform.position = hit.point - (tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position - tinkeringObj.transform.position);//sets the postition to where the attach point will be at the hit point, facing into the mesh
+
                         }
-                        //Debug.Log("axis: " + axis);
-                        // rotate around the attachPointPos
-                        tinkeringObj.transform.RotateAround(attachPointPos, axis, angle);
-
-                        //then compare position and move
-                        tinkeringObj.transform.position = hit.point - (tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position - tinkeringObj.transform.position);//sets the postition to where the attach point will be at the hit point, facing into the mesh
-
                     }
-
                 }
                 else if (painting)
                 {
@@ -514,10 +516,6 @@ public class ToyBuilder : MonoBehaviour
             if (!painting)
             {
                 cursorObj.SetActive(false);
-            }
-            if (tinkeringObj != null)
-            {
-                tinkeringObj.SetActive(false);
             }
         }
     }
