@@ -54,7 +54,7 @@ public class BoxScript : MonoBehaviour
         {
             if (popupInfo.lookingAt[0])
             {
-                if (popupInfo.hitObj[0] == gameObject)
+                if (popupInfo.hitObj[0].tag == "Box")
                 {
                     //Debug.Log("worky 1");
                     menuController.openPopup(open);
