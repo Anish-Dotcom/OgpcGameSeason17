@@ -3449,7 +3449,8 @@ MonoBehaviour:
   mainMenuSongs:
   - {fileID: 8300000, guid: 0127cf279975dd64192e04ecb14f5887, type: 3}
   voidSongs: []
-  mainRoomSongs: []
+  mainRoomSongs:
+  - {fileID: 8300000, guid: 0127cf279975dd64192e04ecb14f5887, type: 3}
   mailboxSongs: []
   sellAreaSongs: []
   gdc: {fileID: 0}
