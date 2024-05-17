@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 9187899657002284078}
   m_Layer: 6
   m_Name: small gear
-  m_TagString: Untagged
+  m_TagString: assemblyPart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

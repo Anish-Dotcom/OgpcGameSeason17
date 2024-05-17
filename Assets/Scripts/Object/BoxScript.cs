@@ -137,6 +137,7 @@ public class BoxScript : MonoBehaviour
     void ObtainItem(int index, int itemObjectIndex) // whatever you want to happen when the item is pressed
     {
         GameObject itemAdded = Instantiate(allItemGameObjects[itemObjectIndex], objectInstantiatedParent);
+        itemAdded.name = itemAdded.name.Replace("(Clone)", "");
         if(ObjectPickUp.equipped == false)
         {
             ObjectPickUp.equipped = true;

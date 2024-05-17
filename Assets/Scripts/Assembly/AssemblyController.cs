@@ -87,9 +87,13 @@ public class AssemblyController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && lookingAtCheck.lookingAt[myInfoIndex])//add the object command
         {
-            AddToAssembly(heldObjContainer.GetComponent<Transform>().GetChild(0).gameObject);
-            ObjectPickUp.equipped = false;
-            ObjectPickUp.slotFull = false;
+            if(heldObjContainer.transform.childCount > 0)
+            {
+                AddToAssembly(heldObjContainer.GetComponent<Transform>().GetChild(0).gameObject);
+                ObjectPickUp.equipped = false;
+                ObjectPickUp.slotFull = false;
+            }
+            
         }
 
         Vector3[] velocity = new Vector3[objectsBeingMoved.Length];
