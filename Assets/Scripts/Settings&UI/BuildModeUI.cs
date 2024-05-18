@@ -16,6 +16,7 @@ public class BuildModeUI : MonoBehaviour
     public GameObject prefabButton; // the button for each item
     public Transform prefabButtonParent;
     public List<GameObject> prefabButtons = new List<GameObject>(); // editted prefab of standard
+    public List<GameObject> itemsAdded = new List<GameObject>(); // the items that are being added to the build
     public GameObject Slots;
     public Button ScrollLeft;
     public Button ScrollRight;
@@ -23,7 +24,7 @@ public class BuildModeUI : MonoBehaviour
     public ToyBuilder toyBuilder;
 
     public int index = -1;
-    private int prevIndex = -2;
+    public int prevIndex = -2;
     private GameObject prevObj;
     private float waitTimeAfterObjChange;
 
@@ -33,22 +34,8 @@ public class BuildModeUI : MonoBehaviour
     }
     public void addButtons(GameObject item)
     {
-        for (int i = 0; i < items.Count; i++)
-        {
-            if (item.name.Contains(items[i].itemName))
-            {
-                GameObject button = Instantiate(prefabButton, prefabButtonParent);
-                prefabButtons.Add(button);
-
-                Transform buttonTransform = button.transform;
-                Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
-                Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
-
-                itemImage.sprite = items[i].itemImage;
-                index = prefabButtons.Count - 1;
-                mainButton.onClick.AddListener(() => AddItemToBuild(index, item));
-            }
-        }
+        itemsAdded.Add(item);
+        UpdateButtons();
     }
 
     void AddItemToBuild(int index, GameObject itemToAdd) // whatever you want to happen when the item is pressed
@@ -59,6 +46,7 @@ public class BuildModeUI : MonoBehaviour
             waitTimeAfterObjChange = 0;
             if (prevIndex != index)
             {
+                /*
                 if (prevObj != null)
                 {
                     if (prevObj != itemToAdd)
@@ -66,7 +54,7 @@ public class BuildModeUI : MonoBehaviour
                         prevObj.transform.SetParent(toyBuilder.disabledStationObjsHolder.transform);
                         prevObj.SetActive(false);
                     }
-                }
+                }*/
                 prevObj = itemToAdd;
                 itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
                 toyBuilder.tinkeringObj = itemToAdd;
@@ -79,6 +67,43 @@ public class BuildModeUI : MonoBehaviour
                 itemToAdd.transform.SetParent(toyBuilder.disabledStationObjsHolder.transform);
                 toyBuilder.tinkering = false;
                 prevIndex = -1;
+            }
+        }
+    }
+
+    public void UpdateButtons()
+    {
+        // Clear existing buttons
+        foreach (var button in prefabButtons)
+        {
+            Destroy(button);
+        }
+        prefabButtons.Clear();
+
+        // Rebuild buttons based on itemsAdded and items
+        for (int i = 0; i < itemsAdded.Count; i++)
+        {
+            GameObject item = itemsAdded[i];
+            for (int j = 0; j < items.Count; j++)
+            {
+                BuildModeItem buildModeItem = items[j];
+                if (item.name.Contains(buildModeItem.itemName))
+                {
+                    GameObject button = Instantiate(prefabButton, prefabButtonParent);
+                    prefabButtons.Add(button);
+
+                    Transform buttonTransform = button.transform;
+                    Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
+                    Button mainButton = buttonTransform.GetChild(1).GetComponent<Button>();
+
+                    itemImage.sprite = buildModeItem.itemImage;
+
+                    // Capture the current values of i and item in local variables
+                    int capturedIndex = prefabButtons.Count - 1;
+                    GameObject capturedItem = item;
+
+                    mainButton.onClick.AddListener(() => AddItemToBuild(capturedIndex, capturedItem));
+                }
             }
         }
     }

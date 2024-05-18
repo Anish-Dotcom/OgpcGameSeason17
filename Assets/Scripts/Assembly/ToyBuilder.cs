@@ -67,6 +67,7 @@ public class ToyBuilder : MonoBehaviour
     public Color currentColor;
     public GameObject paintingMenu;
     public GameObject cursorObj;//the cursor yours changes to when you are aiming at the paint bucket
+    public Texture2D cursorTexture;
     public GameObject paintBucketPos;
     public int PaintBucketUses = 0;
     public int PaintBucketMaxUses = 5;
@@ -380,6 +381,9 @@ public class ToyBuilder : MonoBehaviour
         }
         Destroy(buildModeUi.prefabButtons[indexer]); // removes it from the hotbar
         buildModeUi.prefabButtons.RemoveAt(indexer);
+        buildModeUi.itemsAdded.RemoveAt(indexer);
+        buildModeUi.UpdateButtons();
+        buildModeUi.prevIndex = -2;
         LockInObj.transform.SetParent(trueParent.transform);
         tinkering = false;
     }
@@ -451,6 +455,9 @@ public class ToyBuilder : MonoBehaviour
                     if (letMove)
                     {
                         cursorObj.SetActive(false);
+                        /*
+                        Vector2 hotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);//sets the center of screen to top left of cursor sprite
+                        Cursor.SetCursor(cursorTexture, hotspot, CursorMode.Auto);*/
                         negitiveNorm = -hit.normal;
                         tinkeringObj.SetActive(true);
                         tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
@@ -494,6 +501,7 @@ public class ToyBuilder : MonoBehaviour
                 if (!painting)
                 {
                     cursorObj.SetActive(true);
+                    //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                     
                     if (Input.GetKeyDown(KeyCode.Mouse0))//open up painting menu
                     {
@@ -506,7 +514,6 @@ public class ToyBuilder : MonoBehaviour
                         painting = true;
                         currentColor = Color.white;
                         paintingMenu.SetActive(true);
-
                     }
                 }
             }
@@ -514,7 +521,9 @@ public class ToyBuilder : MonoBehaviour
         else
         {
             if (!painting)
-            {
+            {/*
+                Vector2 hotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);//sets the center of screen to top left of cursor sprite
+                Cursor.SetCursor(cursorTexture, hotspot, CursorMode.Auto);*/
                 cursorObj.SetActive(false);
             }
         }

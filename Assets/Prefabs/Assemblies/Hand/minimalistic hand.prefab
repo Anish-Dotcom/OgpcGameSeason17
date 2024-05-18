@@ -156,9 +156,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4788585161319843713}
   - component: {fileID: 3094670001198575166}
-  m_Layer: 0
+  - component: {fileID: 6108455871447719652}
+  - component: {fileID: 451793034411987334}
+  m_Layer: 6
   m_Name: minimalistic hand
-  m_TagString: Untagged
+  m_TagString: Finished Assembly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,6 +195,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attachPoint: {fileID: 257869694104615300}
   refer: {fileID: 1220044795634336592}
+--- !u!54 &6108455871447719652
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5278122529563434299}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &451793034411987334
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5278122529563434299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.65, z: 1}
+  m_Center: {x: 0, y: -0.57, z: -0.3}
 --- !u!1 &5887166521586968807
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +235,7 @@ GameObject:
   - component: {fileID: 3706134957072555566}
   - component: {fileID: 415461994522393872}
   - component: {fileID: 2149216793207981413}
+  - component: {fileID: 1402201666883478707}
   m_Layer: 0
   m_Name: minimalistic hand
   m_TagString: Untagged
@@ -278,3 +310,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1402201666883478707
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887166521586968807}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3266928621677939381, guid: b041b7c245a25404fa36d5b09edbbaa5, type: 3}
