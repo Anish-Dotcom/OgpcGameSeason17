@@ -31,10 +31,9 @@ public class ConveyorScript : MonoBehaviour
     public void Sellitem()
     {
         GameObject objToSell = player.GetComponent<ObjectPickUp>().currentObject.transform.GetChild(0).gameObject;
-        if (objToSell.name.Contains("Box"))
+        if (objToSell.name.Contains("finished Toy"))
         {
-            TMP_Text tagCanvas = objToSell.GetComponent<BoxScript>().TagSlot.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_Text>();//Gets the canvas
-            int comissionCompleting = -1;
+            int comissionCompleting = 0;/*
             for (int i = 0; i < comissionController.numberOfComissions; i++)
             {
                 int inputNum = comissionController.inputNums[4 * i];
@@ -43,10 +42,10 @@ public class ConveyorScript : MonoBehaviour
                 {
                     comissionCompleting = i;
                 }
-            }
+            }*/
             if (comissionCompleting != -1)
             {
-                sellCalculation.CalculatePrice(objToSell.transform.GetChild(0).gameObject, comissionCompleting);
+                sellCalculation.CalculatePrice(objToSell, comissionCompleting);
             }
         }
     }
