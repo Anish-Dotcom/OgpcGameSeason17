@@ -380,6 +380,8 @@ public class ToyBuilder : MonoBehaviour
         }
         Destroy(buildModeUi.prefabButtons[indexer]); // removes it from the hotbar
         buildModeUi.prefabButtons.RemoveAt(indexer);
+        buildModeUi.itemsAdded.RemoveAt(indexer);
+        buildModeUi.UpdateButtons();
         LockInObj.transform.SetParent(trueParent.transform);
         tinkering = false;
     }
