@@ -28,6 +28,8 @@ public class bedScript : MonoBehaviour
     public int sleepingLength;
     public GameObject crosshair;
 
+    public int week = 0;
+
     public void Start()
 
     {
@@ -117,8 +119,9 @@ public class bedScript : MonoBehaviour
             caledarScript.day = Day;
             if (Day == 7)
             {
+                week++;
                 Day = 0;
-                caledarScript.bills();
+                caledarScript.bills(week);
             }
         }
 

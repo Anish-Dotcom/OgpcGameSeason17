@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class MoneyScrip : MonoBehaviour
 {
     public float currentMoney;
@@ -13,6 +14,10 @@ public class MoneyScrip : MonoBehaviour
     public Text decreaseText;
     public CanvasGroup decreaseTextCanvasGroup;
     public float amount2;
+
+    public bedScript bedScript;
+    public GameObject gameOverUI;
+    public TMP_Text weeksSurvived;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +28,18 @@ public class MoneyScrip : MonoBehaviour
     void Update()
     {
         moneyText.text = "$" + currentMoney.ToString("F2");
+        if(currentMoney < 0) // game over
+        {
+            gameOverUI.SetActive(true);
+            weeksSurvived.text = "Weeks survived: " + bedScript.week.ToString();
+        }
     }
 
-
+    public void playAgain()
+    {
+        gameOverUI.SetActive(false);
+        SceneManager.LoadScene("MainMenu");
+    }
 
 
     public void IncreaseMoney(float amount)

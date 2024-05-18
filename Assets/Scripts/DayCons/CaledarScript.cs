@@ -25,10 +25,9 @@ public class CaledarScript : MonoBehaviour
         OMarks.text = OMarks.text.Replace(" ", "");
     }
 
-    public void bills()
+    public void bills(int week)
     {
-
-        MoneyScript.DecreaseMoney(250);
+        MoneyScript.DecreaseMoney((50 * week) + 200); // make it harder for the player over time
     }
 
 }
