@@ -24,7 +24,7 @@ public class BuildModeUI : MonoBehaviour
     public ToyBuilder toyBuilder;
 
     public int index = -1;
-    private int prevIndex = -2;
+    public int prevIndex = -2;
     private GameObject prevObj;
     private float waitTimeAfterObjChange;
 
@@ -46,6 +46,7 @@ public class BuildModeUI : MonoBehaviour
             waitTimeAfterObjChange = 0;
             if (prevIndex != index)
             {
+                /*
                 if (prevObj != null)
                 {
                     if (prevObj != itemToAdd)
@@ -53,7 +54,7 @@ public class BuildModeUI : MonoBehaviour
                         prevObj.transform.SetParent(toyBuilder.disabledStationObjsHolder.transform);
                         prevObj.SetActive(false);
                     }
-                }
+                }*/
                 prevObj = itemToAdd;
                 itemToAdd.transform.SetParent(toyBuilder.heldStationObjHolder.transform);
                 toyBuilder.tinkeringObj = itemToAdd;

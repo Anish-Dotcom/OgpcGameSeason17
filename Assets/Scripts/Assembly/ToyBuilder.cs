@@ -382,6 +382,7 @@ public class ToyBuilder : MonoBehaviour
         buildModeUi.prefabButtons.RemoveAt(indexer);
         buildModeUi.itemsAdded.RemoveAt(indexer);
         buildModeUi.UpdateButtons();
+        buildModeUi.prevIndex = -2;
         LockInObj.transform.SetParent(trueParent.transform);
         tinkering = false;
     }
