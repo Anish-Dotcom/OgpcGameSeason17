@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 5119499399911320311}
   - component: {fileID: 1202518798262144558}
   - component: {fileID: -1479798594176984276}
+  - component: {fileID: 5109105655970304801}
   m_Layer: 6
   m_Name: batmanhead
   m_TagString: Untagged
@@ -264,6 +265,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5109105655970304801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3176057791455472218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adfcd8261a0e7204eb743dbea4a21701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMat: {fileID: 2100000, guid: b464c5f7698fcb54db7002326eef7980, type: 2}
 --- !u!1 &4323599468654246778
 GameObject:
   m_ObjectHideFlags: 0

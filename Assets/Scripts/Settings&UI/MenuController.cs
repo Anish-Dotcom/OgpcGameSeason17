@@ -12,7 +12,7 @@ public class MenuController : MonoBehaviour
     public bool menuOpen = false;
     public GameObject blur;
     private bool blurActive;
-    private bool showMouseT;
+    public bool showMouseT;
 
     // special function variables:
     public GameObject EscapeMenu;

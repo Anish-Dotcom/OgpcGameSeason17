@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ToyBuilder : MonoBehaviour
 {
+    public GlobalDissolveCon globalDissolveCon;
     public RaycastCon raycastCon;
     public PopupInfo lookingAtCheck;
     public int myInfoIndex;
@@ -89,6 +90,16 @@ public class ToyBuilder : MonoBehaviour
             lookingAtCheck.lookingAt[1] = false;
             lookingAtCheck.lookingAt[2] = false;
             menuCon.closePopup(raycastCon.popups[5]);
+        }
+        if (cursorObj.activeInHierarchy)
+        {
+            Vector2 mousePosition = Input.mousePosition;
+            Vector3 worldPosition;
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(cursorObj.GetComponent<RectTransform>(), mousePosition, Camera.main, out worldPosition))
+            {
+                // Set the position of the RectTransform to the world position
+                cursorObj.GetComponent<RectTransform>().position = worldPosition;
+            }
         }
         if (inBuildMode)
         {
@@ -187,10 +198,7 @@ public class ToyBuilder : MonoBehaviour
                     trueParent.transform.SetParent(mainParent.transform);
                 }
             }
-            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
-            {
-                MoveTinkeringObj(false);
-            }
+            MoveTinkeringObj(false);
         }
         else if (lookingAtCheck.lookingAt[myInfoIndex] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0 || lookingAtCheck.lookingAt[2] && GetComponent<AssemblyController>().RecipeForAssemblyObj.GetComponent<Transform>().childCount == 0)
         {
@@ -355,14 +363,22 @@ public class ToyBuilder : MonoBehaviour
     }
     public void ExitBuildMode()
     {
+        inBuildMode = false;
         if (tinkering)
         {
             tinkering = false;
             heldStationObjHolder.transform.GetChild(1).SetParent(disabledStationObjsHolder.transform);
             tinkeringObj.SetActive(false);
         }
+        if (painting)
+        {
+            painting = false;
+            cursorObj.SetActive(false);
+            paintingMenu.SetActive(false);
+            currentColor = Color.white;
+            cursorObj.transform.GetChild(0).gameObject.GetComponent<Image>().color = currentColor;
+        }
         crosshairOutisde.SetActive(true);
-        inBuildMode = false;
         menuCon.closeMenu(stationMenu);
         velocity = Vector3.zero;
         deriv = Quaternion.identity;
@@ -455,9 +471,7 @@ public class ToyBuilder : MonoBehaviour
                     if (letMove)
                     {
                         cursorObj.SetActive(false);
-                        /*
-                        Vector2 hotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);//sets the center of screen to top left of cursor sprite
-                        Cursor.SetCursor(cursorTexture, hotspot, CursorMode.Auto);*/
+                        menuCon.showMouseT = true;
                         negitiveNorm = -hit.normal;
                         tinkeringObj.SetActive(true);
                         tinkeringObj = heldStationObjHolder.transform.GetChild(1).gameObject;
@@ -501,7 +515,7 @@ public class ToyBuilder : MonoBehaviour
                 if (!painting)
                 {
                     cursorObj.SetActive(true);
-                    //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                    menuCon.showMouseT = false;
                     
                     if (Input.GetKeyDown(KeyCode.Mouse0))//open up painting menu
                     {
@@ -521,10 +535,9 @@ public class ToyBuilder : MonoBehaviour
         else
         {
             if (!painting)
-            {/*
-                Vector2 hotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);//sets the center of screen to top left of cursor sprite
-                Cursor.SetCursor(cursorTexture, hotspot, CursorMode.Auto);*/
+            {
                 cursorObj.SetActive(false);
+                menuCon.showMouseT = true;
             }
         }
     }
@@ -561,34 +574,125 @@ public class ToyBuilder : MonoBehaviour
         {
             if (hit.GetComponent<Collider>().gameObject.name != "painBucket")
             {
-                hit.transform.GetComponent<Material>().SetColor("_BaseColor", color);
+                Material currentMat = hit.transform.GetComponent<MaterialInfo>().currentMat;
+                if (currentMat == globalDissolveCon.toyMats[0])
+                {
+                    // Generate a new material instance
+                    Material newCurrentMat = new Material(globalDissolveCon.toyMats[0]);
+                    hit.transform.GetComponent<MaterialInfo>().currentMat = newCurrentMat;
+                    newCurrentMat.SetColor("_BaseColor", color);
+                    globalDissolveCon.toyMats.Add(newCurrentMat);
+
+                    // Assign the new shared material to the main object
+                    Renderer mainRenderer = hit.GetComponent<Renderer>();
+                    if (mainRenderer != null && mainRenderer.sharedMaterial == currentMat)
+                    {
+                        mainRenderer.sharedMaterial = newCurrentMat;
+                    }
+
+                    // Apply the new shared material to all child objects
+                    ApplyNewSharedMaterialToChildren(hit.transform, currentMat, newCurrentMat);
+                }
+                else
+                {
+                    currentMat.SetColor("_BaseColor", color);
+
+                    // If needed, update the main object's renderer
+                    Renderer mainRenderer = hit.GetComponent<Renderer>();
+                    if (mainRenderer != null && mainRenderer.sharedMaterial == currentMat)
+                    {
+                        mainRenderer.sharedMaterial.SetColor("_BaseColor", color);
+                    }
+
+                    // Update the color for all child objects using the shared material
+                    UpdateColorForChildren(hit.transform, currentMat, color);
+                }
             }
         }
     }
-    public void AvgColors(Color color1, Color color2)
+    void ApplyNewSharedMaterialToChildren(Transform parent, Material oldMat, Material newMat)
     {
-        color1 *= color1;
-        color2 *= color2;
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            Renderer childRenderer = child.GetComponent<Renderer>();
 
-        Color resultingColor = color1 + color2;
-        resultingColor *= (1 / 2);
-        resultingColor.r = Mathf.Sqrt(resultingColor.r);
-        resultingColor.g = Mathf.Sqrt(resultingColor.g);
-        resultingColor.b = Mathf.Sqrt(resultingColor.b);
+            if (childRenderer != null && childRenderer.sharedMaterial == oldMat)
+            {
+                childRenderer.sharedMaterial = newMat;
+            }
 
-        currentColor = resultingColor;
-        cursorObj.transform.GetChild(0).gameObject.GetComponent<Image>().color = currentColor;
+            // Recursively apply to grandchildren
+            ApplyNewSharedMaterialToChildren(child, oldMat, newMat);
+        }
+    }
+    void UpdateColorForChildren(Transform parent, Material sharedMat, Color color)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            Renderer childRenderer = child.GetComponent<Renderer>();
+
+            if (childRenderer != null && childRenderer.sharedMaterial == sharedMat)
+            {
+                childRenderer.sharedMaterial.SetColor("_BaseColor", color);
+            }
+
+            // Recursively update the color for grandchildren
+            UpdateColorForChildren(child, sharedMat, color);
+        }
+    }
+    public void AvgColorsSubtractive(Color color1, Color color2)
+    {
+        if (currentColor == Color.white)
+        {
+            currentColor = color2;
+            cursorObj.transform.GetChild(0).gameObject.GetComponent<Image>().color = color2;
+        }
+        else
+        {
+            // Convert RGB to CMY
+            Vector3 cmy1 = RGBtoCMY(color1);
+            Vector3 cmy2 = RGBtoCMY(color2);
+
+            // Average the CMY values
+            Vector3 mixedCMY = (cmy1 + cmy2) / 2.0f;
+
+            // Convert the averaged CMY back to RGB
+            Color resultingColor = CMYtoRGB(mixedCMY);
+
+            currentColor = resultingColor;
+            cursorObj.transform.GetChild(0).gameObject.GetComponent<Image>().color = currentColor;
+        }
+    }
+
+    // Convert RGB to CMY
+    private Vector3 RGBtoCMY(Color color)
+    {
+        float c = 1.0f - color.r;
+        float m = 1.0f - color.g;
+        float y = 1.0f - color.b;
+        return new Vector3(c, m, y);
+    }
+
+    // Convert CMY to RGB
+    private Color CMYtoRGB(Vector3 cmy)
+    {
+        float r = 1.0f - cmy.x;
+        float g = 1.0f - cmy.y;
+        float b = 1.0f - cmy.z;
+        return new Color(r, g, b);
     }
     public void AddRed()
     {
-        AvgColors(currentColor, Color.red);
+        AvgColorsSubtractive(currentColor, Color.red);
     }
     public void AddBlue()
     {
-        AvgColors(currentColor, Color.blue);
+        AvgColorsSubtractive(currentColor, Color.blue);
     }
     public void AddYellow()
     {
-        AvgColors(currentColor, Color.yellow);
+        AvgColorsSubtractive(currentColor, Color.yellow);
     }
 }

@@ -21,6 +21,7 @@ public class GlobalDissolveCon : MonoBehaviour
     public List<DissolveController> updatingAreas;
     public footStepCon footStepCon;
     public List<Material> boxMats;
+    public List<Material> toyMats;
 
     public Material planeMat;
 
@@ -37,6 +38,11 @@ public class GlobalDissolveCon : MonoBehaviour
         {
             areas[0].BoxSet(boxMats[i]);
             areas[0].BoxUpdate(boxMats[i]);
+        }
+        for (int i = 0; i < toyMats.Count; i++)
+        {
+            areas[0].BoxSet(toyMats[i]);
+            areas[0].BoxUpdate(toyMats[i]);
         }
         consAdded = new bool[areas.Length];
         /*
@@ -72,6 +78,10 @@ public class GlobalDissolveCon : MonoBehaviour
                 areas[1].BoxUpdate(boxMats[i]);
                 //Debug.Log(i + " area: 1");
             }
+            for (int i = 0; i < toyMats.Count; i++)
+            {
+                areas[1].BoxUpdate(toyMats[i]);
+            }
             if (firstFrameOutside)
             {
                 SetRoomLocations();
@@ -91,6 +101,10 @@ public class GlobalDissolveCon : MonoBehaviour
                 {
                     areas[0].BoxUpdate(boxMats[i]);
                     //Debug.Log(i + " area: 0");
+                }
+                for (int i = 0; i < toyMats.Count; i++)
+                {
+                    areas[0].BoxUpdate(toyMats[i]);
                 }
                 removeSteps();
                 firstFrameOutside = true;

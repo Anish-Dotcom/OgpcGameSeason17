@@ -1424,6 +1424,7 @@ GameObject:
   - component: {fileID: 8519079896964680764}
   - component: {fileID: 3804255413657312658}
   - component: {fileID: 8371024433274393491}
+  - component: {fileID: 3574907704508753798}
   m_Layer: 6
   m_Name: gearboxputtogether
   m_TagString: Finished Assembly
@@ -1499,6 +1500,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 9
+--- !u!114 &3574907704508753798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4995364190673618756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adfcd8261a0e7204eb743dbea4a21701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMat: {fileID: 2100000, guid: b464c5f7698fcb54db7002326eef7980, type: 2}
 --- !u!1 &5280750932282794354
 GameObject:
   m_ObjectHideFlags: 0
