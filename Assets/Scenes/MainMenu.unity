@@ -3447,7 +3447,7 @@ MonoBehaviour:
   dialogSource: {fileID: 1230687010}
   audioClip: {fileID: 8300000, guid: b3dd9c03296ecaa4caafc84fc4c6b3e6, type: 3}
   mainMenuSongs:
-  - {fileID: 8300000, guid: 0127cf279975dd64192e04ecb14f5887, type: 3}
+  - {fileID: 8300000, guid: 1a53f069637e1544b966aacfd7b2aee2, type: 3}
   voidSongs: []
   mainRoomSongs:
   - {fileID: 8300000, guid: 0127cf279975dd64192e04ecb14f5887, type: 3}
