@@ -12,19 +12,22 @@ public class MainRadarScript : MonoBehaviour
     public int radarInt;
     public RectTransform swiper;
     public float prevRot;
-    
+    float oldAOR =0;
+
+
     void Start()
     {
-        InvokeRepeating("Mapdots",0,01f);
+
     }
 
 
     void Update()
     {
+        
         Vector3 center = radarUI.position;
         swiper.RotateAround(center,Vector3.forward, 100*Time.deltaTime);
 
-        
+        Mapdots();
     }
     
     public void Mapdots()
@@ -64,22 +67,34 @@ public class MainRadarScript : MonoBehaviour
                 {
                     angleOfRotation = (Mathf.PI * 2) - Mathf.Abs(referanceAngle);
                 }
-                float swiperRotation = swiper.rotation.z;
-                if (swiperRotation < 0)
+                float swiperRotation = NormalizeAngle(swiper.eulerAngles.z * Mathf.Deg2Rad);
+
+
+
+                print(angleOfRotation);
+                print(oldAOR);
+                print(swiperRotation);
+                print("");
+                if (swiperRotation>oldAOR-1&&swiperRotation<angleOfRotation+1)
                 {
-                    swiperRotation = Mathf.PI + Mathf.Abs((swiper.rotation.z/360) * Mathf.PI * 2);
+                    dotPosition /= maxDistance;
+                    dotPosition *= radarUI.sizeDelta.x / 2;
+
+                    GameObject radarDot = Instantiate(radarDotPrefab, radarUI);
+                    radarDot.GetComponent<RectTransform>().anchoredPosition = dotPosition;
                 }
 
-
-                dotPosition /= maxDistance;
-                dotPosition *= radarUI.sizeDelta.x / 2;
-
-                GameObject radarDot = Instantiate(radarDotPrefab, radarUI);
-                radarDot.GetComponent<RectTransform>().anchoredPosition = dotPosition;
-                
+                oldAOR = angleOfRotation;
             }
         }
 
+    }
+    private float NormalizeAngle(float angle)
+    {
+        // Normalize an angle to be between 0 and 2*PI
+        while (angle < 0) angle += 2 * Mathf.PI;
+        while (angle > 2 * Mathf.PI) angle -= 2 * Mathf.PI;
+        return angle;
     }
     
 }
