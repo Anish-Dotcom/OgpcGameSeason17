@@ -480,7 +480,7 @@ public class ToyBuilder : MonoBehaviour
                             heldStationObjHolder.transform.GetChild(0).position = hit.point;//just sets an empty object to the location of hit
 
                             //Debug.DrawRay(hit.point, hit.normal, Color.red, 10f);
-                            Debug.Log(tinkeringObj.name);
+                            //Debug.Log(tinkeringObj.name);
                             attachPointPos = tinkeringObj.GetComponent<attachInfo>().attachPoint.transform.position;
                             referPos = tinkeringObj.GetComponent<attachInfo>().refer.transform.position;
 

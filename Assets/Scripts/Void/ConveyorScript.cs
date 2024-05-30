@@ -30,10 +30,11 @@ public class ConveyorScript : MonoBehaviour
     }
     public void Sellitem()
     {
-        GameObject objToSell = player.GetComponent<ObjectPickUp>().currentObject.transform.GetChild(0).gameObject;
+        GameObject objToSell = player.GetComponent<ObjectPickUp>().currentObject.transform.parent.gameObject;
+        Debug.Log(objToSell);
         if (objToSell.name.Contains("finished Toy"))
         {
-            int comissionCompleting = 0;/*
+            int comissionCompleting = 1;/*
             for (int i = 0; i < comissionController.numberOfComissions; i++)
             {
                 int inputNum = comissionController.inputNums[4 * i];

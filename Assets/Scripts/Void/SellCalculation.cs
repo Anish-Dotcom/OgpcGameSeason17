@@ -42,7 +42,7 @@ public class SellCalculation : MonoBehaviour
         {
             GameObject currentObj = objToSell.transform.GetChild(i).gameObject;//the current object we are checking, component
             //calculating how much each color was used
-            Color currentColor = currentObj.GetComponent<Material>().color;
+            Color currentColor = currentObj.GetComponent<MaterialInfo>().currentMat.GetColor("_BaseColor");
             int index = -1;//is the color already in the list?
             for (int j = 0; j < colorsUsed.Count; j++)
             {
@@ -54,11 +54,12 @@ public class SellCalculation : MonoBehaviour
             if (index == -1)//add a new color
             {
                 colorsUsed.Add(currentColor);
-                colorWeights.Add(GetSurfaceArea(currentObj));
+                colorWeights.Add(0);
+                GetAllMaterialInstancesArea(currentObj.transform, currentObj.GetComponent<MaterialInfo>().currentMat, colorWeights.Count - 1);
             }
             else
             {
-                colorWeights[i] += GetSurfaceArea(currentObj);
+                GetAllMaterialInstancesArea(currentObj.transform, currentObj.GetComponent<MaterialInfo>().currentMat, index);
             }
 
             //check how much each item added costs
@@ -185,7 +186,23 @@ public class SellCalculation : MonoBehaviour
 
         totalPrice = Mathf.RoundToInt(totalPrice);
         moneyScript.IncreaseMoney(totalPrice);
+        FinishSell(objToSell);
     }
+    public void GetAllMaterialInstancesArea(Transform parent, Material sharedMat, int index)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            Renderer childRenderer = child.GetComponent<Renderer>();
+            if (childRenderer != null && childRenderer.sharedMaterial == sharedMat)
+            {
+                Debug.Log(index + " size " + colorWeights.Count);
+                colorWeights[index] += GetSurfaceArea(child.gameObject);
+            }
+            GetAllMaterialInstancesArea(child, sharedMat, index);
+        }
+    }
+
     public float GetSurfaceArea(GameObject objToCalculate)
     {
         Vector3[] vertices = objToCalculate.GetComponent<MeshFilter>().mesh.vertices;
@@ -198,5 +215,10 @@ public class SellCalculation : MonoBehaviour
                         vertices[triangles[p + 2]] - vertices[triangles[p]])).magnitude;
         }
         return (result *= 0.5f);
+    }
+    public void FinishSell(GameObject sellingobj)
+    {
+        player.GetComponent<ObjectPickUp>().Drop(sellingobj);
+        Destroy(sellingobj);
     }
 }
